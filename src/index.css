@@ -5,7 +5,7 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: "Prompt", sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container,
@@ -183,4 +183,8 @@ body {
 
 .text-right {
     text-align: right;
+}
+
+.ant-layout {
+    background: #ffffff !important;
 }

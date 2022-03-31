@@ -1,13 +1,20 @@
 import { Layout } from "antd";
+import styled from "styled-components";
 import DesktopHeader from "./../Header/Desktop/DesktopHeader";
 
-const { Content } = Layout;
+const Content = styled.div`
+    padding-top: 25px;
+    padding-bottom: 25px;
+`;
 
 const DesktopLayout = (props: Props): JSX.Element => {
+    const { children } = props;
     return (
         <Layout>
             <DesktopHeader />
-            <div className="container">sasas</div>
+            <Content>
+                <div className="container">{children}</div>
+            </Content>
         </Layout>
     );
 };
