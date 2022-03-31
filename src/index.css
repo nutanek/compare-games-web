@@ -1,13 +1,186 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+    --main-app-color: #1a242f;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Prompt", sans-serif;
+}
+
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .container-sm,
+    .container {
+        max-width: 540px;
+    }
+}
+@media (min-width: 768px) {
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 720px;
+    }
+}
+@media (min-width: 992px) {
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 1200px) {
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1140px;
+    }
+}
+@media (min-width: 1400px) {
+    .container-xxl,
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1400px;
+    }
+}
+
+/* 
+ *custom 
+ * Copyright (c) 2020 indytheme
+*/
+
+.text-xs {
+    font-size: 12px;
+}
+.text-sm {
+    font-size: 14px;
+}
+.text-md {
+    font-size: 16px;
+}
+.text-lg {
+    font-size: 18px;
+}
+.text-xl {
+    font-size: 20px;
+}
+.text-2xl {
+    font-size: 22px;
+}
+.text-3xl {
+    font-size: 24px;
+}
+.text-4xl {
+    font-size: 26px;
+}
+.text-5xl {
+    font-size: 28px;
+}
+.text-6xl {
+    font-size: 30px;
+}
+.text-7xl {
+    font-size: 32px;
+}
+.text-8xl {
+    font-size: 34px;
+}
+.text-9xl {
+    font-size: 36px;
+}
+.text-10xl {
+    font-size: 38px;
+}
+.text-11xl {
+    font-size: 40px;
+}
+.text-12xl {
+    font-size: 42px;
+}
+@media screen and (max-width: 576px) {
+    .text-xs {
+        font-size: 11px;
+    }
+    .text-sm {
+        font-size: 13px;
+    }
+    .text-md {
+        font-size: 14px;
+    }
+    .text-lg {
+        font-size: 16px;
+    }
+    .text-xl {
+        font-size: 18px;
+    }
+    .text-2xl {
+        font-size: 20px;
+    }
+    .text-3xl {
+        font-size: 22px;
+    }
+    .text-4xl {
+        font-size: 24px;
+    }
+    .text-5xl {
+        font-size: 26px;
+    }
+    .text-6xl {
+        font-size: 28px;
+    }
+    .text-7xl {
+        font-size: 30px;
+    }
+    .text-8xl {
+        font-size: 32px;
+    }
+    .text-9xl {
+        font-size: 34px;
+    }
+    .text-10xl {
+        font-size: 36px;
+    }
+    .text-11xl {
+        font-size: 38px;
+    }
+    .text-12xl {
+        font-size: 40px;
+    }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
 }
