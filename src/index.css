@@ -314,3 +314,10 @@ body {
         opacity: 1;
     }
 }
+
+.loading-modal .ant-modal-content {
+    background-color: transparent !important;
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+}

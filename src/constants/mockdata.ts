@@ -270,5 +270,75 @@ export const GAME_WITH_FILTER: GamesWithFilter = {
             price: 3590,
         },
     ],
-    filter: [],
+    filter: [
+        {
+            id: 1,
+            name: 'Game type',
+            slug: 'game-type',
+            options: [
+                {
+                    id: 1,
+                    name: 'Action',
+                    slug: 'action',
+                    selected: false
+                },
+                {
+                    id: 2,
+                    name: 'Driving/Racing',
+                    slug: 'driving-racing',
+                    selected: false
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: 'Price',
+            slug: 'price',
+            options: [
+                {
+                    id: 1,
+                    name: 'Free',
+                    slug: '0',
+                    selected: false
+                },
+                {
+                    id: 2,
+                    name: 'Under THB 199',
+                    slug: '0-199',
+                    selected: false
+                },
+                {
+                    id: 3,
+                    name: 'THB 200 - 399',
+                    slug: '200-399',
+                    selected: false
+                }
+            ]
+        },
+        {
+            id: 3,
+            name: 'Platform',
+            slug: 'platform',
+            options: [
+                {
+                    id: 1,
+                    name: 'PlayStation',
+                    slug: 'ps',
+                    selected: false
+                },
+                {
+                    id: 2,
+                    name: 'Xbox',
+                    slug: 'xbox',
+                    selected: false
+                },
+                {
+                    id: 3,
+                    name: 'Nintendo',
+                    slug: 'nintendo',
+                    selected: false
+                }
+            ]
+        }
+    ],
 };

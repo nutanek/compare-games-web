@@ -8,6 +8,9 @@ const Content = styled.div`
     align-items: center;
     padding-top: 25px;
     padding-bottom: 25px;
+    > .container {
+        min-height: 100vh;
+    }
 `;
 
 const DesktopLayout = (props: Props): JSX.Element => {
