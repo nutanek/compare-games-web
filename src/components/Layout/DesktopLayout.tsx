@@ -1,8 +1,11 @@
 import { Layout } from "antd";
 import styled from "styled-components";
 import DesktopHeader from "./../Header/Desktop/DesktopHeader";
+import Footer from "../Footer/Footer";
 
 const Content = styled.div`
+    display: flex;
+    align-items: center;
     padding-top: 25px;
     padding-bottom: 25px;
 `;
@@ -15,6 +18,7 @@ const DesktopLayout = (props: Props): JSX.Element => {
             <Content>
                 <div className="container">{children}</div>
             </Content>
+            <Footer />
         </Layout>
     );
 };

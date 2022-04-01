@@ -1,3 +1,5 @@
+import { Filter } from "./filter";
+
 export type Game = {
     id: number;
     name: string;
@@ -6,8 +8,17 @@ export type Game = {
 };
 
 export type Home = {
-    onSales: Game[];
-    mostPopulars: Game[];
-    newReleases: Game[];
-    commingSoons: Game[];
+    on_sales: Game[];
+    most_populars: Game[];
+    new_releases: Game[];
+    comming_soons: Game[];
+};
+
+export type GamesWithFilter = {
+    title: string;
+    page: number;
+    total_page: number;
+    sorting_id: number;
+    filter: Filter[];
+    games: Game[];
 };

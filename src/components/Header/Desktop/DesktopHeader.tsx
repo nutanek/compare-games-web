@@ -1,7 +1,7 @@
-import {Link} from 'react-router-dom'
-import {ROOT_PATH} from './../../../constants/appConstants'
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Layout, Button } from "antd";
+import { ROOT_PATH } from "./../../../constants/appConstants";
 import SearchBoxDesktop from "./SearchBox";
 import Logo from "./../../../images/logo.png";
 
@@ -58,11 +58,19 @@ const Container = styled(Header)`
 const DesktopHeader = (): JSX.Element => {
     return (
         <Container>
-            <Link to={`${ROOT_PATH}/`} className="logo text-md text-bold pointer">
+            <Link
+                to={`${ROOT_PATH}/`}
+                className="logo text-md text-bold pointer"
+            >
                 <img src={Logo} alt="logo" />
                 <div className="title">Consoles</div>
             </Link>
-            <Link to={`${ROOT_PATH}/games`} className="menu text-md text-bold pointer">All Games</Link>
+            <Link
+                to={`${ROOT_PATH}/games`}
+                className="menu text-md text-bold pointer"
+            >
+                All Games
+            </Link>
             <div className="search-box-container">
                 <SearchBoxDesktop />
             </div>
