@@ -15,6 +15,7 @@ import queryString from "query-string";
 import styled from "styled-components";
 import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
+import PasswordStrengthScore from "../Utility/PasswordStrengthScore";
 
 import { ROOT_PATH } from "../../constants/appConstants";
 import Logo from "./../../images/logo.png";
@@ -40,6 +41,9 @@ const Container = styled.div`
         }
         .body {
             padding: 30px;
+            .password-score-container {
+                padding-bottom: 30px;
+            }
         }
         button {
             border-radius: 8px;
@@ -47,12 +51,17 @@ const Container = styled.div`
     }
 `;
 
-class LoginPage extends Component<Props> {
+class SignupPage extends Component<Props> {
     state: State = {
         isLoading: false,
+        password: "",
     };
 
     formRef = React.createRef<FormInstance>();
+
+    onChangePassword(password: string): void {
+        this.setState({ password });
+    }
 
     render() {
         return (
@@ -68,7 +77,7 @@ class LoginPage extends Component<Props> {
                             </div>
                             <div className="body">
                                 <p className="text-center text-bold text-4xl">
-                                    Log in
+                                    Sign up
                                 </p>
                                 <Form
                                     ref={this.formRef}
@@ -76,6 +85,20 @@ class LoginPage extends Component<Props> {
                                     name="control-ref"
                                     requiredMark="optional"
                                 >
+                                    <Form.Item
+                                        name="displayName"
+                                        label="Display name"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    "Please input your display name!",
+                                            },
+                                        ]}
+                                    >
+                                        <Input />
+                                    </Form.Item>
+
                                     <Form.Item
                                         name="email"
                                         label="Email"
@@ -110,34 +133,65 @@ class LoginPage extends Component<Props> {
                                             },
                                         ]}
                                     >
+                                        <Input.Password
+                                            onChange={(e) =>
+                                                this.onChangePassword(
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        name="confirmPassword"
+                                        label="Confirm password"
+                                        hasFeedback
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    "Please confirm your password!",
+                                            },
+                                            ({ getFieldValue }) => ({
+                                                validator(_, value) {
+                                                    if (
+                                                        !value ||
+                                                        getFieldValue(
+                                                            "password"
+                                                        ) === value
+                                                    ) {
+                                                        return Promise.resolve();
+                                                    }
+                                                    return Promise.reject(
+                                                        new Error(
+                                                            "The two passwords do not match!"
+                                                        )
+                                                    );
+                                                },
+                                            }),
+                                        ]}
+                                    >
                                         <Input.Password />
                                     </Form.Item>
-                                    <Form.Item name="remember">
-                                        <Checkbox>Remember me</Checkbox>
-                                    </Form.Item>
+
+                                    <div className="password-score-container">
+                                        <PasswordStrengthScore
+                                            password={this.state.password}
+                                        />
+                                    </div>
 
                                     <Button type="primary" size="large" block>
-                                        Log in
+                                        Sign up
                                     </Button>
-
-                                    <Link to={`${ROOT_PATH}/forgot-password`}>
-                                        <Button
-                                            type="link"
-                                            block
-                                            style={{ marginTop: 15 }}
-                                        >
-                                            Forgot Password?
-                                        </Button>
-                                    </Link>
 
                                     <Divider />
 
                                     <div className="text-secondary-color text-center">
-                                        Don´t have an account?
+                                        Already have an account?
                                     </div>
-                                    <Link to={`${ROOT_PATH}/signup`}>
+                                    <Link to={`${ROOT_PATH}/login`}>
                                         <Button type="link" block>
-                                            Sign up
+                                            Log in
                                         </Button>
                                     </Link>
                                 </Form>
@@ -154,6 +208,7 @@ class LoginPage extends Component<Props> {
 
 type State = {
     isLoading: boolean;
+    password: string;
 };
 
 type Query = {
@@ -165,4 +220,4 @@ type Props = {
     location?: Location;
 };
 
-export default withRouter(LoginPage);
+export default withRouter(SignupPage);
