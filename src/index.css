@@ -8,6 +8,13 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
+input,
+textarea,
+select,
+.ant-input-affix-wrapper {
+    border-radius: 8px !important;
+}
+
 .container,
 .container-fluid,
 .container-xxl,
@@ -194,6 +201,10 @@ body {
 
 .text-right {
     text-align: right;
+}
+
+.text-secondary-color  {
+    color: #888888;
 }
 
 .ant-layout {

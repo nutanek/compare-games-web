@@ -9,7 +9,7 @@ const Content = styled.div`
     padding-top: 25px;
     padding-bottom: 25px;
     > .container {
-        min-height: 100vh;
+        min-height: calc(100vh - 240px);
         margin-top: 80px;
     }
 `;

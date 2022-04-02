@@ -78,20 +78,24 @@ const DesktopHeader = (): JSX.Element => {
                 <SearchBoxDesktop />
             </div>
             <div className="menu account-buttons text-md">
-                <Button
-                    className="login text-md text-bold"
-                    type="primary"
-                    size="large"
-                >
-                    Login
-                </Button>
-                <Button
-                    className="register text-md text-bold"
-                    type="primary"
-                    size="large"
-                >
-                    Register
-                </Button>
+                <Link to={`${ROOT_PATH}/login`}>
+                    <Button
+                        className="login text-md text-bold"
+                        type="primary"
+                        size="large"
+                    >
+                        Login
+                    </Button>
+                </Link>
+                <Link to={`${ROOT_PATH}/signup`}>
+                    <Button
+                        className="register text-md text-bold"
+                        type="primary"
+                        size="large"
+                    >
+                        Register
+                    </Button>
+                </Link>
             </div>
         </Container>
     );
