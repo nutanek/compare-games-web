@@ -1,4 +1,4 @@
-import { Row, Col, Select } from "antd";
+import { Row, Col, Select, Pagination } from "antd";
 import { Component } from "react";
 import { URLSearchParamsInit } from "react-router-dom";
 import queryString from "query-string";
@@ -25,14 +25,22 @@ const Container = styled.div`
         gap: 15px;
         padding: 20px 0;
     }
+    .showing-items {
+        margin-bottom: 15px;
+        color: #888888;
+    }
+    .pagination-container {
+        padding: 40px 0;
+        text-align: center;
+    }
 `;
 
 class GamesPage extends Component<Props> {
     state: State = {
         title: "",
         page: 1,
-        totalPage: 10,
-        sortingId: 1,
+        total: 0,
+        sortingId: 0,
         filter: [],
         games: [],
         isLoading: false,
@@ -60,7 +68,7 @@ class GamesPage extends Component<Props> {
                     {
                         title: GAME_WITH_FILTER.title,
                         page: GAME_WITH_FILTER.page,
-                        totalPage: GAME_WITH_FILTER.total_page,
+                        total: GAME_WITH_FILTER.total,
                         sortingId: GAME_WITH_FILTER.sorting_id,
                         filter: GAME_WITH_FILTER.filter,
                         games: GAME_WITH_FILTER.games,
@@ -97,7 +105,20 @@ class GamesPage extends Component<Props> {
                 }
             })
         );
-        this.setState({ filter });
+        let state = { filter };
+        if (query.sorting?.length > 0 && query.sorting[0] !== "0") {
+            state = {
+                ...state,
+                ...{ sortingId: parseInt(query.sorting[0]) },
+            };
+        }
+        if (query.page?.length > 0 && query.page[0] !== "1") {
+            state = {
+                ...state,
+                ...{ page: parseInt(query.page[0]) },
+            };
+        }
+        this.setState(state);
     }
 
     onSelectFilter(
@@ -129,8 +150,38 @@ class GamesPage extends Component<Props> {
         this.onSelectFilter(filterSlug, optionSlug, true);
     }
 
+    onClearFilter(): void {
+        let filter: FilterModel[] = cloneDeep(this.state.filter);
+        filter.forEach((item) =>
+            item.options.forEach((option) => {
+                option.selected = false;
+            })
+        );
+        this.setState({ filter }, () => this.redirect());
+    }
+
+    onSelectSorting(id: number): void {
+        this.setState(
+            {
+                sortingId: id,
+            },
+            () => this.redirect()
+        );
+    }
+
+    onChangePage(page: number): void {
+        this.setState({ page }, () => this.redirect());
+    }
+
     redirect(): void {
         let query: any = {};
+
+        if (this.state.sortingId !== 0) {
+            query.sorting = this.state.sortingId;
+        }
+        if (this.state.page !== 1) {
+            query.page = this.state.page;
+        }
 
         this.state.filter.forEach((item) =>
             item.options.forEach((option) => {
@@ -156,9 +207,17 @@ class GamesPage extends Component<Props> {
                     <SelectedFilters
                         filters={this.state.filter}
                         onRemove={this.onRemoveFilter.bind(this)}
+                        onClearAll={this.onClearFilter.bind(this)}
                     />
-                    <SortingDesktop />
+                    <SortingDesktop
+                        value={this.state.sortingId}
+                        onSelect={this.onSelectSorting.bind(this)}
+                    />
                 </div>
+                <p className="showing-items text-sm">
+                    Showing {this.state.total}{" "}
+                    {this.state.total > 1 ? "items" : "item"}
+                </p>
                 <Row gutter={40}>
                     <Col xs={12} sm={12} md={8} lg={6}>
                         <Filter
@@ -181,7 +240,19 @@ class GamesPage extends Component<Props> {
                                 </Col>
                             ))}
                         </Row>
-                        {this.state.isLoading && <p className="text-center">Loading...</p>}
+                        {this.state.isLoading && (
+                            <p className="text-center">Loading...</p>
+                        )}
+                        <div className="pagination-container">
+                            <Pagination
+                                current={this.state.page}
+                                pageSize={24}
+                                total={this.state.total}
+                                hideOnSinglePage={true}
+                                showSizeChanger={false}
+                                onChange={this.onChangePage.bind(this)}
+                            />
+                        </div>
                     </Col>
                 </Row>
 
@@ -194,7 +265,7 @@ class GamesPage extends Component<Props> {
 type State = {
     title: string;
     page: number;
-    totalPage: number;
+    total: number;
     sortingId: number;
     filter: FilterModel[];
     games: Game[];

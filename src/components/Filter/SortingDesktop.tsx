@@ -15,7 +15,11 @@ const SortingDesktop = (props: Props) => {
     return (
         <Container className="text-sm">
             <span className="text-bold">Sort by:</span>
-            <Select defaultValue={1} style={{ width: 200 }}>
+            <Select
+                style={{ width: 200 }}
+                value={props.value}
+                onChange={props.onSelect.bind(this)}
+            >
                 {SORTINGS.map((sorting) => (
                     <Option key={sorting.id} value={sorting.id}>
                         {sorting.name}
@@ -27,7 +31,8 @@ const SortingDesktop = (props: Props) => {
 };
 
 type Props = {
-    // filters: FilterModel[];
+    value: number;
+    onSelect: (id: number) => void;
 };
 
 export default SortingDesktop;

@@ -41,7 +41,10 @@ const SelectedFilters = (props: Props) => {
     return (
         <Container>
             {selecteds.length > 0 && (
-                <div className="btn btn-clear">
+                <div
+                    className="btn btn-clear"
+                    onClick={() => props.onClearAll()}
+                >
                     <DeleteOutlined />
                     <div className="name">Clear</div>
                 </div>
@@ -66,6 +69,7 @@ type Selected = FilterOption & {
 type Props = {
     filters: FilterModel[];
     onRemove: (filterSlug: string, optionSlug: string) => void;
+    onClearAll: () => void;
 };
 
 export default SelectedFilters;

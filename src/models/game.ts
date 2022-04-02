@@ -17,7 +17,7 @@ export type Home = {
 export type GamesWithFilter = {
     title: string;
     page: number;
-    total_page: number;
+    total: number;
     sorting_id: number;
     filter: Filter[];
     games: Game[];

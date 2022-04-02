@@ -158,7 +158,7 @@ export const HOME_API: Home = {
 export const GAME_WITH_FILTER: GamesWithFilter = {
     title: "Category Name",
     page: 1,
-    total_page: 10,
+    total: 50,
     sorting_id: 1,
     games: [
         {

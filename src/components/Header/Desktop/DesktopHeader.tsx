@@ -8,10 +8,13 @@ import Logo from "./../../../images/logo.png";
 const { Header } = Layout;
 
 const Container = styled(Header)`
+    position: fixed;
     display: flex;
     align-items: center;
     background-color: var(--main-app-color);
+    width: 100%;
     height: 80px;
+    z-index: 99;
     .logo {
         display: flex;
         align-items: center;
