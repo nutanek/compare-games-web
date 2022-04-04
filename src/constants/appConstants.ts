@@ -14,3 +14,7 @@ export const SORTINGS = [
         name: "Price (Hight to Low)",
     },
 ];
+
+export const ERRORS = {
+    unknown: "Something went wrong!",
+};

@@ -6,6 +6,7 @@ import {
     useRoutes,
 } from "react-router-dom";
 import { ROOT_PATH } from "./constants/appConstants";
+import ScrollToTop from "./components/Utility/ScrollToTop";
 import DesktopLayout from "./components/Layout/DesktopLayout";
 import HomePage from "./components/Pages/HomePage";
 import LoginPage from "./components/Pages/LoginPage";
@@ -25,9 +26,11 @@ const AppRoutes = () => {
 function App(): JSX.Element {
     return (
         <Router>
-            <DesktopLayout>
-                <AppRoutes />
-            </DesktopLayout>
+            <ScrollToTop>
+                <DesktopLayout>
+                    <AppRoutes />
+                </DesktopLayout>
+            </ScrollToTop>
         </Router>
     );
 }

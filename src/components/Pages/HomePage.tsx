@@ -2,6 +2,7 @@ import { Row, Col } from "antd";
 import { Component } from "react";
 import styled from "styled-components";
 import { Game } from "../../models/game";
+import { getHomeApi } from "./../../services/apiServices";
 import Title from "./../Utility/Title";
 import ProductCard from "../Product/ProductCard/ProductCard";
 
@@ -12,6 +13,7 @@ const Container = styled.div``;
 
 class HomePage extends Component {
     state: State = {
+        isLoading: false,
         onSales: [],
         mostPopulars: [],
         newReleases: [],
@@ -19,12 +21,23 @@ class HomePage extends Component {
     };
 
     componentDidMount() {
-        this.setState({
-            onSales: HOME_API.on_sales,
-            mostPopulars: HOME_API.most_populars,
-            newReleases: HOME_API.new_releases,
-            commingSoons: HOME_API.comming_soons,
-        });
+        this.getHome();
+    }
+
+    async getHome() {
+        try {
+            this.setState({ isLoading: true });
+            let { data: homeData } = await getHomeApi();
+            this.setState({
+                isLoading: false,
+                onSales: homeData.on_sales,
+                mostPopulars: homeData.most_populars,
+                newReleases: homeData.new_releases,
+                commingSoons: homeData.comming_soons,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {
@@ -127,6 +140,7 @@ class HomePage extends Component {
 // };
 
 type State = {
+    isLoading: boolean;
     onSales: Game[];
     mostPopulars: Game[];
     newReleases: Game[];

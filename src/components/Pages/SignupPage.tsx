@@ -8,16 +8,18 @@ import {
     Checkbox,
     Button,
     Divider,
+    message,
 } from "antd";
 import { Component } from "react";
 import { Link, NavigateFunction } from "react-router-dom";
 import queryString from "query-string";
 import styled from "styled-components";
+import { signupApi } from "./../../services/apiServices";
 import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
 import PasswordStrengthScore from "../Utility/PasswordStrengthScore";
 
-import { ROOT_PATH } from "../../constants/appConstants";
+import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
 import Logo from "./../../images/logo.png";
 
 const Container = styled.div`
@@ -59,8 +61,29 @@ class SignupPage extends Component<Props> {
 
     formRef = React.createRef<FormInstance>();
 
+    async signup(info: FormData): Promise<void> {
+        try {
+            this.setState({ isLoading: true });
+            let { data }: any = await signupApi({
+                display_name: info.displayName,
+                email: info.email,
+                password: info.password,
+                confirm_password: info.confirmPassword,
+            });
+            message.success("Success!");
+            this.setState({ isLoading: false });
+        } catch (error: any) {
+            message.error(error?.msg || ERRORS.unknown);
+            this.setState({ isLoading: false });
+        }
+    }
+
     onChangePassword(password: string): void {
         this.setState({ password });
+    }
+
+    onSubmit(values: FormData): void {
+        this.signup(values);
     }
 
     render() {
@@ -84,6 +107,7 @@ class SignupPage extends Component<Props> {
                                     layout="vertical"
                                     name="control-ref"
                                     requiredMark="optional"
+                                    onFinish={this.onSubmit.bind(this)}
                                 >
                                     <Form.Item
                                         name="displayName"
@@ -180,7 +204,12 @@ class SignupPage extends Component<Props> {
                                         />
                                     </div>
 
-                                    <Button type="primary" size="large" block>
+                                    <Button
+                                        htmlType="submit"
+                                        type="primary"
+                                        size="large"
+                                        block
+                                    >
                                         Sign up
                                     </Button>
 
@@ -213,6 +242,13 @@ type State = {
 
 type Query = {
     [key: string]: string[];
+};
+
+type FormData = {
+    confirmPassword: string;
+    displayName: string;
+    email: string;
+    password: string;
 };
 
 type Props = {

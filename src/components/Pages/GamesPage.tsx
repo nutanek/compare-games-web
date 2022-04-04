@@ -7,6 +7,7 @@ import cloneDeep from "lodash/cloneDeep";
 import withRouter from "./../../hocs/withRouter";
 import { Game } from "../../models/game";
 import { Filter as FilterModel } from "../../models/filter";
+import { getAllGamesApi } from "./../../services/apiServices";
 import Title from "./../Utility/Title";
 import ProductCard from "../Product/ProductCard/ProductCard";
 import Filter from "../Filter/Filter";
@@ -60,65 +61,51 @@ class GamesPage extends Component<Props> {
     }
 
     async onGetGameList(queryStr: string): Promise<void> {
-        const query = this.generateQuery(queryStr);
-        this.setState({ isLoading: true, games: [] });
-        await setTimeout(
-            () =>
-                this.setState(
-                    {
-                        title: GAME_WITH_FILTER.title,
-                        page: GAME_WITH_FILTER.page,
-                        total: GAME_WITH_FILTER.total,
-                        sortingId: GAME_WITH_FILTER.sorting_id,
-                        filter: GAME_WITH_FILTER.filter,
-                        games: GAME_WITH_FILTER.games,
-                    },
-                    () => {
-                        this.onSetSelectedFilter(query);
-                        this.setState({ isLoading: false });
-                    }
-                ),
+        const { query, sortingId, page } = this.generateQuery(queryStr);
 
-            300
-        );
+        try {
+            this.setState({ isLoading: true });
+            let { data } = await getAllGamesApi({
+                filter: query,
+                sorting_id: sortingId,
+                page,
+            });
+            this.setState({
+                isLoading: false,
+                title: data.title,
+                page: data.page,
+                total: data.total,
+                sortingId: data.sorting_id,
+                filter: data.filter,
+                games: data.games,
+            });
+        } catch (error) {
+            this.setState({ isLoading: false });
+        }
     }
 
-    generateQuery(queryStr: string): Query {
+    generateQuery(queryStr: string): {
+        query: Query;
+        sortingId: number;
+        page: number;
+    } {
         let query = queryString.parse(queryStr);
         for (let [key, value] of Object.entries(query)) {
             if (typeof value === "string") {
                 query[key] = [value];
             }
         }
-        return query as Query;
-    }
-
-    onSetSelectedFilter(query: Query): void {
-        let filter = cloneDeep(this.state.filter);
-        filter.forEach((item) =>
-            item.options.forEach((option) => {
-                if (
-                    query[item.slug] &&
-                    query[item.slug].includes(option.slug)
-                ) {
-                    option.selected = true;
-                }
-            })
-        );
-        let state = { filter };
-        if (query.sorting?.length > 0 && query.sorting[0] !== "0") {
-            state = {
-                ...state,
-                ...{ sortingId: parseInt(query.sorting[0]) },
-            };
-        }
-        if (query.page?.length > 0 && query.page[0] !== "1") {
-            state = {
-                ...state,
-                ...{ page: parseInt(query.page[0]) },
-            };
-        }
-        this.setState(state);
+        let page = 1;
+        try {
+            page = query.page ? parseInt(query.page[0] as string) : 1;
+        } catch (error) {}
+        let sortingId = 1;
+        try {
+            sortingId = query.sorting
+                ? parseInt(query.sorting[0] as string)
+                : 1;
+        } catch (error) {}
+        return { query: query as Query, sortingId, page };
     }
 
     onSelectFilter(
@@ -157,20 +144,24 @@ class GamesPage extends Component<Props> {
                 option.selected = false;
             })
         );
-        this.setState({ filter }, () => this.redirect());
+        this.setState({ filter, page: 1 }, () => this.redirect());
     }
 
     onSelectSorting(id: number): void {
         this.setState(
             {
                 sortingId: id,
+                page: 1,
             },
             () => this.redirect()
         );
     }
 
     onChangePage(page: number): void {
-        this.setState({ page }, () => this.redirect());
+        this.setState({ page }, () => {
+            this.redirect();
+            window.scrollTo(0, 0);
+        });
     }
 
     redirect(): void {
@@ -220,10 +211,12 @@ class GamesPage extends Component<Props> {
                 </p>
                 <Row gutter={40}>
                     <Col xs={12} sm={12} md={8} lg={6}>
-                        <Filter
-                            filters={this.state.filter}
-                            onSelect={this.onSelectFilter.bind(this)}
-                        />
+                        {this.state.filter.length > 0 && (
+                            <Filter
+                                filters={this.state.filter}
+                                onSelect={this.onSelectFilter.bind(this)}
+                            />
+                        )}
                     </Col>
                     <Col xs={24} sm={24} md={16} lg={18}>
                         <Row gutter={[15, 24]}>
@@ -256,7 +249,7 @@ class GamesPage extends Component<Props> {
                     </Col>
                 </Row>
 
-                {/* <LoadingModal isOpen={this.state.isLoading}/> */}
+                <LoadingModal isOpen={this.state.isLoading}/>
             </Container>
         );
     }
