@@ -1,5 +1,8 @@
 export const ROOT_PATH = "/compare-game";
 
+export const KEY_ACCESS_TOKEN = "consoles_access_token";
+export const KEY_USER_INFO = "consoles_user_info";
+
 export const SORTINGS = [
     {
         id: 1,

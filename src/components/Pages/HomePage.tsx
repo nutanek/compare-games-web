@@ -5,8 +5,6 @@ import { Game } from "../../models/game";
 import { getHomeApi } from "./../../services/apiServices";
 import Title from "./../Utility/Title";
 import ProductCard from "../Product/ProductCard/ProductCard";
-
-import { HOME_API } from "./../../constants/mockdata";
 import { ROOT_PATH } from "../../constants/appConstants";
 
 const Container = styled.div``;

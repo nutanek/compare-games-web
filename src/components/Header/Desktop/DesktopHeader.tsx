@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Layout, Button } from "antd";
+import { Layout, Button, Modal } from "antd";
 import { ROOT_PATH } from "./../../../constants/appConstants";
+import {
+    isLoggedIn as checkLoggedIn,
+    signout,
+} from "../../../services/appServices";
 import SearchBoxDesktop from "./SearchBox";
 import Logo from "./../../../images/logo.png";
 
 const { Header } = Layout;
+const { confirm } = Modal;
 
 const Container = styled(Header)`
     position: fixed;
@@ -59,6 +64,20 @@ const Container = styled(Header)`
 `;
 
 const DesktopHeader = (): JSX.Element => {
+    const isLoggedIn = checkLoggedIn();
+
+    function showConfirmLogoutModal() {
+        confirm({
+            title: "Do you want to log out?",
+            centered: true,
+            maskClosable: true,
+            onOk() {
+                signout({ isCallback: false });
+            },
+            onCancel() {},
+        });
+    }
+
     return (
         <Container>
             <Link
@@ -78,24 +97,39 @@ const DesktopHeader = (): JSX.Element => {
                 <SearchBoxDesktop />
             </div>
             <div className="menu account-buttons text-md">
-                <Link to={`${ROOT_PATH}/login`}>
-                    <Button
-                        className="login text-md text-bold"
-                        type="primary"
-                        size="large"
-                    >
-                        Login
-                    </Button>
-                </Link>
-                <Link to={`${ROOT_PATH}/signup`}>
-                    <Button
-                        className="register text-md text-bold"
-                        type="primary"
-                        size="large"
-                    >
-                        Register
-                    </Button>
-                </Link>
+                {isLoggedIn ? (
+                    <>
+                        <Button
+                            className="register text-md text-bold"
+                            type="primary"
+                            size="large"
+                            onClick={() => showConfirmLogoutModal()}
+                        >
+                            Logout
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <Link to={`${ROOT_PATH}/login`}>
+                            <Button
+                                className="login text-md text-bold"
+                                type="primary"
+                                size="large"
+                            >
+                                Login
+                            </Button>
+                        </Link>
+                        <Link to={`${ROOT_PATH}/signup`}>
+                            <Button
+                                className="register text-md text-bold"
+                                type="primary"
+                                size="large"
+                            >
+                                Register
+                            </Button>
+                        </Link>
+                    </>
+                )}
             </div>
         </Container>
     );

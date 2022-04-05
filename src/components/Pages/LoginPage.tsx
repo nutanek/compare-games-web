@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Row,
     Col,
@@ -8,15 +8,22 @@ import {
     Checkbox,
     Button,
     Divider,
+    message,
 } from "antd";
 import { Component } from "react";
 import { Link, NavigateFunction } from "react-router-dom";
 import queryString from "query-string";
 import styled from "styled-components";
+import {
+    setLocalAccessToken,
+    setLocalUserInfo,
+    isLoggedIn,
+} from "../../services/appServices";
+import { signinApi } from "../../services/apiServices";
 import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
 
-import { ROOT_PATH } from "../../constants/appConstants";
+import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
 import Logo from "./../../images/logo.png";
 
 const Container = styled.div`
@@ -54,7 +61,49 @@ class LoginPage extends Component<Props> {
 
     formRef = React.createRef<FormInstance>();
 
+    componentDidMount() {
+        if (isLoggedIn()) {
+            window.location.replace(`${ROOT_PATH}/`)
+        }
+    }
+
+    async signin(info: FormData): Promise<void> {
+        try {
+            this.setState({ isLoading: true });
+            let { data } = await signinApi({
+                email: info.email,
+                password: info.password,
+                remember: info.remember,
+            });
+            setLocalAccessToken(data.access_token);
+            setLocalUserInfo(data);
+            message.success("Success!");
+            this.setState({ isLoading: false });
+            setTimeout(() =>  this.redirect(), 300)
+        } catch (error: any) {
+            message.error(error?.response?.data?.msg || ERRORS.unknown);
+            this.setState({ isLoading: false });
+        }
+    }
+
+    redirect(): void {
+        let queryStr = this.props.location?.search || ''
+        let query = queryString.parse(queryStr);
+        if (query.callback) {
+            window.location.replace(query.callback as string)
+        } else {
+            window.location.replace(`${ROOT_PATH}/`)
+        }
+    }
+
+    onSubmit(values: FormData): void {
+        this.signin(values);
+    }
+
     render() {
+        if (isLoggedIn()) {
+            return null;
+        }
         return (
             <Container>
                 <Row justify="center">
@@ -75,6 +124,8 @@ class LoginPage extends Component<Props> {
                                     layout="vertical"
                                     name="control-ref"
                                     requiredMark="optional"
+                                    initialValues={{ remember: true }}
+                                    onFinish={this.onSubmit.bind(this)}
                                 >
                                     <Form.Item
                                         name="email"
@@ -112,11 +163,19 @@ class LoginPage extends Component<Props> {
                                     >
                                         <Input.Password />
                                     </Form.Item>
-                                    <Form.Item name="remember">
+                                    <Form.Item
+                                        name="remember"
+                                        valuePropName="checked"
+                                    >
                                         <Checkbox>Remember me</Checkbox>
                                     </Form.Item>
 
-                                    <Button type="primary" size="large" block>
+                                    <Button
+                                        htmlType="submit"
+                                        type="primary"
+                                        size="large"
+                                        block
+                                    >
                                         Log in
                                     </Button>
 
@@ -158,6 +217,12 @@ type State = {
 
 type Query = {
     [key: string]: string[];
+};
+
+type FormData = {
+    email: string;
+    password: string;
+    remember: boolean;
 };
 
 type Props = {

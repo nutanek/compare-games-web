@@ -14,8 +14,6 @@ import Filter from "../Filter/Filter";
 import SelectedFilters from "../Filter/SelectedFilters";
 import SortingDesktop from "../Filter/SortingDesktop";
 import LoadingModal from "../Utility/Modal/Loading";
-
-import { GAME_WITH_FILTER } from "./../../constants/mockdata";
 import { ROOT_PATH } from "../../constants/appConstants";
 
 const Container = styled.div`

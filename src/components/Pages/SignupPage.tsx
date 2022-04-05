@@ -14,6 +14,11 @@ import { Component } from "react";
 import { Link, NavigateFunction } from "react-router-dom";
 import queryString from "query-string";
 import styled from "styled-components";
+import {
+    isLoggedIn,
+    setLocalAccessToken,
+    setLocalUserInfo,
+} from "./../../services/appServices";
 import { signupApi } from "./../../services/apiServices";
 import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
@@ -61,19 +66,28 @@ class SignupPage extends Component<Props> {
 
     formRef = React.createRef<FormInstance>();
 
+    componentDidMount() {
+        if (isLoggedIn()) {
+            window.location.replace(`${ROOT_PATH}/`);
+        }
+    }
+
     async signup(info: FormData): Promise<void> {
         try {
             this.setState({ isLoading: true });
-            let { data }: any = await signupApi({
+            let { data } = await signupApi({
                 display_name: info.displayName,
                 email: info.email,
                 password: info.password,
                 confirm_password: info.confirmPassword,
             });
+            setLocalAccessToken(data.access_token);
+            setLocalUserInfo(data);
             message.success("Success!");
             this.setState({ isLoading: false });
+            setTimeout(() =>  this.redirect(), 300)
         } catch (error: any) {
-            message.error(error?.msg || ERRORS.unknown);
+            message.error(error?.response?.data?.msg || ERRORS.unknown);
             this.setState({ isLoading: false });
         }
     }
@@ -82,11 +96,24 @@ class SignupPage extends Component<Props> {
         this.setState({ password });
     }
 
+    redirect(): void {
+        let queryStr = this.props.location?.search || ''
+        let query = queryString.parse(queryStr);
+        if (query.callback) {
+            window.location.replace(query.callback as string)
+        } else {
+            window.location.replace(`${ROOT_PATH}/`)
+        }
+    }
+
     onSubmit(values: FormData): void {
         this.signup(values);
     }
 
     render() {
+        if (isLoggedIn()) {
+            return null;
+        }
         return (
             <Container>
                 <Row justify="center">
