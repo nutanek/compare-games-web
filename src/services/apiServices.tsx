@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { Home, GamesWithFilter } from "./../models/game";
+import { Home, GamesWithFilter, Game } from "./../models/game";
+import { Wishlist } from "../models/wishlist";
 import { SignUp, SignIn } from "./../models/user";
 import { getLocalAccessToken, signout } from "./appServices";
 
@@ -10,6 +11,8 @@ const PATH = {
     signin: `${API_URL}/signin`,
     home: `${API_URL}/home`,
     allGames: `${API_URL}/all-games`,
+    searchGames: `${API_URL}/search/games`,
+    wishlist: `${API_URL}/wishlist`,
 };
 
 export function getHomeApi(): Promise<AxiosResponse<Home, any>> {
@@ -31,6 +34,24 @@ export function signupApi(params: object): Promise<AxiosResponse<SignUp, any>> {
 export function signinApi(params: object): Promise<AxiosResponse<SignIn, any>> {
     const data = JSON.stringify(params);
     return axios.post<SignIn>(PATH.signin, data);
+}
+
+export function searchGamesApi(params: {
+    keyword: string;
+}): Promise<AxiosResponse<Game[], any>> {
+    return axios.get<Game[]>(PATH.searchGames + `?keyword=${params.keyword}`);
+}
+
+export function getWishlistApi(params: {
+    page: number;
+}): Promise<AxiosResponse<Wishlist, any>> {
+    return axios.get<Wishlist>(PATH.wishlist + `?page=${params.page}`);
+}
+
+export function updateWishlistApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.wishlist, params);
 }
 
 axios.interceptors.request.use(async (config) => {

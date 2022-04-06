@@ -1,4 +1,4 @@
-import { Row, Col, Select, Pagination } from "antd";
+import { Row, Col, Select, Pagination, Empty } from "antd";
 import { Component } from "react";
 import { URLSearchParamsInit } from "react-router-dom";
 import queryString from "query-string";
@@ -38,6 +38,7 @@ class GamesPage extends Component<Props> {
     state: State = {
         title: "",
         page: 1,
+        itemsPerPage: 20,
         total: 0,
         sortingId: 0,
         filter: [],
@@ -62,7 +63,7 @@ class GamesPage extends Component<Props> {
         const { query, sortingId, page } = this.generateQuery(queryStr);
 
         try {
-            this.setState({ isLoading: true });
+            this.setState({ isLoading: true, games: [] });
             let { data } = await getAllGamesApi({
                 filter: query,
                 sorting_id: sortingId,
@@ -72,6 +73,7 @@ class GamesPage extends Component<Props> {
                 isLoading: false,
                 title: data.title,
                 page: data.page,
+                itemsPerPage: data.items_per_page,
                 total: data.total,
                 sortingId: data.sorting_id,
                 filter: data.filter,
@@ -128,7 +130,7 @@ class GamesPage extends Component<Props> {
         filter[foundFilterIndex].options[foundOptionIndex].selected =
             !isSelected;
 
-        this.setState({ filter }, () => this.redirect());
+        this.setState({ filter, page: 1 }, () => this.redirect());
     }
 
     onRemoveFilter(filterSlug: string, optionSlug: string): void {
@@ -231,13 +233,22 @@ class GamesPage extends Component<Props> {
                                 </Col>
                             ))}
                         </Row>
+                        
                         {this.state.isLoading && (
                             <p className="text-center">Loading...</p>
                         )}
+                        {!this.state.isLoading &&
+                            this.state.games.length === 0 && (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_DEFAULT}
+                                    description="No games"
+                                />
+                            )}
+
                         <div className="pagination-container">
                             <Pagination
                                 current={this.state.page}
-                                pageSize={24}
+                                pageSize={this.state.itemsPerPage}
                                 total={this.state.total}
                                 hideOnSinglePage={true}
                                 showSizeChanger={false}
@@ -247,7 +258,7 @@ class GamesPage extends Component<Props> {
                     </Col>
                 </Row>
 
-                <LoadingModal isOpen={this.state.isLoading}/>
+                <LoadingModal isOpen={this.state.isLoading} />
             </Container>
         );
     }
@@ -256,6 +267,7 @@ class GamesPage extends Component<Props> {
 type State = {
     title: string;
     page: number;
+    itemsPerPage: number;
     total: number;
     sortingId: number;
     filter: FilterModel[];

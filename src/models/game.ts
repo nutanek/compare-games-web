@@ -5,6 +5,7 @@ export type Game = {
     name: string;
     image: string;
     price: number;
+    liked: boolean 
 };
 
 export type Home = {
@@ -17,6 +18,7 @@ export type Home = {
 export type GamesWithFilter = {
     title: string;
     page: number;
+    items_per_page: number,
     total: number;
     sorting_id: number;
     filter: Filter[];

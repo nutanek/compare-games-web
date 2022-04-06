@@ -1,6 +1,8 @@
 import { Input } from "antd";
 import styled from "styled-components";
 import { SearchOutlined } from "@ant-design/icons";
+import { Game } from "../../../models/game";
+import withSearchGames from "./../../../hocs/withSearchGames";
 
 const Container = styled.div`
     .ant-input-affix-wrapper {
@@ -17,7 +19,7 @@ const Container = styled.div`
     }
 `;
 
-const SearchBoxDesktop = () => {
+const SearchBoxDesktop = (props: Props) => {
     return (
         <Container>
             <Input
@@ -25,9 +27,17 @@ const SearchBoxDesktop = () => {
                 size="large"
                 placeholder="Search Game"
                 prefix={<SearchOutlined style={{ color: "#ffffff" }} />}
+                onChange={e => props.onChangeKeyword && props.onChangeKeyword(e.target.value)}
             />
         </Container>
     );
 };
 
-export default SearchBoxDesktop;
+type Props = {
+    keyword?: string;
+    isLoadingSearch?: boolean;
+    searchResult?: Game[];
+    onChangeKeyword?: (keyword: string) => void;
+};
+
+export default withSearchGames(SearchBoxDesktop);

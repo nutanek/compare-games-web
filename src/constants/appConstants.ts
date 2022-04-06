@@ -15,6 +15,10 @@ export const SORTINGS = [
     {
         id: 3,
         name: "Price (Hight to Low)",
+    }, 
+    {
+        id: 4,
+        name: "Rating",
     },
 ];
 

@@ -8,7 +8,9 @@ const LoadingModal = ({ isOpen }: Props) => (
         closable={false}
         wrapClassName="loading-modal"
     >
-        <Spin size="large" />
+        {/* <Spin size="large" /> */}
+
+        <div className="lds-hourglass"></div>
     </Modal>
 );
 
