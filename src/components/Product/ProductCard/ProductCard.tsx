@@ -5,7 +5,9 @@ import styled from "styled-components";
 import numeral from "numeral";
 import LazyLoad from "react-lazyload";
 import { ERRORS } from "../../../constants/appConstants";
+import { PlatformKey } from "../../../models/game";
 import { updateWishlistApi } from "../../../services/apiServices";
+import PlatformTags from "./PlatformTags";
 
 const Container = styled.div`
     .image-wrapper {
@@ -51,7 +53,15 @@ const Container = styled.div`
     }
 `;
 
-const ProductCard = ({ id, name, image, price, liked, onLike }: Props) => {
+const ProductCard = ({
+    id,
+    name,
+    image,
+    price,
+    liked,
+    platforms,
+    onLike,
+}: Props) => {
     const refImage = useRef<HTMLImageElement>(null);
     let [isLoading, setIsLoading] = useState(false);
     let [isLiked, setIsLiked] = useState(liked);
@@ -82,17 +92,20 @@ const ProductCard = ({ id, name, image, price, liked, onLike }: Props) => {
     return (
         <Container>
             <div className="image-wrapper">
-                <LazyLoad>
-                    <img
-                        ref={refImage}
-                        className="image opacity-0"
-                        onLoad={removePlaceholder}
-                        onError={removePlaceholder}
-                        src={image}
-                        alt={name}
-                    />
-                </LazyLoad>
+                {image !== "" && (
+                    <LazyLoad>
+                        <img
+                            ref={refImage}
+                            className="image opacity-0"
+                            onLoad={removePlaceholder}
+                            onError={removePlaceholder}
+                            src={image}
+                            alt={name}
+                        />
+                    </LazyLoad>
+                )}
             </div>
+            <PlatformTags platforms={platforms} />
             <div className="name text-sm text-bold text-ellipsis-2">{name}</div>
             <div className="price-wrapper">
                 <div className="price text-sm text-bold">
@@ -120,6 +133,7 @@ type Props = {
     image: string;
     price: number;
     liked: boolean;
+    platforms: PlatformKey[];
     onLike?: (id: number) => void;
 };
 

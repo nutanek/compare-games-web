@@ -5,6 +5,7 @@ import {
 import { ROOT_PATH } from "./constants/appConstants";
 import { isLoggedIn as checkIsLoggedIn } from "./services/appServices";
 import ScrollToTop from "./components/Utility/ScrollToTop";
+import GroupChat from "./components/GroupChat/GroupChat";
 import DesktopLayout from "./components/Layout/DesktopLayout";
 import HomePage from "./components/Pages/HomePage";
 import LoginPage from "./components/Pages/LoginPage";
@@ -41,6 +42,7 @@ function App(): JSX.Element {
                     <AppRoutes />
                 </DesktopLayout>
             </ScrollToTop>
+            <GroupChat />
         </Router>
     );
 }

@@ -13,6 +13,7 @@ const PATH = {
     allGames: `${API_URL}/all-games`,
     searchGames: `${API_URL}/search/games`,
     wishlist: `${API_URL}/wishlist`,
+    chat: `${API_URL}/chat`,
 };
 
 export function getHomeApi(): Promise<AxiosResponse<Home, any>> {
@@ -52,6 +53,12 @@ export function updateWishlistApi(
     params: object
 ): Promise<AxiosResponse<any, any>> {
     return axios.post<any>(PATH.wishlist, params);
+}
+
+export function chatApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.chat, params);
 }
 
 axios.interceptors.request.use(async (config) => {
