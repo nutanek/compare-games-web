@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Home, GamesWithFilter, Game } from "./../models/game";
 import { Wishlist } from "../models/wishlist";
 import { SignUp, SignIn } from "./../models/user";
+import { ChatRoom } from "./../models/chat";
 import { getLocalAccessToken, signout } from "./appServices";
 
 const API_URL = process.env.REACT_APP_API_URL || "";
@@ -13,6 +14,7 @@ const PATH = {
     allGames: `${API_URL}/all-games`,
     searchGames: `${API_URL}/search/games`,
     wishlist: `${API_URL}/wishlist`,
+    chatRooms: `${API_URL}/chat-rooms`,
     chat: `${API_URL}/chat`,
 };
 
@@ -55,9 +57,13 @@ export function updateWishlistApi(
     return axios.post<any>(PATH.wishlist, params);
 }
 
-export function chatApi(
+export function getChatRoomApi(
     params: object
-): Promise<AxiosResponse<any, any>> {
+): Promise<AxiosResponse<ChatRoom[], any>> {
+    return axios.post<ChatRoom[]>(PATH.chatRooms, params);
+}
+
+export function chatApi(params: object): Promise<AxiosResponse<any, any>> {
     return axios.post<any>(PATH.chat, params);
 }
 
