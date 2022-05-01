@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
+import { Link, NavigateFunction } from "react-router-dom";
 import { message, Spin } from "antd";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import styled from "styled-components";
 import numeral from "numeral";
 import LazyLoad from "react-lazyload";
-import { ERRORS } from "../../../constants/appConstants";
+import { ERRORS, ROOT_PATH } from "../../../constants/appConstants";
 import { PlatformKey } from "../../../models/game";
 import { updateWishlistApi } from "../../../services/apiServices";
 import PlatformTags from "./PlatformTags";
@@ -94,14 +95,16 @@ const ProductCard = ({
             <div className="image-wrapper">
                 {image !== "" && (
                     <LazyLoad>
-                        <img
-                            ref={refImage}
-                            className="image opacity-0"
-                            onLoad={removePlaceholder}
-                            onError={removePlaceholder}
-                            src={image}
-                            alt={name}
-                        />
+                        <Link to={`${ROOT_PATH}/game/${id}`}>
+                            <img
+                                ref={refImage}
+                                className="image opacity-0"
+                                onLoad={removePlaceholder}
+                                onError={removePlaceholder}
+                                src={image}
+                                alt={name}
+                            />
+                        </Link>
                     </LazyLoad>
                 )}
             </div>

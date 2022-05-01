@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Home, GamesWithFilter, Game } from "./../models/game";
+import { Home, GamesWithFilter, Game, SingleGame } from "./../models/game";
 import { Wishlist } from "../models/wishlist";
 import { SignUp, SignIn } from "./../models/user";
 import { ChatRoom } from "./../models/chat";
@@ -11,6 +11,7 @@ const PATH = {
     signup: `${API_URL}/signup`,
     signin: `${API_URL}/signin`,
     home: `${API_URL}/home`,
+    game: `${API_URL}/game`,
     allGames: `${API_URL}/all-games`,
     searchGames: `${API_URL}/search/games`,
     wishlist: `${API_URL}/wishlist`,
@@ -20,6 +21,12 @@ const PATH = {
 
 export function getHomeApi(): Promise<AxiosResponse<Home, any>> {
     return axios.get<Home>(PATH.home);
+}
+
+export function getGameApi(params: {
+    id: number;
+}): Promise<AxiosResponse<SingleGame, any>> {
+    return axios.get<SingleGame>(PATH.game + `?id=${params.id}`);
 }
 
 export function getAllGamesApi(

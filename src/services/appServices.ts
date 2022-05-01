@@ -1,3 +1,4 @@
+import dateFormat from "dateformat";
 import { SignUp } from "../models/user";
 import {
     KEY_ACCESS_TOKEN,
@@ -63,15 +64,22 @@ export function signout({ isCallback }: { isCallback: boolean | undefined }) {
         let callbackUrl = encodeURIComponent(window.location.href);
         window.location.replace(`${ROOT_PATH}/login?callback=${callbackUrl}`);
     } else {
-        window.location.reload()
+        window.location.reload();
     }
 }
 
 export function isLoggedIn(): boolean {
-    let accessToken = getLocalAccessToken() 
-    let userInfo = getLocalUserInfo()
+    let accessToken = getLocalAccessToken();
+    let userInfo = getLocalUserInfo();
     if (userInfo.user_id && userInfo.access_token == accessToken) {
-        return true
+        return true;
     }
-    return false
+    return false;
+}
+
+export function epochToDateTime(epoch: number, format: string): string {
+    var d = new Date();
+    let date = new Date(epoch + d.getTimezoneOffset());
+    let timeFormat = dateFormat(date, format);
+    return timeFormat;
 }

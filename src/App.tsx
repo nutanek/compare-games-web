@@ -8,6 +8,7 @@ import ScrollToTop from "./components/Utility/ScrollToTop";
 import GroupChat from "./components/GroupChat/GroupChat";
 import DesktopLayout from "./components/Layout/DesktopLayout";
 import HomePage from "./components/Pages/HomePage";
+import SingleGamePage from "./components/Pages/SingleGamePage";
 import LoginPage from "./components/Pages/LoginPage";
 import SignupPage from "./components/Pages/SignupPage";
 import GamesPage from "./components/Pages/GamesPage";
@@ -18,6 +19,7 @@ const AppRoutes = () => {
     let routes = [
         { path: `*`, element: <HomePage /> },
         { path: `${ROOT_PATH}/`, element: <HomePage /> },
+        { path: `${ROOT_PATH}/game/:id`, element: <SingleGamePage /> },
         { path: `${ROOT_PATH}/games`, element: <GamesPage /> },
         { path: `${ROOT_PATH}/login`, element: <LoginPage /> },
         { path: `${ROOT_PATH}/signup`, element: <SignupPage /> },
@@ -42,7 +44,7 @@ function App(): JSX.Element {
                     <AppRoutes />
                 </DesktopLayout>
             </ScrollToTop>
-            <GroupChat />
+            {/* <GroupChat /> */}
         </Router>
     );
 }

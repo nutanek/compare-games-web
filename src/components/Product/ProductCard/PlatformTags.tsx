@@ -23,14 +23,14 @@ padding-top: 10px;
 `;
 
 const PLATFOTM = {
-    ps: "PS",
+    ps: "PlayStation",
     xbox: "Xbox",
     nintendo: "Nintendo",
 };
 
 const PlatformTags = ({ platforms }: Props) => {
     return (
-        <Container>
+        <Container className="platforms">
             {platforms.map((platform) => (
                 <div
                     key={platform}
