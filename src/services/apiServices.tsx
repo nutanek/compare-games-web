@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Home, GamesWithFilter, Game, SingleGame } from "./../models/game";
+import { ReviewsByPage } from "./../models/review";
 import { Wishlist } from "../models/wishlist";
 import { SignUp, SignIn } from "./../models/user";
 import { ChatRoom } from "./../models/chat";
@@ -17,6 +18,8 @@ const PATH = {
     wishlist: `${API_URL}/wishlist`,
     chatRooms: `${API_URL}/chat-rooms`,
     chat: `${API_URL}/chat`,
+    reviews: `${API_URL}/reviews`,
+    reactReview: `${API_URL}/react-review`,
 };
 
 export function getHomeApi(): Promise<AxiosResponse<Home, any>> {
@@ -34,6 +37,21 @@ export function getAllGamesApi(
 ): Promise<AxiosResponse<GamesWithFilter, any>> {
     const data = JSON.stringify(params);
     return axios.post<GamesWithFilter>(PATH.allGames, data);
+}
+
+export function getReviewsApi(params: {
+    gameId: number;
+    page: number;
+}): Promise<AxiosResponse<ReviewsByPage, any>> {
+    return axios.get<ReviewsByPage>(
+        PATH.reviews + `?game_id=${params.gameId}&page=${params.page}`
+    );
+}
+
+export function reactReviewApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.reactReview, params);
 }
 
 export function signupApi(params: object): Promise<AxiosResponse<SignUp, any>> {

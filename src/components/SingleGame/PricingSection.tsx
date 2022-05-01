@@ -32,6 +32,19 @@ const Container = styled.div`
                 border-radius: 100px;
             }
         }
+        @media (max-width: 767.99px) {
+            .platforms {
+                .platform-item {
+                    padding: 3px 10px;
+                    font-size: 12px;
+                }
+            }
+            .medal {
+                img {
+                    width: 40px;
+                }
+            }
+        }
         .original-price {
             color: #808080;
             text-decoration: line-through;

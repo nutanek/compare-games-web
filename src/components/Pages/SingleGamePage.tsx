@@ -12,6 +12,7 @@ import { epochToDateTime } from "../../services/appServices";
 import GenreTags from "../SingleGame/GenreTags";
 import LoadingModal from "../Utility/Modal/Loading";
 import PricingSection from "../SingleGame/PricingSection";
+import Review from "../Review/Review";
 
 const Container = styled.div`
     .breadcrumb {
@@ -63,6 +64,7 @@ const Container = styled.div`
         }
     }
     .properties-section {
+        margin: 20px 0;
         table.properties-table {
             width: 100%;
             td:nth-child(1) {
@@ -73,6 +75,24 @@ const Container = styled.div`
                 padding: 10px 0px 10px 10px;
             }
         }
+    }
+    .ratings-section {
+        margin: 20px 0;
+        .rating-item {
+            height: 100%;
+            border: 1px solid #d2d4d9;
+            padding: 15px;
+            text-align: center;
+            .score {
+                color: #ff6161;
+            }
+            .count {
+                color: #999999;
+            }
+        }
+    }
+    .reviews-section {
+        margin: 30px 0;
     }
 `;
 
@@ -97,6 +117,7 @@ const initialGameValues = {
 class SingleGamePage extends Component<Props> {
     state: State = {
         isLoading: false,
+        isLikeLoading: false,
         game: initialGameValues,
     };
 
@@ -122,21 +143,17 @@ class SingleGamePage extends Component<Props> {
 
     async updateWishlist(id: number) {
         try {
-            this.setState({ isLoading: true });
+            this.setState({ isLikeLoading: true });
             let game = cloneDeep(this.state.game);
             let { data } = await updateWishlistApi({
                 action: game.liked ? "REMOVE" : "ADD",
                 game_id: id,
             });
             game.liked = !game.liked;
-            this.setState({ isLoading: false, game });
-
-            // setIsLoading(false);
-            // setIsLiked((isLiked) => !isLiked);
-            // onLike && onLike(id);
+            this.setState({ isLikeLoading: false, game });
             message.success(data?.msg || "Success!");
         } catch (error: any) {
-            this.setState({ isLoading: false });
+            this.setState({ isLikeLoading: false });
             message.error(error?.response?.data?.msg || ERRORS.unknown);
         }
     }
@@ -177,7 +194,7 @@ class SingleGamePage extends Component<Props> {
                         <h1 className="text-3xl">{game.name}</h1>
                         <GenreTags genres={game.genres} />
                         <AddToWishlist
-                            isLoading={this.state.isLoading}
+                            isLoading={this.state.isLikeLoading}
                             liked={game.liked}
                             onClick={() => this.updateWishlist(game.id)}
                         />
@@ -185,8 +202,8 @@ class SingleGamePage extends Component<Props> {
                     </Col>
                 </Row>
 
-                <Row className="description-section">
-                    <Col>
+                <Row>
+                    <Col xs={24} className="description-section">
                         <h2 className="title text-center text-3xl text-bold">
                             Description
                         </h2>
@@ -197,33 +214,93 @@ class SingleGamePage extends Component<Props> {
                     </Col>
                 </Row>
 
-                <Row className="properties-section">
-                    <Col style={{ width: "100%" }}>
+                <Row>
+                    <Col xs={24} className="properties-section">
                         <table className="properties-table text-md">
-                            <tr>
-                                <td>Release date:</td>
-                                <td>
-                                    {epochToDateTime(
-                                        game.release_date,
-                                        "mmm d, yyyy"
-                                    )}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Developer:</td>
-                                <td>{game.developer}</td>
-                            </tr>
-                            <tr>
-                                <td>Voice:</td>
-                                <td>{game.voices}</td>
-                            </tr>
-                            <tr>
-                                <td>Subtitles:</td>
-                                <td>{game.subtitles}</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>Release date:</td>
+                                    <td>
+                                        {epochToDateTime(
+                                            game.release_date,
+                                            "mmm d, yyyy"
+                                        )}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Developer:</td>
+                                    <td>{game.developer || "-"}</td>
+                                </tr>
+                                <tr>
+                                    <td>Voice:</td>
+                                    <td>{game.voices || "-"}</td>
+                                </tr>
+                                <tr>
+                                    <td>Subtitles:</td>
+                                    <td>{game.subtitles || "-"}</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </Col>
                 </Row>
+
+                <Row>
+                    <Col xs={24} className="ratings-section">
+                        <h2 className="text-lg text-bold">Ratings</h2>
+                        <Row gutter={[10, 10]}>
+                            <Col xs={24} sm={12} lg={12}>
+                                <div className="rating-item">
+                                    <div className="text-lg text-bold">
+                                        Metacritic Rating
+                                    </div>
+                                    <div className="text-bold">
+                                        <span className="text-5xl score">
+                                            {game.metacritic_rating || "-"}{" "}
+                                        </span>
+                                        <span className="text-xl">/ 5</span>
+                                    </div>
+                                    <div className="text-sm count">
+                                        Critics: {game.metacritic_rating_count}
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={12} lg={12}>
+                                <div className="rating-item">
+                                    <div className="text-lg text-bold">
+                                        Consoles Rating
+                                    </div>
+                                    <div className="text-bold">
+                                        <span className="text-5xl score">
+                                            {game.user_rating || "-"}{" "}
+                                        </span>
+                                        <span className="text-xl">/ 5</span>
+                                    </div>
+                                    <div className="text-sm count">
+                                        Users: {game.user_rating_count}
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+
+                {!this.state.isLoading && game.id && (
+                    <Row>
+                        <Col xs={24} className="reviews-section">
+                            <h2 className="text-lg text-bold">
+                                Showing {game.user_rating_count}{" "}
+                                {game.user_rating_count > 1
+                                    ? "Reviews"
+                                    : "Review"}
+                            </h2>
+                            <Row>
+                                <Col xs={24}>
+                                    <Review gameId={game.id} />
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                )}
 
                 <LoadingModal isOpen={this.state.isLoading} />
             </Container>
@@ -260,6 +337,7 @@ const AddToWishlist = (props: AddToWishlistType) => {
 
 type State = {
     isLoading: boolean;
+    isLikeLoading: boolean;
     game: SingleGame;
 };
 
