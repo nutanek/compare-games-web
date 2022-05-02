@@ -1,13 +1,14 @@
-import { Row, Col, message } from "antd";
+import React from "react";
+import { message, Pagination, Spin, Empty } from "antd";
 import { Component } from "react";
 import clone from "lodash/clone";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
 import { ReviewItem as ReviewItemModel } from "../../models/review";
 import { getReviewsApi, reactReviewApi } from "./../../services/apiServices";
-import LoadingModal from "../Utility/Modal/Loading";
+import { isLoggedIn as checkIsLoggedIn } from "./../../services/appServices";
 import ReviewItem from "./ReviewItem";
+import CommentBox from "./CommentBox";
 
 const Container = styled.div``;
 
@@ -18,6 +19,8 @@ class Review extends Component<Props> {
         currentPage: 1,
         total: 0,
     };
+
+    topOfReviewRef = React.createRef<HTMLDivElement>();
 
     componentDidMount() {
         this.getReviews();
@@ -103,9 +106,24 @@ class Review extends Component<Props> {
         }
     }
 
+    onChangePage(page: number) {
+        this.setState({ currentPage: page }, () => this.getReviews());
+        this.topOfReviewRef?.current?.scrollIntoView({ block: "center" });
+    }
+
+    onSuccessReview() {
+        this.props.onSuccessReview && this.props.onSuccessReview();
+        this.topOfReviewRef?.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
+    }
+
     render() {
+        const isLoggedIn = checkIsLoggedIn();
         return (
-            <>
+            <Spin tip="Loading..." spinning={this.state.isLoading}>
+                <div ref={this.topOfReviewRef}></div>
                 {this.state.reviews.map((review, index) => (
                     <ReviewItem
                         key={review.id}
@@ -115,8 +133,25 @@ class Review extends Component<Props> {
                         }
                     />
                 ))}
-                <LoadingModal isOpen={this.state.isLoading} />
-            </>
+                {!this.state.isLoading && this.state.reviews.length === 0 && (
+                    <Empty description="No reviews" />
+                )}
+                <Pagination
+                    style={{ textAlign: "right" }}
+                    current={this.state.currentPage}
+                    pageSize={5}
+                    total={this.state.total}
+                    hideOnSinglePage={true}
+                    showSizeChanger={false}
+                    onChange={this.onChangePage.bind(this)}
+                />
+                {isLoggedIn ? (
+                    <CommentBox
+                        gameId={this.props.gameId}
+                        onSuccess={() => this.onSuccessReview()}
+                    />
+                ) : null}
+            </Spin>
         );
     }
 }
@@ -130,6 +165,7 @@ type State = {
 
 type Props = {
     gameId: number;
+    onSuccessReview?: () => void;
 };
 
 export default Review;

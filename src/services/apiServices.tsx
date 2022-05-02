@@ -20,6 +20,7 @@ const PATH = {
     chat: `${API_URL}/chat`,
     reviews: `${API_URL}/reviews`,
     reactReview: `${API_URL}/react-review`,
+    review: `${API_URL}/review`,
 };
 
 export function getHomeApi(): Promise<AxiosResponse<Home, any>> {
@@ -52,6 +53,10 @@ export function reactReviewApi(
     params: object
 ): Promise<AxiosResponse<any, any>> {
     return axios.post<any>(PATH.reactReview, params);
+}
+
+export function addReviewApi(params: object): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.review, params);
 }
 
 export function signupApi(params: object): Promise<AxiosResponse<SignUp, any>> {

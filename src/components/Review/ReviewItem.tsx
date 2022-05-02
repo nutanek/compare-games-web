@@ -32,6 +32,7 @@ const Container = styled.div`
     }
     > .comment {
         padding-top: 30px;
+        white-space: pre-line;
     }
     > .reactions {
         margin-top: 30px;
@@ -75,11 +76,14 @@ const ReviewItem = (props: Props) => {
                     </div>
                 </div>
                 <div className="rating-star">
-                    <Rate disabled value={review.rating} />
+                    <Rate disabled allowHalf value={review.rating} />
                 </div>
             </div>
             {review.comment !== "" && (
-                <div className="comment text-md">{review.comment}</div>
+                <div
+                    className="comment text-md"
+                    dangerouslySetInnerHTML={{ __html: review.comment }}
+                />
             )}
             <div className="reactions">
                 <div

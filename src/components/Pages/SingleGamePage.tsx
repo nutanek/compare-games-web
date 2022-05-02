@@ -4,6 +4,7 @@ import { HeartFilled } from "@ant-design/icons";
 import { Link, NavigateFunction, Params } from "react-router-dom";
 import styled from "styled-components";
 import cloneDeep from "lodash/cloneDeep";
+import LazyLoad from "react-lazyload";
 import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
 import { SingleGame } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
@@ -59,6 +60,7 @@ const Container = styled.div`
     }
     .description-section {
         margin: 20px 0;
+        white-space: pre-line;
         .title {
             margin-bottom: 20px;
         }
@@ -156,6 +158,11 @@ class SingleGamePage extends Component<Props> {
             this.setState({ isLikeLoading: false });
             message.error(error?.response?.data?.msg || ERRORS.unknown);
         }
+    }
+
+    onSuccessReview() {
+        const params = this.props.urlParams;
+        this.getGame(params?.id || 0);
     }
 
     render() {
@@ -285,21 +292,28 @@ class SingleGamePage extends Component<Props> {
                 </Row>
 
                 {!this.state.isLoading && game.id && (
-                    <Row>
-                        <Col xs={24} className="reviews-section">
-                            <h2 className="text-lg text-bold">
-                                Showing {game.user_rating_count}{" "}
-                                {game.user_rating_count > 1
-                                    ? "Reviews"
-                                    : "Review"}
-                            </h2>
-                            <Row>
-                                <Col xs={24}>
-                                    <Review gameId={game.id} />
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
+                    <LazyLoad>
+                        <Row>
+                            <Col xs={24} className="reviews-section">
+                                <h2 className="text-lg text-bold">
+                                    Showing {game.user_rating_count}{" "}
+                                    {game.user_rating_count > 1
+                                        ? "Reviews"
+                                        : "Review"}
+                                </h2>
+                                <Row>
+                                    <Col xs={24}>
+                                        <Review
+                                            gameId={game.id}
+                                            onSuccessReview={() =>
+                                                this.onSuccessReview()
+                                            }
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </LazyLoad>
                 )}
 
                 <LoadingModal isOpen={this.state.isLoading} />
