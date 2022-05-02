@@ -61,7 +61,7 @@ const AccountSidebar = (props: Props) => {
             centered: true,
             maskClosable: true,
             onOk() {
-                signout({ isCallback: false });
+                signout({ isCallback: true });
             },
             onCancel() {},
         });

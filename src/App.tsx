@@ -11,6 +11,7 @@ import LoginPage from "./components/Pages/LoginPage";
 import SignupPage from "./components/Pages/SignupPage";
 import GamesPage from "./components/Pages/GamesPage";
 import AcoountPage from "./components/Pages/AcoountPage";
+import AcoountProfilePage from "./components/Pages/AcoountProfilePage";
 import AcoountWishListPage from "./components/Pages/AcoountWishListPage";
 
 const AppRoutes = () => {
@@ -32,6 +33,10 @@ const AppRoutes = () => {
         routes = [
             ...routes,
             { path: `${ROOT_PATH}/account`, element: <AcoountPage /> },
+            {
+                path: `${ROOT_PATH}/account/profile`,
+                element: <AcoountProfilePage />,
+            },
         ];
     }
 

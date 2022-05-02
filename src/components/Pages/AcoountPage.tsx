@@ -80,7 +80,9 @@ class AcoountPage extends Component<Props> {
                     <>
                         <div className="section-header">
                             <div className="text-lg text-bold">Profile</div>
-                            <Button size="middle">Edit</Button>
+                            <Link to={`${ROOT_PATH}/account/profile`}>
+                                <Button size="middle">Edit</Button>
+                            </Link>
                         </div>
                         <div className="section-info text-md">
                             <Row>
@@ -103,7 +105,7 @@ class AcoountPage extends Component<Props> {
                                 <Col className="title" xs={10}>
                                     Country/region of residence
                                 </Col>
-                                <Col xs={14}>{user.country || '-'}</Col>
+                                <Col xs={14}>{user.country || "-"}</Col>
                             </Row>
                         </div>
 

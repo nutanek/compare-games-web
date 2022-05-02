@@ -74,6 +74,12 @@ export function getUserSelf(): Promise<AxiosResponse<UserInfo, any>> {
     return axios.get<UserInfo>(PATH.userSelf);
 }
 
+export function updateUserSelf(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.put<any>(PATH.userSelf, params);
+}
+
 export function searchGamesApi(params: {
     keyword: string;
 }): Promise<AxiosResponse<Game[], any>> {
