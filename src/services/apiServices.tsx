@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Home, GamesWithFilter, Game, SingleGame } from "./../models/game";
 import { ReviewsByPage } from "./../models/review";
 import { Wishlist } from "../models/wishlist";
-import { SignUp, SignIn } from "./../models/user";
+import { SignUp, SignIn, UserInfo } from "./../models/user";
 import { ChatRoom } from "./../models/chat";
 import { getLocalAccessToken, signout } from "./appServices";
 
@@ -11,6 +11,7 @@ const API_URL = process.env.REACT_APP_API_URL || "";
 const PATH = {
     signup: `${API_URL}/signup`,
     signin: `${API_URL}/signin`,
+    userSelf: `${API_URL}/user/self`,
     home: `${API_URL}/home`,
     game: `${API_URL}/game`,
     allGames: `${API_URL}/all-games`,
@@ -67,6 +68,10 @@ export function signupApi(params: object): Promise<AxiosResponse<SignUp, any>> {
 export function signinApi(params: object): Promise<AxiosResponse<SignIn, any>> {
     const data = JSON.stringify(params);
     return axios.post<SignIn>(PATH.signin, data);
+}
+
+export function getUserSelf(): Promise<AxiosResponse<UserInfo, any>> {
+    return axios.get<UserInfo>(PATH.userSelf);
 }
 
 export function searchGamesApi(params: {

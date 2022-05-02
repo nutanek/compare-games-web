@@ -15,7 +15,7 @@ export const SORTINGS = [
     {
         id: 3,
         name: "Price (Hight to Low)",
-    }, 
+    },
     {
         id: 4,
         name: "Rating",
@@ -24,4 +24,10 @@ export const SORTINGS = [
 
 export const ERRORS = {
     unknown: "Something went wrong!",
+};
+
+export const USER_GENDER = {
+    m: "Male",
+    f: "Female",
+    n: "Choose not to answer",
 };

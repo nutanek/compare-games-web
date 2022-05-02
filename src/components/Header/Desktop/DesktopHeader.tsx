@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Layout, Button, Modal } from "antd";
+import { UserOutlined, HeartFilled } from "@ant-design/icons";
 import { ROOT_PATH } from "./../../../constants/appConstants";
 import {
     isLoggedIn as checkLoggedIn,
-    signout,
 } from "../../../services/appServices";
 import SearchBoxDesktop from "./SearchBox";
 import Logo from "./../../../images/logo.png";
@@ -56,6 +56,15 @@ const Container = styled(Header)`
                 color: #ffffff;
                 background-color: transparent;
             }
+            &.account {
+                color: var(--main-app-color);
+                background-color: #ffffff;
+            }
+            &.wishlist {
+                padding-left: 0;
+                border: none;
+                color: #ffffff;
+            }
             &:hover {
                 opacity: 0.7;
             }
@@ -65,18 +74,6 @@ const Container = styled(Header)`
 
 const DesktopHeader = (): JSX.Element => {
     const isLoggedIn = checkLoggedIn();
-
-    function showConfirmLogoutModal() {
-        confirm({
-            title: "Do you want to log out?",
-            centered: true,
-            maskClosable: true,
-            onOk() {
-                signout({ isCallback: false });
-            },
-            onCancel() {},
-        });
-    }
 
     return (
         <Container>
@@ -97,17 +94,27 @@ const DesktopHeader = (): JSX.Element => {
                 <SearchBoxDesktop />
             </div>
             <div className="menu account-buttons text-md">
+                <Link to={`${ROOT_PATH}/account/wishlist`}>
+                    <Button
+                        className="wishlist text-md text-bold"
+                        type="text"
+                        size="large"
+                        icon={<HeartFilled style={{ color: "#fe0a06" }} />}
+                    >
+                        Wish List
+                    </Button>
+                </Link>
                 {isLoggedIn ? (
-                    <>
+                    <Link to={`${ROOT_PATH}/account`}>
                         <Button
-                            className="register text-md text-bold"
+                            className="account text-md text-bold"
                             type="primary"
                             size="large"
-                            onClick={() => showConfirmLogoutModal()}
+                            icon={<UserOutlined />}
                         >
-                            Logout
+                            My Account
                         </Button>
-                    </>
+                    </Link>
                 ) : (
                     <>
                         <Link to={`${ROOT_PATH}/login`}>
