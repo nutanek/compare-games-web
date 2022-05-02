@@ -12,6 +12,7 @@ const PATH = {
     signup: `${API_URL}/signup`,
     signin: `${API_URL}/signin`,
     userSelf: `${API_URL}/user/self`,
+    userPassword: `${API_URL}/user/password`,
     home: `${API_URL}/home`,
     game: `${API_URL}/game`,
     allGames: `${API_URL}/all-games`,
@@ -70,14 +71,20 @@ export function signinApi(params: object): Promise<AxiosResponse<SignIn, any>> {
     return axios.post<SignIn>(PATH.signin, data);
 }
 
-export function getUserSelf(): Promise<AxiosResponse<UserInfo, any>> {
+export function getUserSelfApi(): Promise<AxiosResponse<UserInfo, any>> {
     return axios.get<UserInfo>(PATH.userSelf);
 }
 
-export function updateUserSelf(
+export function updateUserSelfApi(
     params: object
 ): Promise<AxiosResponse<any, any>> {
     return axios.put<any>(PATH.userSelf, params);
+}
+
+export function updateUserPasswordApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.put<any>(PATH.userPassword, params);
 }
 
 export function searchGamesApi(params: {

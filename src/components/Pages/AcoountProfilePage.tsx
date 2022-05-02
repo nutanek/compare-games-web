@@ -8,18 +8,16 @@ import {
     Input,
     Divider,
     Radio,
-    AutoComplete,
     Select,
     FormInstance,
 } from "antd";
-import { Link, NavigateFunction, Params } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
-import cloneDeep from "lodash/cloneDeep";
 import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
 import countries from "../../constants/countries.json";
 import { UserGender, UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
-import { getUserSelf, updateUserSelf } from "./../../services/apiServices";
+import { getUserSelfApi, updateUserSelfApi } from "./../../services/apiServices";
 import {
     getLocalUserInfo,
     setLocalUserInfo,
@@ -85,7 +83,7 @@ class AcoountProfilePage extends Component<Props> {
     async getUser() {
         try {
             this.setState({ isLoading: true });
-            let { data: user } = await getUserSelf();
+            let { data: user } = await getUserSelfApi();
             this.setState({
                 isLoading: false,
                 user,
@@ -112,7 +110,7 @@ class AcoountProfilePage extends Component<Props> {
     ) {
         try {
             this.setState({ isLoading: true });
-            await updateUserSelf({
+            await updateUserSelfApi({
                 display_name: values.displayName,
                 image: values.image,
                 country: values.country,
@@ -164,7 +162,9 @@ class AcoountProfilePage extends Component<Props> {
                             <Col className="profile" xs={24} lg={3}>
                                 <div className="avatar-wrapper">
                                     <div className="avatar">
-                                        <img src={user.image} alt="user" />
+                                        {user.image && (
+                                            <img src={user.image} alt="user" />
+                                        )}
                                     </div>
                                 </div>
                                 <Button

@@ -6,7 +6,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
 import { UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
-import { getUserSelf } from "./../../services/apiServices";
+import { getUserSelfApi } from "./../../services/apiServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
@@ -61,7 +61,7 @@ class AcoountPage extends Component<Props> {
     async getUser() {
         try {
             this.setState({ isLoading: true });
-            let { data: user } = await getUserSelf();
+            let { data: user } = await getUserSelfApi();
             this.setState({
                 isLoading: false,
                 user,
@@ -125,7 +125,9 @@ class AcoountPage extends Component<Props> {
 
                         <div className="section-header">
                             <div className="text-lg text-bold">Password</div>
-                            <Button size="middle">Edit</Button>
+                            <Link to={`${ROOT_PATH}/account/password`}>
+                                <Button size="middle">Edit</Button>
+                            </Link>
                         </div>
                         <div className="section-info text-md">
                             <Row>

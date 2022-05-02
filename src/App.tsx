@@ -13,6 +13,7 @@ import GamesPage from "./components/Pages/GamesPage";
 import AcoountPage from "./components/Pages/AcoountPage";
 import AcoountProfilePage from "./components/Pages/AcoountProfilePage";
 import AcoountWishListPage from "./components/Pages/AcoountWishListPage";
+import AcoountPasswordPage from "./components/Pages/AcoountPasswordPage";
 
 const AppRoutes = () => {
     const isLoggedIn = checkIsLoggedIn();
@@ -36,6 +37,10 @@ const AppRoutes = () => {
             {
                 path: `${ROOT_PATH}/account/profile`,
                 element: <AcoountProfilePage />,
+            },
+            {
+                path: `${ROOT_PATH}/account/password`,
+                element: <AcoountPasswordPage />,
             },
         ];
     }
