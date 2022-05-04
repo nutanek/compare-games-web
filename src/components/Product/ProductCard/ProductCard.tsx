@@ -92,10 +92,10 @@ const ProductCard = ({
 
     return (
         <Container>
-            <div className="image-wrapper">
-                {image !== "" && (
-                    <LazyLoad>
-                        <Link to={`${ROOT_PATH}/game/${id}`}>
+            <Link to={`${ROOT_PATH}/game/${id}`}>
+                <div className="image-wrapper">
+                    {image !== "" && (
+                        <LazyLoad>
                             <img
                                 ref={refImage}
                                 className="image opacity-0"
@@ -104,10 +104,11 @@ const ProductCard = ({
                                 src={image}
                                 alt={name}
                             />
-                        </Link>
-                    </LazyLoad>
-                )}
-            </div>
+                        </LazyLoad>
+                    )}
+                </div>
+            </Link>
+
             <PlatformTags platforms={platforms} />
             <div className="name text-sm text-bold text-ellipsis-2">{name}</div>
             <div className="price-wrapper">

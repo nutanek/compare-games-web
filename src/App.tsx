@@ -14,6 +14,7 @@ import AcoountPage from "./components/Pages/AcoountPage";
 import AcoountProfilePage from "./components/Pages/AcoountProfilePage";
 import AcoountWishListPage from "./components/Pages/AcoountWishListPage";
 import AcoountPasswordPage from "./components/Pages/AcoountPasswordPage";
+import AcoountAdminGameDetailPage from "./components/Pages/AcoountAdminGameDetailPage";
 
 const AppRoutes = () => {
     const isLoggedIn = checkIsLoggedIn();
@@ -41,6 +42,14 @@ const AppRoutes = () => {
             {
                 path: `${ROOT_PATH}/account/password`,
                 element: <AcoountPasswordPage />,
+            },
+            {
+                path: `${ROOT_PATH}/admin/game/:id`,
+                element: <AcoountAdminGameDetailPage type="EDIT" />,
+            },
+            {
+                path: `${ROOT_PATH}/admin/game`,
+                element: <AcoountAdminGameDetailPage type="ADD" />,
             },
         ];
     }

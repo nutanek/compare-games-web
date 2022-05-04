@@ -1,5 +1,12 @@
 import axios, { AxiosResponse } from "axios";
-import { Home, GamesWithFilter, Game, SingleGame } from "./../models/game";
+import {
+    Home,
+    GamesWithFilter,
+    Game,
+    SingleGame,
+    GameAdmin,
+    SingleGameGenre,
+} from "./../models/game";
 import { ReviewsByPage } from "./../models/review";
 import { Wishlist } from "../models/wishlist";
 import { SignUp, SignIn, UserInfo } from "./../models/user";
@@ -23,6 +30,8 @@ const PATH = {
     reviews: `${API_URL}/reviews`,
     reactReview: `${API_URL}/react-review`,
     review: `${API_URL}/review`,
+    gameAdmin: `${API_URL}/admin/game`,
+    allGameGenresAdmin: `${API_URL}/admin/all-game-genres`,
 };
 
 export function getHomeApi(): Promise<AxiosResponse<Home, any>> {
@@ -33,6 +42,28 @@ export function getGameApi(params: {
     id: number;
 }): Promise<AxiosResponse<SingleGame, any>> {
     return axios.get<SingleGame>(PATH.game + `?id=${params.id}`);
+}
+
+export function getAllGameGenresAdminApi(): Promise<AxiosResponse<SingleGameGenre[], any>> {
+    return axios.get<SingleGameGenre[]>(PATH.allGameGenresAdmin);
+}
+
+export function getGameAdminApi(params: {
+    id: number;
+}): Promise<AxiosResponse<GameAdmin, any>> {
+    return axios.get<GameAdmin>(PATH.gameAdmin + `?id=${params.id}`);
+}
+
+export function addGameAdminApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.gameAdmin, params);
+}
+
+export function updateGameAdminApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.put<any>(PATH.gameAdmin, params);
 }
 
 export function getAllGamesApi(
