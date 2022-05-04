@@ -197,19 +197,17 @@ class AcoountAdminGameDetailPage extends Component<Props> {
             in_platform_nintendo: game.in_platform_nintendo,
         };
 
-        console.log("-------", data);
-
         let dataStr = JSON.stringify(data);
 
         if (this.props.type === "ADD") {
             this.addGame(dataStr, () => {
                 this.props.navigate &&
-                    this.props.navigate(`${ROOT_PATH}/account`);
+                    this.props.navigate(`${ROOT_PATH}/account/admin/games`);
             });
         } else if (this.props.type === "EDIT") {
             this.updateGame(dataStr, () => {
                 this.props.navigate &&
-                    this.props.navigate(`${ROOT_PATH}/account`);
+                    this.props.navigate(`${ROOT_PATH}/account/admin/games`);
             });
         }
     }
@@ -650,7 +648,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                             <Button
                                 htmlType="submit"
                                 type="primary"
-                                shape="round"
+                                style={{ borderRadius: 8 }}
                                 size="large"
                             >
                                 Save changes

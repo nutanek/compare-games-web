@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
-import { Button, Modal, Select } from "antd";
-import { UserOutlined, HeartOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
+import {
+    UserOutlined,
+    HeartOutlined,
+    BuildOutlined,
+    LogoutOutlined,
+} from "@ant-design/icons";
 import styled from "styled-components";
 import { getLocalUserInfo, signout } from "./../../services/appServices";
-import { ROOT_PATH } from "../../constants/appConstants";
+import { ROOT_PATH, USER_ROLE } from "../../constants/appConstants";
 
 const { confirm } = Modal;
 
@@ -99,6 +104,17 @@ const AccountSidebar = (props: Props) => {
                             <div className="text">Wish List</div>
                         </div>
                     </Link>
+
+                    {user.role === USER_ROLE.admin && (
+                        <Link to={`${ROOT_PATH}/account/admin/games`}>
+                            <div className="menu-item pointer">
+                                <div className="icon">
+                                    <BuildOutlined />
+                                </div>
+                                <div className="text">Games</div>
+                            </div>
+                        </Link>
+                    )}
 
                     <div
                         className="menu-item pointer"

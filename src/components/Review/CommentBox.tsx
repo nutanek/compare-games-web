@@ -123,7 +123,7 @@ class CommentBox extends Component<Props> {
                         <Button
                             disabled={this.state.rating === 0}
                             type="primary"
-                            shape="round"
+                            style={{ borderRadius: 8 }}
                             icon={<SendOutlined />}
                             size="large"
                             onClick={() => this.addReview()}

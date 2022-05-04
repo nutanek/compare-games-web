@@ -31,3 +31,8 @@ export const USER_GENDER = {
     f: "Female",
     n: "Choose not to answer",
 };
+
+export const USER_ROLE = {
+    admin: "admin",
+    user: "user",
+};

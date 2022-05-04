@@ -169,7 +169,7 @@ class AcoountProfilePage extends Component<Props> {
                                 </div>
                                 <Button
                                     className="button-edit"
-                                    shape="round"
+                                    style={{ borderRadius: 8 }}
                                     size="small"
                                 >
                                     Edit
@@ -253,7 +253,7 @@ class AcoountProfilePage extends Component<Props> {
                             <Button
                                 htmlType="submit"
                                 type="primary"
-                                shape="round"
+                                style={{ borderRadius: 8 }}
                                 size="large"
                             >
                                 Save changes

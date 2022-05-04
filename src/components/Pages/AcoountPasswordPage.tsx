@@ -192,7 +192,7 @@ class AcoountPasswordPage extends Component<Props> {
                                     <Button
                                         htmlType="submit"
                                         type="primary"
-                                        shape="round"
+                                        style={{ borderRadius: 8 }}
                                         size="large"
                                     >
                                         Save changes

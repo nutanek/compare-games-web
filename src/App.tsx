@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, useRoutes } from "react-router-dom";
-import { ROOT_PATH } from "./constants/appConstants";
-import { isLoggedIn as checkIsLoggedIn } from "./services/appServices";
+import { ROOT_PATH, USER_ROLE } from "./constants/appConstants";
+import {
+    isLoggedIn as checkIsLoggedIn,
+    getUserRole,
+} from "./services/appServices";
 import ScrollToTop from "./components/Utility/ScrollToTop";
 import GroupChat from "./components/GroupChat/GroupChat";
 import DesktopLayout from "./components/Layout/DesktopLayout";
@@ -15,9 +18,11 @@ import AcoountProfilePage from "./components/Pages/AcoountProfilePage";
 import AcoountWishListPage from "./components/Pages/AcoountWishListPage";
 import AcoountPasswordPage from "./components/Pages/AcoountPasswordPage";
 import AcoountAdminGameDetailPage from "./components/Pages/AcoountAdminGameDetailPage";
+import AcoountAdminGameListPage from "./components/Pages/AcoountAdminGameListPage";
 
 const AppRoutes = () => {
     const isLoggedIn = checkIsLoggedIn();
+    const userRole = getUserRole();
     let routes = [
         { path: `*`, element: <NotFoundPage /> },
         { path: `${ROOT_PATH}/`, element: <HomePage /> },
@@ -43,13 +48,23 @@ const AppRoutes = () => {
                 path: `${ROOT_PATH}/account/password`,
                 element: <AcoountPasswordPage />,
             },
+        ];
+    }
+
+    if (isLoggedIn && userRole === USER_ROLE.admin) {
+        routes = [
+            ...routes,
             {
-                path: `${ROOT_PATH}/admin/game/:id`,
+                path: `${ROOT_PATH}/account/admin/game/:id`,
                 element: <AcoountAdminGameDetailPage type="EDIT" />,
             },
             {
-                path: `${ROOT_PATH}/admin/game`,
+                path: `${ROOT_PATH}/account/admin/game`,
                 element: <AcoountAdminGameDetailPage type="ADD" />,
+            },
+            {
+                path: `${ROOT_PATH}/account/admin/games`,
+                element: <AcoountAdminGameListPage />,
             },
         ];
     }

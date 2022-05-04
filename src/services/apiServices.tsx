@@ -44,7 +44,9 @@ export function getGameApi(params: {
     return axios.get<SingleGame>(PATH.game + `?id=${params.id}`);
 }
 
-export function getAllGameGenresAdminApi(): Promise<AxiosResponse<SingleGameGenre[], any>> {
+export function getAllGameGenresAdminApi(): Promise<
+    AxiosResponse<SingleGameGenre[], any>
+> {
     return axios.get<SingleGameGenre[]>(PATH.allGameGenresAdmin);
 }
 
@@ -64,6 +66,12 @@ export function updateGameAdminApi(
     params: object
 ): Promise<AxiosResponse<any, any>> {
     return axios.put<any>(PATH.gameAdmin, params);
+}
+
+export function removeGameAdminApi(params: {
+    id: number;
+}): Promise<AxiosResponse<any, any>> {
+    return axios.delete<any>(PATH.gameAdmin + `?id=${params.id}`);
 }
 
 export function getAllGamesApi(
