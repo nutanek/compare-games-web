@@ -1,90 +1,115 @@
-import { useEffect, useState } from "react";
-import { Button, Drawer, Input, List, Avatar, message } from "antd";
+import { forwardRef } from "react";
 import styled from "styled-components";
-import VirtualList from "rc-virtual-list";
-import { io } from "socket.io-client";
-import { WechatOutlined } from "@ant-design/icons";
-import { ERRORS } from "../../constants/appConstants";
-import { ChatRoom } from "../../models/chat";
-import { getChatRoomApi } from "./../../services/apiServices";
-import ChatButton from "./ChatButton";
+import { getLocalUserInfo } from "../../services/appServices";
+import { SocketData } from "../../models/sokect";
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    height: 100%;
     .chat-messages {
         flex: 1;
-        background-color: #ff0000;
+        .chat-item {
+            display: flex;
+            .avatar {
+                background-color: #dddddd;
+                background-size: cover;
+                width: 50px;
+                height: 50px;
+                border-radius: 100%;
+            }
+            .message-box-wrapper {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .message-box {
+                    width: fit-content;
+                    padding: 5px 10px;
+                    background: #c4c4c4;
+                    border-radius: 8px;
+                    white-space: pre-line;
+                }
+            }
+            &.left {
+                .message-box-wrapper {
+                    padding: 10px 65px 10px 15px;
+                }
+            }
+            &.right {
+                .profile {
+                    order: 1;
+                }
+                .message-box-wrapper {
+                    align-items: flex-end;
+                    padding: 10px 15px 5px 65px;
+                    .message-box {
+                        background-color: var(--main-app-color);
+                        color: #ffffff;
+                    }
+                }
+            }
+            &.same-user-message {
+                .profile {
+                    visibility: hidden;
+                    height: 0;
+                }
+                .message-box-wrapper {
+                    padding-top: 0;
+                }
+            }
+        }
     }
 `;
 
-const SingleGroupChat = (props: Props) => {
+const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
+    const userInfo = getLocalUserInfo();
+
     let body = document.body,
         html = document.documentElement;
 
-    let containerHeight =
-        Math.max(
-            body.scrollHeight,
-            body.offsetHeight,
-            html.clientHeight,
-            html.scrollHeight,
-            html.offsetHeight
-        ) - 300;
-
-    const [data, setData] = useState([]);
-
-  
-
-    // async function getChatRooms() {
-    //     try {
-    //         let { data } = await getChatRoomApi({
-    //             page: 1,
-    //         });
-    //         setChatRooms(data);
-    //     } catch (error: any) {
-    //         console.log(error?.response?.message || ERRORS.unknown);
-    //     }
-    // }
-
-    const onScroll = (e: any) => {
-        if (e.target.scrollHeight - e.target.scrollTop === containerHeight) {
-            //   appendData();
-        }
+    const prevItemIsSameUser = (index: number): boolean => {
+        return (
+            index > 0 &&
+            props.chatItems[index - 1].userId == props.chatItems[index].userId
+        );
     };
 
     return (
         <Container>
             <div className="chat-messages">
-                <List>
-                    <VirtualList
-                        data={data}
-                        height={containerHeight}
-                        itemHeight={47}
-                        itemKey="email"
-                        onScroll={onScroll}
+                {props.chatItems.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className={`chat-item ${
+                            item.userId == userInfo.user_id ? "right" : "left"
+                        } ${
+                            prevItemIsSameUser(index) ? "same-user-message" : ""
+                        }`}
                     >
-                        {(item) => (
-                            <List.Item key={1}>
-                                <List.Item.Meta
-                                    // avatar={<Avatar src={item.picture.large} />}
-                                    title={"dssdsd"}
-                                />
-                                <div>Content</div>
-                            </List.Item>
-                        )}
-                    </VirtualList>
-                </List>
-            </div>
-
-            <div>
-                sdsdsd
-                <Input placeholder="Basic usage" />
+                        <div className="profile">
+                            <div
+                                className="avatar"
+                                style={{
+                                    backgroundImage: `url(${item.image})`,
+                                }}
+                            ></div>
+                        </div>
+                        <div className="message-box-wrapper">
+                            <div className="message-box text-md">
+                                {item.message}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+                <div ref={ref}></div>
             </div>
         </Container>
     );
-};
+});
 
 type Props = {
+    chatItems: SocketData[];
     onClose: () => void;
 };
 

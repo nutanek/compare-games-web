@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Drawer, Input, InputRef, List, message } from "antd";
-import { WechatOutlined } from "@ant-design/icons";
+import { WechatOutlined, LeftOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 import { io, Socket } from "socket.io-client";
+import { v4 as uuidv4 } from "uuid";
 import {
     ClientToServerEvents,
     ServerToClientEvents,
@@ -13,40 +15,70 @@ import { getChatRoomApi } from "./../../services/apiServices";
 import ChatButton from "./ChatButton";
 import SingleGroupChat from "./SingleGroupChat";
 import InputMessage from "./InputMessage";
-import { getLocalUserInfo } from "../../services/appServices";
+import {
+    getLocalAccessToken,
+    getLocalUserInfo,
+} from "../../services/appServices";
+
+const Container = styled.div``;
 
 const GroupChat = () => {
-    const [chatMessages, setChatMessages] = useState<SocketData>();
-    const [visible, setVisible] = useState(false);
+    const [chatItems, setChatItems] = useState<SocketData[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
     const [selectedSingleGroupId, setSelectedSingleGroupId] =
         useState<number>(-1);
     const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
-
-    let socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
+    const socketRef =
+        useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
+    const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (selectedSingleGroupId !== -1) {
-            socket = io("ws://localhost:8080");
-            socket.on("connect", () => {
+            const accessToken = getLocalAccessToken();
+            socketRef.current = io("ws://localhost:8080", {
+                reconnectionDelayMax: 10000,
+                auth: {
+                    token: accessToken,
+                },
+                query: {
+                    room_id: selectedSingleGroupId,
+                },
+            });
+
+            socketRef.current.on("connect", () => {
                 console.log(`Socket.io is connected`);
             });
-            socket.on("newMessage", (msg) => {
-                console.log("-----------", msg);
+
+            socketRef.current.on("newMessage", (receivedChatItem) => {
+                setChatItems((prevState) => [...prevState, receivedChatItem]);
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 100);
             });
+
+            socketRef.current.on("disconnect", () => {
+                console.log(`Socket.io is disconnect`);
+            });
+
+            return () => {
+                socketRef?.current?.disconnect();
+            };
         }
     }, [selectedSingleGroupId]);
 
     const showDrawer = () => {
-        setVisible(true);
+        setIsOpen(true);
     };
 
     const onClose = (): void => {
-        setVisible(false);
+        setIsOpen(false);
     };
 
     useEffect(() => {
-        getChatRooms();
-    }, []);
+        if (isOpen) {
+            getChatRooms();
+        }
+    }, [isOpen]);
 
     async function getChatRooms(): Promise<void> {
         try {
@@ -63,36 +95,58 @@ const GroupChat = () => {
         setSelectedSingleGroupId(id);
     }
 
+    function onBackToMain(): void {
+        socketRef?.current?.disconnect();
+        setSelectedSingleGroupId(-1);
+        setChatItems([]);
+    }
+
     function sendMessage(value: string) {
-        const userInfo = getLocalUserInfo()
-        socket.emit("sendMessage", {
+        const userInfo = getLocalUserInfo();
+        socketRef?.current?.emit("sendMessage", {
+            id: uuidv4(),
             userId: userInfo.user_id,
-            userName: userInfo.display_name,
+            displayName: userInfo.display_name,
+            image: userInfo.image,
             message: value,
         });
     }
 
+    const scrollToBottom = () => {
+        messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
     return (
-        <div>
+        <Container>
             <ChatButton onClick={() => showDrawer()} />
 
             <Drawer
                 title={
-                    <div>
-                        <p>ddsdsd</p>
-                        <Input />
-                    </div>
+                    selectedSingleGroupId === -1 ? (
+                        <div>
+                            <p>ddsdsd</p>
+                            <Input />
+                        </div>
+                    ) : (
+                        <div>
+                            <LeftOutlined onClick={() => onBackToMain()} />
+                            <p>ddsdsd</p>
+                        </div>
+                    )
                 }
+                className="chat-drawer"
                 placement="right"
                 closeIcon={null}
                 closable={false}
                 size="large"
                 onClose={() => onClose()}
-                visible={visible}
+                visible={isOpen}
                 footer={
-                    <div>
-                        <InputMessage onSubmit={sendMessage}/>
-                    </div>
+                    selectedSingleGroupId === -1 ? null : (
+                        <div>
+                            <InputMessage onSubmit={sendMessage} />
+                        </div>
+                    )
                 }
             >
                 {selectedSingleGroupId === -1 ? (
@@ -118,12 +172,16 @@ const GroupChat = () => {
                         )}
                     />
                 ) : (
-                    <SingleGroupChat
-                        onClose={() => setSelectedSingleGroupId(-1)}
-                    />
+                    <>
+                        <SingleGroupChat
+                            ref={messagesEndRef}
+                            chatItems={chatItems}
+                            onClose={() => setSelectedSingleGroupId(-1)}
+                        />
+                    </>
                 )}
             </Drawer>
-        </div>
+        </Container>
     );
 };
 

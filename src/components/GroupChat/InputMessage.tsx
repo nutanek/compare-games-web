@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Drawer, Input, List, Avatar, message } from "antd";
+import { SendOutlined } from "@ant-design/icons";
 import styled from "styled-components";
-import VirtualList from "rc-virtual-list";
-import { io } from "socket.io-client";
-import { WechatOutlined } from "@ant-design/icons";
-import { ERRORS } from "../../constants/appConstants";
-import { ChatRoom } from "../../models/chat";
-import { getChatRoomApi } from "./../../services/apiServices";
-import ChatButton from "./ChatButton";
 
-const Container = styled.div``;
+const Container = styled.div`
+    display: flex;
+    gap: 10px;
+`;
 
 const InputMessage = (props: Props) => {
     let [message, setMessage] = useState<string>("");
@@ -18,18 +15,36 @@ const InputMessage = (props: Props) => {
         setMessage(value);
     }
 
-    function onSubmit() {
+    function onSubmit(e: any) {
+        const keyCode = e.which || e.keyCode;
+        if (keyCode === 13 && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    }
+
+    function sendMessage() {
         props.onSubmit(message);
         setMessage("");
     }
 
     return (
         <Container>
-            <Input
+            <Input.TextArea
+                size="large"
                 value={message}
+                autoSize={{ minRows: 1, maxRows: 2 }}
+                placeholder="Type your message..."
                 onChange={(e) => onChangeMessage(e.target.value)}
-                onPressEnter={() => onSubmit()}
+                onKeyDown={onSubmit}
             />
+            <Button
+                size="large"
+                type="primary"
+                shape="circle"
+                icon={<SendOutlined />}
+                onClick={() => sendMessage()}
+            ></Button>
         </Container>
     );
 };

@@ -81,7 +81,7 @@ function App(): JSX.Element {
                     <AppRoutes />
                 </DesktopLayout>
             </ScrollToTop>
-            {/* <GroupChat /> */}
+            <GroupChat />
         </Router>
     );
 }

@@ -11,7 +11,9 @@ export interface InterServerEvents {
 }
 
 export interface SocketData {
+    id: string;
     userId: number;
-    userName: string;
+    displayName: string,
+    image: string;
     message: string
 }
