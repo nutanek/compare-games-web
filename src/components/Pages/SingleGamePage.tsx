@@ -190,11 +190,13 @@ class SingleGamePage extends Component<Props> {
                         lg={8}
                     >
                         <div className="image-wrapper">
-                            <img
-                                className="image"
-                                src={game.image}
-                                alt={game.name}
-                            />
+                            {game.image && (
+                                <img
+                                    className="image"
+                                    src={game.image}
+                                    alt={game.name}
+                                />
+                            )}
                         </div>
                     </Col>
                     <Col className="gutter-row" xs={24} sm={24} md={24} lg={16}>

@@ -2,7 +2,6 @@ import { Component } from "react";
 import { Row, Col, message, Button } from "antd";
 import { Link, NavigateFunction, Params } from "react-router-dom";
 import styled from "styled-components";
-import cloneDeep from "lodash/cloneDeep";
 import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
 import { UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";

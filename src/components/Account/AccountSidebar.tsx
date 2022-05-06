@@ -9,6 +9,7 @@ import {
 import styled from "styled-components";
 import { getLocalUserInfo, signout } from "./../../services/appServices";
 import { ROOT_PATH, USER_ROLE } from "../../constants/appConstants";
+import withRouter from "../../hocs/withRouter";
 
 const { confirm } = Modal;
 
@@ -52,10 +53,22 @@ const Container = styled.div`
                 display: flex;
                 gap: 10px;
                 align-items: center;
+                color: var(--main-app-color);
+                &.active {
+                    color: #0f79af;
+                }
             }
         }
     }
 `;
+
+const PATH_ACTIVE = {
+    userInfo: ["/account", "/account/profile", "/account/password"].map(
+        (path) => ROOT_PATH + path
+    ),
+    wishlist: ["/account/wishlist"].map((path) => ROOT_PATH + path),
+    games: ["/account/admin/games"].map((path) => ROOT_PATH + path),
+};
 
 const AccountSidebar = (props: Props) => {
     const user = getLocalUserInfo();
@@ -88,7 +101,15 @@ const AccountSidebar = (props: Props) => {
             <div className="menu-list-wrapper">
                 <div className="menu-list text-md ">
                     <Link to={`${ROOT_PATH}/account`}>
-                        <div className="menu-item pointer">
+                        <div
+                            className={`menu-item pointer ${
+                                PATH_ACTIVE.userInfo.includes(
+                                    props.location?.pathname as string
+                                )
+                                    ? "active"
+                                    : ""
+                            }`}
+                        >
                             <div className="icon">
                                 <UserOutlined />
                             </div>
@@ -97,7 +118,15 @@ const AccountSidebar = (props: Props) => {
                     </Link>
 
                     <Link to={`${ROOT_PATH}/account/wishlist`}>
-                        <div className="menu-item pointer">
+                        <div
+                            className={`menu-item pointer ${
+                                PATH_ACTIVE.wishlist.includes(
+                                    props.location?.pathname as string
+                                )
+                                    ? "active"
+                                    : ""
+                            }`}
+                        >
                             <div className="icon">
                                 <HeartOutlined />
                             </div>
@@ -107,7 +136,15 @@ const AccountSidebar = (props: Props) => {
 
                     {user.role === USER_ROLE.admin && (
                         <Link to={`${ROOT_PATH}/account/admin/games`}>
-                            <div className="menu-item pointer">
+                            <div
+                                className={`menu-item pointer ${
+                                    PATH_ACTIVE.games.includes(
+                                        props.location?.pathname as string
+                                    )
+                                        ? "active"
+                                        : ""
+                                }`}
+                            >
                                 <div className="icon">
                                     <BuildOutlined />
                                 </div>
@@ -132,7 +169,7 @@ const AccountSidebar = (props: Props) => {
 };
 
 type Props = {
-    // value: number;
+    location?: Location;
 };
 
-export default AccountSidebar;
+export default withRouter(AccountSidebar);

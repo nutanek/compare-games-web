@@ -4,11 +4,7 @@ import {
     Col,
     message,
     Button,
-    Form,
     Input,
-    Divider,
-    Radio,
-    Select,
     FormInstance,
     Table,
     Pagination,
@@ -20,30 +16,20 @@ import {
     SearchOutlined,
     PlusOutlined,
 } from "@ant-design/icons";
-import { Link, NavigateFunction, URLSearchParamsInit } from "react-router-dom";
+import { Link, URLSearchParamsInit } from "react-router-dom";
 import styled from "styled-components";
 import queryString from "query-string";
 import debounce from "lodash/debounce";
 import numeral from "numeral";
-import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
-import countries from "../../constants/countries.json";
+import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
 import { Game } from "../../models/game";
-import { UserGender, UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
 import {
-    getUserSelfApi,
-    updateUserSelfApi,
     getAllGamesApi,
     removeGameAdminApi,
 } from "./../../services/apiServices";
-import {
-    getLocalUserInfo,
-    setLocalUserInfo,
-} from "./../../services/appServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
-
-const { Option } = Select;
 
 const Container = styled.div`
     .pagination-container {
@@ -131,7 +117,7 @@ class AcoountAdminGameListPage extends Component<Props> {
             this.setState({
                 isLoading: false,
             });
-            onSuccess && onSuccess()
+            onSuccess && onSuccess();
             message.success("Success!");
         } catch (error: any) {
             this.setState({ isLoading: false });
@@ -249,6 +235,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                         <Table
                             dataSource={this.state.games}
                             pagination={false}
+                            rowKey="id"
                             columns={[
                                 {
                                     responsive: ["md", "lg", "xl", "xxl"],

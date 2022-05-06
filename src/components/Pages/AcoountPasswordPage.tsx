@@ -6,28 +6,15 @@ import {
     Button,
     Form,
     Input,
-    Divider,
-    Radio,
-    AutoComplete,
     Select,
     FormInstance,
 } from "antd";
-import { Link, NavigateFunction, Params } from "react-router-dom";
+import { NavigateFunction, Params } from "react-router-dom";
 import styled from "styled-components";
-import cloneDeep from "lodash/cloneDeep";
 import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
-import countries from "../../constants/countries.json";
-import { UserGender, UserInfo } from "../../models/user";
+import { UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
-import {
-    getUserSelfApi,
-    updateUserPasswordApi,
-    updateUserSelfApi,
-} from "./../../services/apiServices";
-import {
-    getLocalUserInfo,
-    setLocalUserInfo,
-} from "./../../services/appServices";
+import { updateUserPasswordApi } from "./../../services/apiServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 

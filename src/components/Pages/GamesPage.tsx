@@ -1,4 +1,4 @@
-import { Row, Col, Select, Pagination, Empty } from "antd";
+import { Row, Col, Pagination, Empty } from "antd";
 import { Component } from "react";
 import { URLSearchParamsInit } from "react-router-dom";
 import queryString from "query-string";
