@@ -497,8 +497,36 @@ select,
     }
 }
 
+.chat-drawer .chat-header .close {
+    display: none;
+}
+
 @media (max-width: 767.99px) {
     .chat-drawer .ant-drawer-content-wrapper {
         width: 100% !important;
     }
+    .chat-drawer .chat-header .close {
+        display: block;
+    }
+    .chat-drawer .ant-list-item-action {
+        display: none;
+    }
+}
+
+.chat-drawer .ant-drawer-header-title,
+.chat-drawer .ant-drawer-title {
+    width: 100%;
+}
+
+.chat-drawer .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-drawer .chat-header .name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

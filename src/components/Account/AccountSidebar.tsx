@@ -90,7 +90,13 @@ const AccountSidebar = (props: Props) => {
             <div className="profile">
                 <div className="avatar-wrapper">
                     <div className="avatar">
-                        <img src={user.image} alt="user" />
+                        <img
+                            src={
+                                user.image ||
+                                `${ROOT_PATH}/images/no-avatar.png`
+                            }
+                            alt="user"
+                        />
                     </div>
                 </div>
                 <div className="display-name text-lg text-bold">

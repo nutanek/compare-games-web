@@ -2,7 +2,6 @@ import { Layout } from "antd";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ROOT_PATH } from "../../constants/appConstants";
-import Logo from "./../../images/logo.png";
 
 const Container = styled(Layout.Footer)`
     display: flex;
@@ -39,7 +38,7 @@ const Footer = () => {
                 to={`${ROOT_PATH}/`}
                 className="logo text-md text-bold pointer"
             >
-                <img src={Logo} alt="logo" />
+                <img src={`${ROOT_PATH}/images/logo.png`} alt="logo" />
                 <div className="title">Consoles</div>
             </Link>
             <div className="copyright text-md">© Consoles 2022</div>

@@ -7,7 +7,6 @@ import {
     isLoggedIn as checkLoggedIn,
 } from "../../../services/appServices";
 import SearchBoxDesktop from "./SearchBox";
-import Logo from "./../../../images/logo.png";
 
 const { Header } = Layout;
 const { confirm } = Modal;
@@ -81,7 +80,7 @@ const DesktopHeader = (): JSX.Element => {
                 to={`${ROOT_PATH}/`}
                 className="logo text-md text-bold pointer"
             >
-                <img src={Logo} alt="logo" />
+                <img src={`${ROOT_PATH}/images/logo.png`} alt="logo" />
                 <div className="title">Consoles</div>
             </Link>
             <Link

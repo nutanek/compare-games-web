@@ -24,7 +24,6 @@ import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
 
 import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
-import Logo from "./../../images/logo.png";
 
 const Container = styled.div`
     .card-container {
@@ -110,7 +109,7 @@ class LoginPage extends Component<Props> {
                     <Col xs={20} sm={18} md={14} lg={10} xl={8}>
                         <div className="card-container">
                             <div className="header">
-                                <img src={Logo} alt="logo" />
+                                <img src={`${ROOT_PATH}/images/logo.png`} alt="logo" />
                                 <div className="name text-bold text-xl">
                                     Console
                                 </div>

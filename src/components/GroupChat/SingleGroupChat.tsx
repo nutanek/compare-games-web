@@ -1,7 +1,9 @@
 import { forwardRef } from "react";
 import styled from "styled-components";
+import { ROOT_PATH } from "../../constants/appConstants";
 import { getLocalUserInfo } from "../../services/appServices";
 import { SocketData } from "../../models/sokect";
+import { ChatRoom } from "../../models/chat";
 
 const Container = styled.div`
     display: flex;
@@ -12,8 +14,10 @@ const Container = styled.div`
         .chat-item {
             display: flex;
             .avatar {
+                margin-top: 20px;
                 background-color: #dddddd;
                 background-size: cover;
+                background-position: center center;
                 width: 50px;
                 height: 50px;
                 border-radius: 100%;
@@ -65,9 +69,6 @@ const Container = styled.div`
 const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
     const userInfo = getLocalUserInfo();
 
-    let body = document.body,
-        html = document.documentElement;
-
     const prevItemIsSameUser = (index: number): boolean => {
         return (
             index > 0 &&
@@ -91,14 +92,25 @@ const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
                             <div
                                 className="avatar"
                                 style={{
-                                    backgroundImage: `url(${item.image})`,
+                                    backgroundImage: `url(${
+                                        item.userId === 0
+                                            ? `${ROOT_PATH}/images/logo.png`
+                                            : item.image ||
+                                              `${ROOT_PATH}/images/no-avatar.png`
+                                    })`,
                                 }}
                             ></div>
                         </div>
                         <div className="message-box-wrapper">
-                            <div className="message-box text-md">
-                                {item.message}
+                            <div className="text-sm text-bold">
+                                {!prevItemIsSameUser(index) && item.displayName}
                             </div>
+                            <div
+                                className="message-box text-md"
+                                dangerouslySetInnerHTML={{
+                                    __html: item.message,
+                                }}
+                            ></div>
                         </div>
                     </div>
                 ))}
@@ -109,6 +121,7 @@ const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
 });
 
 type Props = {
+    room: ChatRoom;
     chatItems: SocketData[];
     onClose: () => void;
 };

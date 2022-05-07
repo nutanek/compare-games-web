@@ -9,6 +9,7 @@ import {
     Divider,
     Radio,
     Select,
+    Upload,
     FormInstance,
 } from "antd";
 import { NavigateFunction } from "react-router-dom";
@@ -17,7 +18,10 @@ import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
 import countries from "../../constants/countries.json";
 import { UserGender, UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
-import { getUserSelfApi, updateUserSelfApi } from "./../../services/apiServices";
+import {
+    getUserSelfApi,
+    updateUserSelfApi,
+} from "./../../services/apiServices";
 import {
     getLocalUserInfo,
     setLocalUserInfo,
@@ -142,6 +146,17 @@ class AcoountProfilePage extends Component<Props> {
         });
     }
 
+    onChangeImage(info: any) {
+        if (info.file.status !== "uploading") {
+            console.log(info.fileList[0]);
+        }
+        if (info.file.status === "done") {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === "error") {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
+
     render() {
         const { user } = this.state;
 
@@ -162,18 +177,28 @@ class AcoountProfilePage extends Component<Props> {
                             <Col className="profile" xs={24} lg={3}>
                                 <div className="avatar-wrapper">
                                     <div className="avatar">
-                                        {user.image && (
-                                            <img src={user.image} alt="user" />
-                                        )}
+                                        <img
+                                            src={
+                                                user.image ||
+                                                `${ROOT_PATH}/images/no-avatar.png`
+                                            }
+                                            alt="user"
+                                        />
                                     </div>
                                 </div>
-                                <Button
-                                    className="button-edit"
-                                    style={{ borderRadius: 8 }}
-                                    size="small"
+                                <Upload
+                                    beforeUpload={() => false}
+                                    onChange={this.onChangeImage.bind(this)}
+                                    fileList={[]}
                                 >
-                                    Edit
-                                </Button>
+                                    <Button
+                                        className="button-edit"
+                                        style={{ borderRadius: 8 }}
+                                        size="small"
+                                    >
+                                        Edit
+                                    </Button>
+                                </Upload>
                             </Col>
                             <Col xs={24} lg={21}>
                                 <Form.Item

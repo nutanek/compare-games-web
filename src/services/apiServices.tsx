@@ -10,10 +10,11 @@ import {
 import { ReviewsByPage } from "./../models/review";
 import { Wishlist } from "../models/wishlist";
 import { SignUp, SignIn, UserInfo } from "./../models/user";
-import { ChatRoom } from "./../models/chat";
+import { AllChatRooms, ChatRoom } from "./../models/chat";
 import { getLocalAccessToken, signout } from "./appServices";
 
 const API_URL = process.env.REACT_APP_API_URL || "";
+export const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "";
 
 const PATH = {
     signup: `${API_URL}/signup`,
@@ -146,8 +147,8 @@ export function updateWishlistApi(
 
 export function getChatRoomApi(
     params: object
-): Promise<AxiosResponse<ChatRoom[], any>> {
-    return axios.post<ChatRoom[]>(PATH.chatRooms, params);
+): Promise<AxiosResponse<AllChatRooms, any>> {
+    return axios.post<AllChatRooms>(PATH.chatRooms, params);
 }
 
 export function chatApi(params: object): Promise<AxiosResponse<any, any>> {

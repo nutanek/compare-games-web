@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import numeral from "numeral";
 import { ROOT_PATH } from "../../constants/appConstants";
 import { SingleGamePrice } from "../../models/game";
 import PlatformTags from "../Product/ProductCard/PlatformTags";
-import Medal1 from "./../../images/medal-1.png";
-import Medal2 from "./../../images/medal-2.png";
-import Medal3 from "./../../images/medal-3.png";
 
-const MedalImages = [Medal1, Medal2, Medal3];
+const MedalImages = [
+    `${ROOT_PATH}/images/medal-1.png`,
+    `${ROOT_PATH}/images/medal-2.png`,
+    `${ROOT_PATH}/images/medal-3.png`,
+];
 
 const Container = styled.div`
     display: flex;
