@@ -25,6 +25,7 @@ import {
     ROOT_PATH,
     USER_GENDER,
 } from "../../constants/appConstants";
+import languages from "./../../constants/languages.json";
 import { GameAdmin, PlatformKey, SingleGameGenre } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import {
@@ -415,6 +416,13 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                         mode="multiple"
                                         placeholder="Please select a genre"
                                         size="large"
+                                        tokenSeparators={[", ", ","]}
+                                        filterOption={(input, option) =>
+                                            option?.props.children
+                                                .toLowerCase()
+                                                .indexOf(input.toLowerCase()) >=
+                                            0
+                                        }
                                     >
                                         {allGenres.map((genre) => (
                                             <Option
@@ -487,9 +495,16 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                         mode="tags"
                                         placeholder="Please select voice languages"
                                         size="large"
+                                        tokenSeparators={[", ", ","]}
                                     >
-                                        <Option value="china">China</Option>
-                                        <Option value="usa">U.S.A</Option>
+                                        {languages.map((language) => (
+                                            <Option
+                                                key={language.code}
+                                                value={language.name}
+                                            >
+                                                {language.name}
+                                            </Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
 
@@ -512,9 +527,16 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                         mode="tags"
                                         placeholder="Please select subtitle languages"
                                         size="large"
+                                        tokenSeparators={[", ", ","]}
                                     >
-                                        <Option value="china">China</Option>
-                                        <Option value="usa">U.S.A</Option>
+                                        {languages.map((language) => (
+                                            <Option
+                                                key={language.code}
+                                                value={language.name}
+                                            >
+                                                {language.name}
+                                            </Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
 
