@@ -20,9 +20,9 @@ import {
     ServerToClientEvents,
     SocketData,
 } from "../../models/sokect";
-import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
+import { ERRORS, ROOT_PATH, SOCKET_URL } from "../../constants/appConstants";
 import { AllChatRooms, ChatRoom } from "../../models/chat";
-import { SOCKET_URL, getChatRoomApi } from "./../../services/apiServices";
+import {  getChatRoomApi } from "./../../services/apiServices";
 import ChatButton from "./ChatButton";
 import SingleGroupChat from "./SingleGroupChat";
 import InputMessage from "./InputMessage";
@@ -90,7 +90,7 @@ const GroupChat = () => {
 
             socketRef.current.on("newMessage", (receivedChatItem) => {
                 if (receivedChatItem.userId === 0) {
-                    let audio = new Audio(`${ROOT_PATH}/chat-noti.mp3`);
+                    let audio = new Audio(`${ROOT_PATH}/audios/chat-noti.mp3`);
                     audio.play();
                 }
 

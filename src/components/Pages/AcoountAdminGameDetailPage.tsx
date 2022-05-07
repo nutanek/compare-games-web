@@ -11,12 +11,20 @@ import {
     DatePicker,
     InputNumber,
     Checkbox,
+    Upload,
+    Image,
 } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
 import { cloneDeep } from "lodash";
-import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
+import {
+    ERRORS,
+    IMAGE_PATH,
+    ROOT_PATH,
+    USER_GENDER,
+} from "../../constants/appConstants";
 import { GameAdmin, PlatformKey, SingleGameGenre } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import {
@@ -24,6 +32,7 @@ import {
     getGameAdminApi,
     addGameAdminApi,
     updateGameAdminApi,
+    uploadImageApi,
 } from "./../../services/apiServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
@@ -172,6 +181,39 @@ class AcoountAdminGameDetailPage extends Component<Props> {
         }
     }
 
+    async uploadImage(file: File, onSuccess?: (image: string) => void) {
+        try {
+            this.setState({ isLoading: true });
+            const formData = new FormData();
+            formData.append("path", "games");
+            formData.append("image", file);
+            let { data: image } = await uploadImageApi(formData);
+            this.setState({
+                isLoading: false,
+            });
+            onSuccess && onSuccess(image.name);
+        } catch (error: any) {
+            message.error(error?.response?.data?.msg || ERRORS.unknown);
+            this.setState({ isLoading: false });
+        }
+    }
+
+    onChangeImage(info: any) {
+        if (info.file.status !== "uploading") {
+            console.log(info.fileList[0]);
+            this.uploadImage(info.fileList[0].originFileObj, (image) => {
+                let game = cloneDeep(this.state.game);
+                game.image = image;
+                this.setState({ game });
+            });
+        }
+        if (info.file.status === "done") {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === "error") {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
+
     onSubmit(values: any) {
         let { game } = this.state;
         let data = {
@@ -274,6 +316,45 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <div className="section-header text-lg text-bold">
                                     Basic info
                                 </div>
+
+                                <Form.Item
+                                    label={
+                                        <div className="text-bold text-md">
+                                            Image
+                                        </div>
+                                    }
+                                    style={{ width: "100%" }}
+                                >
+                                    <>
+                                        {game.image && (
+                                            <div style={{ marginBottom: 10 }}>
+                                                <Image
+                                                    width={200}
+                                                    src={`${IMAGE_PATH}/games/${game.image}`}
+                                                />
+                                            </div>
+                                        )}
+                                        <Upload
+                                            beforeUpload={() => false}
+                                            accept="image/png, image/gif, image/jpeg, image/jpg"
+                                            fileList={[]}
+                                            onChange={this.onChangeImage.bind(
+                                                this
+                                            )}
+                                        >
+                                            <Button
+                                                type="primary"
+                                                style={{ borderRadius: 8 }}
+                                                size="large"
+                                                icon={<UploadOutlined />}
+                                            >
+                                                {game.image
+                                                    ? "Change image"
+                                                    : "Upload image"}
+                                            </Button>
+                                        </Upload>
+                                    </>
+                                </Form.Item>
 
                                 <Form.Item
                                     label={

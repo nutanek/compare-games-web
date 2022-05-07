@@ -14,13 +14,20 @@ import {
 } from "antd";
 import { NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
-import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
+import { cloneDeep } from "lodash";
+import {
+    ERRORS,
+    IMAGE_PATH,
+    ROOT_PATH,
+    USER_GENDER,
+} from "../../constants/appConstants";
 import countries from "../../constants/countries.json";
 import { UserGender, UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
 import {
     getUserSelfApi,
     updateUserSelfApi,
+    uploadImageApi,
 } from "./../../services/apiServices";
 import {
     getLocalUserInfo,
@@ -131,6 +138,23 @@ class AcoountProfilePage extends Component<Props> {
         }
     }
 
+    async uploadImage(file: File, onSuccess?: (image: string) => void) {
+        try {
+            this.setState({ isLoading: true });
+            const formData = new FormData();
+            formData.append("path", "users");
+            formData.append("image", file);
+            let { data: image } = await uploadImageApi(formData);
+            this.setState({
+                isLoading: false,
+            });
+            onSuccess && onSuccess(image.name);
+        } catch (error: any) {
+            message.error(error?.response?.data?.msg || ERRORS.unknown);
+            this.setState({ isLoading: false });
+        }
+    }
+
     onSubmit(values: {
         displayName: string;
         gender: UserGender;
@@ -149,6 +173,11 @@ class AcoountProfilePage extends Component<Props> {
     onChangeImage(info: any) {
         if (info.file.status !== "uploading") {
             console.log(info.fileList[0]);
+            this.uploadImage(info.fileList[0].originFileObj, (image) => {
+                let user = cloneDeep(this.state.user);
+                user.image = image;
+                this.setState({ user });
+            });
         }
         if (info.file.status === "done") {
             message.success(`${info.file.name} file uploaded successfully`);
@@ -179,8 +208,9 @@ class AcoountProfilePage extends Component<Props> {
                                     <div className="avatar">
                                         <img
                                             src={
-                                                user.image ||
-                                                `${ROOT_PATH}/images/no-avatar.png`
+                                                user.image
+                                                    ? `${IMAGE_PATH}/users/${user.image}`
+                                                    : `${ROOT_PATH}/images/no-avatar.png`
                                             }
                                             alt="user"
                                         />
@@ -188,8 +218,9 @@ class AcoountProfilePage extends Component<Props> {
                                 </div>
                                 <Upload
                                     beforeUpload={() => false}
-                                    onChange={this.onChangeImage.bind(this)}
+                                    accept="image/png, image/gif, image/jpeg, image/jpg"
                                     fileList={[]}
+                                    onChange={this.onChangeImage.bind(this)}
                                 >
                                     <Button
                                         className="button-edit"

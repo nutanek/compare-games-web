@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Rate } from "antd";
 import { LikeFilled, DislikeFilled } from "@ant-design/icons";
 import { ReviewItem as ReviewItemModel } from "../../models/review";
+import { ROOT_PATH, IMAGE_PATH } from "../../constants/appConstants";
 import { epochToDateTime } from "../../services/appServices";
 
 const Container = styled.div`
@@ -61,7 +62,13 @@ const ReviewItem = (props: Props) => {
                 <div className="avatar-wrapper">
                     <div
                         className="avatar"
-                        style={{ backgroundImage: `url(${review.image})` }}
+                        style={{
+                            backgroundImage: `url(${
+                                review.image
+                                    ? `${IMAGE_PATH}/users/${review.image}`
+                                    : `${ROOT_PATH}/images/no-avatar.png`
+                            })`,
+                        }}
                     ></div>
                 </div>
                 <div className="name">

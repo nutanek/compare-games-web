@@ -5,7 +5,7 @@ import { Link, NavigateFunction, Params } from "react-router-dom";
 import styled from "styled-components";
 import cloneDeep from "lodash/cloneDeep";
 import LazyLoad from "react-lazyload";
-import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
+import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
 import { SingleGame } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import { getGameApi, updateWishlistApi } from "./../../services/apiServices";
@@ -193,7 +193,7 @@ class SingleGamePage extends Component<Props> {
                             {game.image && (
                                 <img
                                     className="image"
-                                    src={game.image}
+                                    src={`${IMAGE_PATH}/games/${game.image}`}
                                     alt={game.name}
                                 />
                             )}

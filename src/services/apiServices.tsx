@@ -10,11 +10,10 @@ import {
 import { ReviewsByPage } from "./../models/review";
 import { Wishlist } from "../models/wishlist";
 import { SignUp, SignIn, UserInfo } from "./../models/user";
-import { AllChatRooms, ChatRoom } from "./../models/chat";
+import { AllChatRooms } from "./../models/chat";
+import { UploadImage } from "../models/upload";
 import { getLocalAccessToken, signout } from "./appServices";
-
-const API_URL = process.env.REACT_APP_API_URL || "";
-export const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "";
+import { API_URL } from "../constants/appConstants";
 
 const PATH = {
     signup: `${API_URL}/signup`,
@@ -33,6 +32,7 @@ const PATH = {
     review: `${API_URL}/review`,
     gameAdmin: `${API_URL}/admin/game`,
     allGameGenresAdmin: `${API_URL}/admin/all-game-genres`,
+    uploadImage: `${API_URL}/upload-image`,
 };
 
 export function getHomeApi(): Promise<AxiosResponse<Home, any>> {
@@ -155,9 +155,20 @@ export function chatApi(params: object): Promise<AxiosResponse<any, any>> {
     return axios.post<any>(PATH.chat, params);
 }
 
+export function uploadImageApi(
+    params: object
+): Promise<AxiosResponse<UploadImage, any>> {
+    return axios.post<UploadImage>(PATH.uploadImage, params, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+}
+
 axios.interceptors.request.use(async (config) => {
     const accessToken = getLocalAccessToken();
     config.headers = {
+        ...config.headers,
         "x-access-token": accessToken,
         "Content-Type": "application/json",
     };

@@ -21,7 +21,7 @@ import styled from "styled-components";
 import queryString from "query-string";
 import debounce from "lodash/debounce";
 import numeral from "numeral";
-import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
+import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
 import { Game } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import {
@@ -250,7 +250,11 @@ class AcoountAdminGameListPage extends Component<Props> {
                                                 this.onClickRow(record.id),
                                         };
                                     },
-                                    render: (value) => <img src={value} />,
+                                    render: (value) => (
+                                        <img
+                                            src={`${IMAGE_PATH}/games/${value}`}
+                                        />
+                                    ),
                                 },
                                 {
                                     title: "Name",

@@ -1,5 +1,9 @@
 export const ROOT_PATH = "/compare-game";
 
+export const API_URL = process.env.REACT_APP_API_URL || "";
+export const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "";
+export const IMAGE_PATH = process.env.REACT_APP_IMAGE_PATH || "";
+
 export const KEY_ACCESS_TOKEN = "consoles_access_token";
 export const KEY_USER_INFO = "consoles_user_info";
 

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import styled from "styled-components";
-import { ROOT_PATH } from "../../constants/appConstants";
+import { IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
 import { getLocalUserInfo } from "../../services/appServices";
 import { SocketData } from "../../models/sokect";
 import { ChatRoom } from "../../models/chat";
@@ -95,8 +95,9 @@ const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
                                     backgroundImage: `url(${
                                         item.userId === 0
                                             ? `${ROOT_PATH}/images/logo.png`
-                                            : item.image ||
-                                              `${ROOT_PATH}/images/no-avatar.png`
+                                            : item.image
+                                            ? `${IMAGE_PATH}/users/${item.image}`
+                                            : `${ROOT_PATH}/images/no-avatar.png`
                                     })`,
                                 }}
                             ></div>

@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Button, Input, message, Rate, Spin } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import styled from "styled-components";
-import { ERRORS } from "../../constants/appConstants";
+import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
 import { addReviewApi } from "./../../services/apiServices";
 import { getLocalUserInfo } from "./../../services/appServices";
 
@@ -61,7 +61,7 @@ class CommentBox extends Component<Props> {
                 rating: this.state.rating,
                 comment: this.state.comment,
             });
-            message.success('Thank you for your review!');
+            message.success("Thank you for your review!");
             this.setState({
                 isLoading: false,
                 rating: 0,
@@ -94,7 +94,11 @@ class CommentBox extends Component<Props> {
                             <div
                                 className="avatar"
                                 style={{
-                                    backgroundImage: `url(${user.image})`,
+                                    backgroundImage: `url(${
+                                        user.image
+                                            ? `${IMAGE_PATH}/users/${user.image}`
+                                            : `${ROOT_PATH}/images/no-avatar.png`
+                                    })`,
                                 }}
                             ></div>
                         </div>

@@ -5,7 +5,7 @@ import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import styled from "styled-components";
 import numeral from "numeral";
 import LazyLoad from "react-lazyload";
-import { ERRORS, ROOT_PATH } from "../../../constants/appConstants";
+import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../../constants/appConstants";
 import { PlatformKey } from "../../../models/game";
 import { updateWishlistApi } from "../../../services/apiServices";
 import PlatformTags from "./PlatformTags";
@@ -101,7 +101,7 @@ const ProductCard = ({
                                 className="image opacity-0"
                                 onLoad={removePlaceholder}
                                 onError={removePlaceholder}
-                                src={image}
+                                src={`${IMAGE_PATH}/games/${image}`}
                                 alt={name}
                             />
                         </LazyLoad>

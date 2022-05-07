@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { getLocalUserInfo, signout } from "./../../services/appServices";
-import { ROOT_PATH, USER_ROLE } from "../../constants/appConstants";
+import { IMAGE_PATH, ROOT_PATH, USER_ROLE } from "../../constants/appConstants";
 import withRouter from "../../hocs/withRouter";
 
 const { confirm } = Modal;
@@ -92,8 +92,9 @@ const AccountSidebar = (props: Props) => {
                     <div className="avatar">
                         <img
                             src={
-                                user.image ||
-                                `${ROOT_PATH}/images/no-avatar.png`
+                                user.image
+                                    ? `${IMAGE_PATH}/users/${user.image}`
+                                    : `${ROOT_PATH}/images/no-avatar.png`
                             }
                             alt="user"
                         />
