@@ -6,7 +6,7 @@ import {
 } from "./services/appServices";
 import ScrollToTop from "./components/Utility/ScrollToTop";
 import GroupChat from "./components/GroupChat/GroupChat";
-import DesktopLayout from "./components/Layout/DesktopLayout";
+import MainLayout from "./components/Layout/MainLayout";
 import NotFoundPage from "./components/Pages/NotFoundPage";
 import HomePage from "./components/Pages/HomePage";
 import SingleGamePage from "./components/Pages/SingleGamePage";
@@ -82,9 +82,9 @@ function App(): JSX.Element {
     return (
         <Router>
             <ScrollToTop>
-                <DesktopLayout>
+                <MainLayout>
                     <AppRoutes />
-                </DesktopLayout>
+                </MainLayout>
             </ScrollToTop>
             <GroupChat />
         </Router>

@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Row, Col, message, Breadcrumb, Spin } from "antd";
 import { HeartFilled } from "@ant-design/icons";
-import { Link, NavigateFunction, Params } from "react-router-dom";
+import { Link, NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
 import cloneDeep from "lodash/cloneDeep";
 import LazyLoad from "react-lazyload";
@@ -140,7 +140,7 @@ class SingleGamePage extends Component<Props> {
         } catch (error) {
             console.log(error);
             this.setState({ isLoading: false });
-            message.error(ERRORS.unknown);
+            this.props.navigate && this.props.navigate(`${ROOT_PATH}/page-not-found`)
         }
     }
 

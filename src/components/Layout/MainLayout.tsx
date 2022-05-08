@@ -18,7 +18,7 @@ const Content = styled.div`
     }
 `;
 
-const DesktopLayout = (props: Props): JSX.Element => {
+const MainLayout = (props: Props): JSX.Element => {
     const { children } = props;
     return (
         <Layout>
@@ -36,4 +36,4 @@ type Props = {
     children: JSX.Element | JSX.Element[];
 };
 
-export default DesktopLayout;
+export default MainLayout;
