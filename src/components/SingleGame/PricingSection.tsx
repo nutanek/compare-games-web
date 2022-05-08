@@ -82,7 +82,11 @@ const PricingSection = (props: Props) => {
                     {item.is_on_platform ? (
                         <>
                             <div className="final-price text-2xl text-bold">
-                                THB {numeral(item.final_price).format("0,0.00")}
+                                {item.final_price > 0
+                                    ? `THB ${numeral(item.final_price).format(
+                                          "0,0.00"
+                                      )}`
+                                    : "Free"}
                             </div>
                             {item.sale_price > 0 && (
                                 <div className="original-price text-lg">

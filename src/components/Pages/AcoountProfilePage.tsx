@@ -144,6 +144,8 @@ class AcoountProfilePage extends Component<Props> {
             const formData = new FormData();
             formData.append("path", "users");
             formData.append("image", file);
+            formData.append("width", "200");
+            formData.append("height", "200");
             let { data: image } = await uploadImageApi(formData);
             this.setState({
                 isLoading: false,

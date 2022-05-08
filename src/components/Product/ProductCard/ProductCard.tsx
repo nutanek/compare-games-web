@@ -113,7 +113,9 @@ const ProductCard = ({
             <div className="name text-sm text-bold text-ellipsis-2">{name}</div>
             <div className="price-wrapper">
                 <div className="price text-sm text-bold">
-                    THB {numeral(price).format("0,0.00")}
+                    {price > 0
+                        ? `THB ${numeral(price).format("0,0.00")}`
+                        : "Free"}
                 </div>
                 <div
                     className={`fav-icon ${

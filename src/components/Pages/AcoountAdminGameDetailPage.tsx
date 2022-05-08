@@ -19,12 +19,7 @@ import moment from "moment";
 import { NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
 import { cloneDeep } from "lodash";
-import {
-    ERRORS,
-    IMAGE_PATH,
-    ROOT_PATH,
-    USER_GENDER,
-} from "../../constants/appConstants";
+import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
 import languages from "./../../constants/languages.json";
 import { GameAdmin, PlatformKey, SingleGameGenre } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
@@ -313,7 +308,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                         autoComplete="off"
                     >
                         <Row gutter={30}>
-                            <Col xs={24} lg={21}>
+                            <Col xs={24}>
                                 <div className="section-header text-lg text-bold">
                                     Basic info
                                 </div>
@@ -754,7 +749,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 style={{ borderRadius: 8 }}
                                 size="large"
                             >
-                                Save changes
+                                {this.props.type === "ADD"
+                                    ? "Submit"
+                                    : "Save changes"}
                             </Button>
                         </div>
                     </Form>

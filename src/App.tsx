@@ -19,6 +19,7 @@ import AcoountWishListPage from "./components/Pages/AcoountWishListPage";
 import AcoountPasswordPage from "./components/Pages/AcoountPasswordPage";
 import AcoountAdminGameDetailPage from "./components/Pages/AcoountAdminGameDetailPage";
 import AcoountAdminGameListPage from "./components/Pages/AcoountAdminGameListPage";
+import AcoountAdminGameUrlPage from "./components/Pages/AcoountAdminGameUrlPage";
 
 const AppRoutes = () => {
     const isLoggedIn = checkIsLoggedIn();
@@ -65,6 +66,10 @@ const AppRoutes = () => {
             {
                 path: `${ROOT_PATH}/account/admin/games`,
                 element: <AcoountAdminGameListPage />,
+            },
+            {
+                path: `${ROOT_PATH}/account/admin/game-url`,
+                element: <AcoountAdminGameUrlPage />,
             },
         ];
     }

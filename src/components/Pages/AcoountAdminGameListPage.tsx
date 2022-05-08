@@ -294,7 +294,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                                     key: "action",
                                     align: "right",
                                     render: (value, record, index) => (
-                                        <span>
+                                        <div style={{ whiteSpace: "nowrap" }}>
                                             <Link
                                                 to={`${ROOT_PATH}/account/admin/game/${record.id}`}
                                             >
@@ -323,7 +323,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                                                     icon={<DeleteOutlined />}
                                                 ></Button>
                                             </Popconfirm>
-                                        </span>
+                                        </div>
                                     ),
                                 },
                             ]}

@@ -32,6 +32,7 @@ const PATH = {
     review: `${API_URL}/review`,
     gameAdmin: `${API_URL}/admin/game`,
     allGameGenresAdmin: `${API_URL}/admin/all-game-genres`,
+    gameFromUrlAdmin: `${API_URL}/admin/game-url`,
     uploadImage: `${API_URL}/upload-image`,
 };
 
@@ -73,6 +74,12 @@ export function removeGameAdminApi(params: {
     id: number;
 }): Promise<AxiosResponse<any, any>> {
     return axios.delete<any>(PATH.gameAdmin + `?id=${params.id}`);
+}
+
+export function addGameFromUrlAdminApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.gameFromUrlAdmin, params);
 }
 
 export function getAllGamesApi(

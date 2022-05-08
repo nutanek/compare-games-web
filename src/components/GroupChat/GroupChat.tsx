@@ -20,7 +20,7 @@ import {
     ServerToClientEvents,
     SocketData,
 } from "../../models/sokect";
-import { ERRORS, ROOT_PATH, SOCKET_URL } from "../../constants/appConstants";
+import { ERRORS, IMAGE_PATH, ROOT_PATH, SOCKET_URL } from "../../constants/appConstants";
 import { AllChatRooms, ChatRoom } from "../../models/chat";
 import {  getChatRoomApi } from "./../../services/apiServices";
 import ChatButton from "./ChatButton";
@@ -273,7 +273,7 @@ const GroupChat = () => {
                                     onClick={() => onOpenSingleGroupChat(index)}
                                 >
                                     <List.Item.Meta
-                                        avatar={<Avatar src={item.image} />}
+                                        avatar={<Avatar src={`${IMAGE_PATH}/games/${item.image}`} />}
                                         title={item.name}
                                     />
                                 </List.Item>
