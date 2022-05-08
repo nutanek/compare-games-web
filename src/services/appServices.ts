@@ -71,7 +71,7 @@ export function signout({ isCallback }: { isCallback: boolean | undefined }) {
 export function isLoggedIn(): boolean {
     let accessToken = getLocalAccessToken();
     let userInfo = getLocalUserInfo();
-    if (userInfo.user_id && userInfo.access_token == accessToken) {
+    if (userInfo.user_id && userInfo.access_token === accessToken) {
         return true;
     }
     return false;

@@ -2,10 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { legacy_createStore as createStore } from "redux";
+import { Provider } from "react-redux";
+import { rootReducer, RootReducerState } from "./reducers/rootReducer";
 import "antd/dist/antd.css";
 import "./index.css";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const store = createStore(rootReducer);
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById("root")
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

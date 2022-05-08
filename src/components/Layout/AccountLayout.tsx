@@ -4,7 +4,9 @@ import DesktopHeader from "./../Header/Desktop/DesktopHeader";
 import Footer from "../Footer/Footer";
 import AccountSidebar from "../Account/AccountSidebar";
 
-const Container = styled.div``;
+const Container = styled.div`
+    padding-top: 20px;
+`;
 
 const AccountLayout = (props: Props): JSX.Element => {
     const { children } = props;

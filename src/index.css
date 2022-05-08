@@ -530,3 +530,41 @@ select,
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+
+
+@media (min-width: 768px) {
+    /* .header-desktop {
+        display: flex !important;
+    }
+
+    .header-mobile {
+        display: none !important;
+    } */
+
+    /* .header-desktop {
+        display: none !important;
+    }
+    
+    .header-mobile {
+        display: flex !important;
+    } */
+}
+
+.header-mobile {
+    display: none !important;
+}
+
+@media (max-width: 767.99px) {
+    .header-desktop {
+        display: none !important;
+    }
+    
+    .header-mobile {
+        display: flex !important;
+    }
+
+    .chat-float-button {
+        display: none !important;
+    }
+}

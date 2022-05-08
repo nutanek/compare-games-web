@@ -1,5 +1,6 @@
-import { Row, Col, Pagination, Empty } from "antd";
 import { Component } from "react";
+import { Row, Col, Pagination, Empty, Button } from "antd";
+import { FilterOutlined } from "@ant-design/icons";
 import { URLSearchParamsInit } from "react-router-dom";
 import queryString from "query-string";
 import styled from "styled-components";
@@ -24,6 +25,9 @@ const Container = styled.div`
         gap: 15px;
         padding: 20px 0;
     }
+    .filter-button-mobile {
+        display: none;
+    }
     .showing-items {
         margin-bottom: 15px;
         color: #888888;
@@ -31,6 +35,17 @@ const Container = styled.div`
     .pagination-container {
         padding: 40px 0;
         text-align: center;
+    }
+    @media (max-width: 767.99px) {
+        .toolbar {
+            flex-direction: column;
+        }
+        .closed-filter {
+            display: none;
+        }
+        .filter-button-mobile {
+            display: block;
+        }
     }
 `;
 
@@ -41,6 +56,8 @@ class GamesPage extends Component<Props> {
         itemsPerPage: 20,
         total: 0,
         sortingId: 0,
+        keyword: "",
+        isOpenFilter: false,
         filter: [],
         games: [],
         isLoading: false,
@@ -60,13 +77,15 @@ class GamesPage extends Component<Props> {
     }
 
     async onGetGameList(queryStr: string): Promise<void> {
-        const { query, sortingId, page } = this.generateQuery(queryStr);
+        const { query, sortingId, keyword, page } =
+            this.generateQuery(queryStr);
 
         try {
             this.setState({ isLoading: true, games: [] });
             let { data } = await getAllGamesApi({
                 filter: query,
                 sorting_id: sortingId,
+                keyword,
                 page,
             });
             this.setState({
@@ -76,6 +95,7 @@ class GamesPage extends Component<Props> {
                 itemsPerPage: data.items_per_page,
                 total: data.total,
                 sortingId: data.sorting_id,
+                keyword,
                 filter: data.filter,
                 games: data.games,
             });
@@ -87,6 +107,7 @@ class GamesPage extends Component<Props> {
     generateQuery(queryStr: string): {
         query: Query;
         sortingId: number;
+        keyword: string;
         page: number;
     } {
         let query = queryString.parse(queryStr);
@@ -95,17 +116,25 @@ class GamesPage extends Component<Props> {
                 query[key] = [value];
             }
         }
+
         let page = 1;
         try {
             page = query.page ? parseInt(query.page[0] as string) : 1;
         } catch (error) {}
+
         let sortingId = 1;
         try {
             sortingId = query.sorting
                 ? parseInt(query.sorting[0] as string)
                 : 1;
         } catch (error) {}
-        return { query: query as Query, sortingId, page };
+
+        let keyword = "";
+        try {
+            keyword = query.keyword ? (query.keyword[0] as string) : "";
+        } catch (error) {}
+
+        return { query: query as Query, sortingId, keyword, page };
     }
 
     onSelectFilter(
@@ -173,6 +202,9 @@ class GamesPage extends Component<Props> {
         if (this.state.page !== 1) {
             query.page = this.state.page;
         }
+        if (this.state.keyword !== "") {
+            query.keyword = this.state.keyword;
+        }
 
         this.state.filter.forEach((item) =>
             item.options.forEach((option) => {
@@ -190,27 +222,55 @@ class GamesPage extends Component<Props> {
             });
     }
 
+    toggleFilter() {
+        this.setState({ isOpenFilter: !this.state.isOpenFilter });
+    }
+
     render() {
         return (
             <Container>
-                <Title title={this.state.title} />
-                <div className="toolbar">
-                    <SelectedFilters
-                        filters={this.state.filter}
-                        onRemove={this.onRemoveFilter.bind(this)}
-                        onClearAll={this.onClearFilter.bind(this)}
-                    />
-                    <SortingDesktop
-                        value={this.state.sortingId}
-                        onSelect={this.onSelectSorting.bind(this)}
-                    />
-                </div>
-                <p className="showing-items text-sm">
-                    Showing {this.state.total}{" "}
-                    {this.state.total > 1 ? "items" : "item"}
-                </p>
-                <Row gutter={40}>
-                    <Col xs={12} sm={12} md={8} lg={6}>
+                <Row gutter={30}>
+                    <Col xs={24}>
+                        <Title title={this.state.title} />
+                        <div className="toolbar">
+                            <SelectedFilters
+                                filters={this.state.filter}
+                                onRemove={this.onRemoveFilter.bind(this)}
+                                onClearAll={this.onClearFilter.bind(this)}
+                            />
+                            <SortingDesktop
+                                value={this.state.sortingId}
+                                onSelect={this.onSelectSorting.bind(this)}
+                            />
+                        </div>
+                        <p className="showing-items text-sm">
+                            Showing {this.state.total}{" "}
+                            {this.state.total > 1 ? "items" : "item"}
+                        </p>
+                        <Button
+                            block
+                            ghost
+                            danger
+                            icon={<FilterOutlined />}
+                            style={{ marginBottom: 20, borderRadius: 8 }}
+                            className="filter-button-mobile"
+                            onClick={() => this.toggleFilter()}
+                        >
+                            {this.state.isOpenFilter
+                                ? "Hide Filters"
+                                : "Show Filters"}
+                        </Button>
+                    </Col>
+                    <Col
+                        xs={24}
+                        sm={12}
+                        md={8}
+                        lg={6}
+                        style={{ paddingRight: 30 }}
+                        className={
+                            !this.state.isOpenFilter ? "closed-filter" : ""
+                        }
+                    >
                         {this.state.filter.length > 0 && (
                             <Filter
                                 filters={this.state.filter}
@@ -233,7 +293,7 @@ class GamesPage extends Component<Props> {
                                 </Col>
                             ))}
                         </Row>
-                        
+
                         {this.state.isLoading && (
                             <p className="text-center">Loading...</p>
                         )}
@@ -270,6 +330,8 @@ type State = {
     itemsPerPage: number;
     total: number;
     sortingId: number;
+    keyword: string;
+    isOpenFilter: boolean;
     filter: FilterModel[];
     games: Game[];
     isLoading: boolean;

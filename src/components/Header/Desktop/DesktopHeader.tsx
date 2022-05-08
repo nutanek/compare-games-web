@@ -75,7 +75,7 @@ const DesktopHeader = (): JSX.Element => {
     const isLoggedIn = checkLoggedIn();
 
     return (
-        <Container>
+        <Container className="header-desktop">
             <Link
                 to={`${ROOT_PATH}/`}
                 className="logo text-md text-bold pointer"

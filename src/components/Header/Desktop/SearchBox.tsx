@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Input } from "antd";
 import styled from "styled-components";
+import { NavigateFunction } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
-import { Game } from "../../../models/game";
-import withSearchGames from "./../../../hocs/withSearchGames";
+import { ROOT_PATH } from "../../../constants/appConstants";
+import withRouter from "../../../hocs/withRouter";
 
 const Container = styled.div`
     .ant-input-affix-wrapper {
@@ -20,24 +22,31 @@ const Container = styled.div`
 `;
 
 const SearchBoxDesktop = (props: Props) => {
+    let [keyword, setKeyword] = useState<string>("");
+
+    function onSearch() {
+        props.navigate &&
+            props.navigate(`${ROOT_PATH}/games?keyword=${keyword}`);
+    }
+
     return (
         <Container>
             <Input
+                allowClear
                 className="text-md"
                 size="large"
                 placeholder="Search Game"
                 prefix={<SearchOutlined style={{ color: "#ffffff" }} />}
-                onChange={e => props.onChangeKeyword && props.onChangeKeyword(e.target.value)}
+                onChange={(e) => setKeyword(e.target.value)}
+                onPressEnter={() => onSearch()}
             />
         </Container>
     );
 };
 
 type Props = {
-    keyword?: string;
-    isLoadingSearch?: boolean;
-    searchResult?: Game[];
-    onChangeKeyword?: (keyword: string) => void;
+    navigate?: NavigateFunction;
+    location?: Location;
 };
 
-export default withSearchGames(SearchBoxDesktop);
+export default withRouter(SearchBoxDesktop);

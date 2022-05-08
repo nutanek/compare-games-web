@@ -1,4 +1,4 @@
-import { Modal, Spin } from "antd";
+import { Modal } from "antd";
 
 const LoadingModal = ({ isOpen }: Props) => (
     <Modal

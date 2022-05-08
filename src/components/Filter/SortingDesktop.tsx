@@ -5,8 +5,10 @@ import { SORTINGS } from "./../../constants/appConstants";
 const { Option } = Select;
 
 const Container = styled.div`
+    > .title {
+        padding-right: 8px;
+    }
     .ant-select-selector {
-        margin-left: 8px;
         border-radius: 8px !important;
     }
 `;
@@ -14,7 +16,7 @@ const Container = styled.div`
 const SortingDesktop = (props: Props) => {
     return (
         <Container className="text-sm">
-            <span className="text-bold">Sort by:</span>
+            <span className="text-bold title">Sort by:</span>
             <Select
                 style={{ width: 200 }}
                 value={props.value}

@@ -75,6 +75,7 @@ const Container = styled.div`
             }
             td:nth-child(2) {
                 padding: 10px 0px 10px 10px;
+                word-break: break-word;
             }
         }
     }
@@ -241,7 +242,7 @@ class SingleGamePage extends Component<Props> {
                                     <td>{game.developer || "-"}</td>
                                 </tr>
                                 <tr>
-                                    <td>Voice:</td>
+                                    <td>Voices:</td>
                                     <td>{game.voices || "-"}</td>
                                 </tr>
                                 <tr>

@@ -51,9 +51,15 @@ const Filter = (props: Props) => {
                 >
                     {filter.options.map((option) => (
                         <div key={option.slug} className="filter-option">
-                            <div className="name">{option.name}</div>
+                            <label
+                                htmlFor={`filter-${filter.name}-${option.slug}`}
+                                className="name"
+                            >
+                                {option.name}
+                            </label>
                             <div className="check">
                                 <Checkbox
+                                    id={`filter-${filter.name}-${option.slug}`}
                                     checked={option.selected}
                                     onChange={() =>
                                         props.onSelect(

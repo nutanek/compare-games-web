@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
     Avatar,
     Button,
@@ -20,9 +21,15 @@ import {
     ServerToClientEvents,
     SocketData,
 } from "../../models/sokect";
-import { ERRORS, IMAGE_PATH, ROOT_PATH, SOCKET_URL } from "../../constants/appConstants";
+import { RootReducerState } from "./../../reducers/rootReducer";
+import {
+    ERRORS,
+    IMAGE_PATH,
+    ROOT_PATH,
+    SOCKET_URL,
+} from "../../constants/appConstants";
 import { AllChatRooms, ChatRoom } from "../../models/chat";
-import {  getChatRoomApi } from "./../../services/apiServices";
+import { getChatRoomApi } from "./../../services/apiServices";
 import ChatButton from "./ChatButton";
 import SingleGroupChat from "./SingleGroupChat";
 import InputMessage from "./InputMessage";
@@ -45,11 +52,16 @@ const initialChatRoom = {
     game_id: 0,
 };
 
+const itemsPerPage = 12;
+
 const Container = styled.div``;
 
 const GroupChat = () => {
+    const isOpen = useSelector<RootReducerState, boolean>(
+        (state) => state.isOpenChatModal
+    );
+    const dispatch = useDispatch();
     const [chatItems, setChatItems] = useState<SocketData[]>([]);
-    const [isOpen, setIsOpen] = useState(false);
     const [selectedSingleGroupId, setSelectedSingleGroupId] =
         useState<number>(-1);
     const [selectedSingleGroup, setSelectedSingleGroup] =
@@ -110,12 +122,12 @@ const GroupChat = () => {
         }
     }, [selectedSingleGroupId]);
 
-    const showDrawer = () => {
-        setIsOpen(true);
-    };
-
-    const onClose = (): void => {
-        setIsOpen(false);
+    const toggleModal = (status: boolean) => {
+        if (status) {
+            dispatch({ type: "OPEN_CHAT_MODAL" });
+        } else {
+            dispatch({ type: "CLOSE_CHAT_MODAL" });
+        }
     };
 
     useEffect(() => {
@@ -130,6 +142,7 @@ const GroupChat = () => {
             let { data } = await getChatRoomApi({
                 page,
                 keyword,
+                items_per_page: itemsPerPage,
             });
             setChatRooms(data);
         } catch (error: any) {
@@ -180,7 +193,7 @@ const GroupChat = () => {
 
     return (
         <Container>
-            <ChatButton onClick={() => showDrawer()} />
+            <ChatButton onClick={() => toggleModal(true)} />
 
             <Drawer
                 title={
@@ -200,7 +213,7 @@ const GroupChat = () => {
                                         size="small"
                                         shape="circle"
                                         icon={<CloseOutlined />}
-                                        onClick={() => setIsOpen(false)}
+                                        onClick={() => toggleModal(false)}
                                     ></Button>
                                 </div>
                             </div>
@@ -232,7 +245,7 @@ const GroupChat = () => {
                                     size="small"
                                     shape="circle"
                                     icon={<CloseOutlined />}
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={() => toggleModal(false)}
                                 ></Button>
                             </div>
                         </div>
@@ -244,7 +257,7 @@ const GroupChat = () => {
                 closable={false}
                 size="large"
                 bodyStyle={selectedSingleGroupId !== -1 ? { padding: 15 } : {}}
-                onClose={() => onClose()}
+                onClose={() => toggleModal(false)}
                 visible={isOpen}
                 footer={
                     selectedSingleGroupId === -1 ? null : (
@@ -254,7 +267,7 @@ const GroupChat = () => {
                     )
                 }
             >
-                {selectedSingleGroupId === -1 ? (
+                {!isOpen ? null : selectedSingleGroupId === -1 ? (
                     <Spin spinning={isLoading}>
                         <List
                             itemLayout="horizontal"
@@ -273,7 +286,11 @@ const GroupChat = () => {
                                     onClick={() => onOpenSingleGroupChat(index)}
                                 >
                                     <List.Item.Meta
-                                        avatar={<Avatar src={`${IMAGE_PATH}/games/${item.image}`} />}
+                                        avatar={
+                                            <Avatar
+                                                src={`${IMAGE_PATH}/games/${item.image}`}
+                                            />
+                                        }
                                         title={item.name}
                                     />
                                 </List.Item>
@@ -282,7 +299,7 @@ const GroupChat = () => {
                         <div style={{ padding: "15px 0", textAlign: "center" }}>
                             <Pagination
                                 current={page}
-                                pageSize={20}
+                                pageSize={itemsPerPage}
                                 total={chatRooms.total}
                                 showSizeChanger={false}
                                 hideOnSinglePage
