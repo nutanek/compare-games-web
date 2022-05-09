@@ -252,12 +252,12 @@ class AcoountAdminGameDetailPage extends Component<Props> {
 
     onSelectPlatform(platform: string, status: boolean) {
         let game = cloneDeep(this.state.game);
-        if (platform == "ps") {
+        if (platform === "ps") {
             game.in_platform_ps = status;
-        } else if (platform == "xbox") {
+        } else if (platform === "xbox") {
             game.in_platform_xbox = status;
         }
-        if (platform == "nintendo") {
+        if (platform === "nintendo") {
             game.in_platform_nintendo = status;
         }
         this.setState({ game });
@@ -265,17 +265,17 @@ class AcoountAdminGameDetailPage extends Component<Props> {
 
     onSelectOnSale(platform: string, status: boolean) {
         let game = cloneDeep(this.state.game);
-        if (platform == "ps") {
+        if (platform === "ps") {
             game.sale_price_ps = status ? 1 : 0;
             this.formRef.current?.setFieldsValue({
                 salePricePs: game.sale_price_ps,
             });
-        } else if (platform == "xbox") {
+        } else if (platform === "xbox") {
             game.sale_price_xbox = status ? 1 : 0;
             this.formRef.current?.setFieldsValue({
                 salePriceXbox: game.sale_price_xbox,
             });
-        } else if (platform == "nintendo") {
+        } else if (platform === "nintendo") {
             game.sale_price_nintendo = status ? 1 : 0;
             this.formRef.current?.setFieldsValue({
                 salePriceNintendo: game.sale_price_nintendo,
@@ -292,7 +292,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                     title={
                         isLoading
                             ? "game"
-                            : this.props.type == "ADD"
+                            : this.props.type === "ADD"
                             ? "Add game"
                             : "Edit game"
                     }
@@ -479,12 +479,6 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     }
                                     name="voices"
                                     style={{ width: "100%" }}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Voices is required!",
-                                        },
-                                    ]}
                                 >
                                     <Select
                                         mode="tags"
@@ -511,12 +505,6 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     }
                                     name="subtitles"
                                     style={{ width: "100%" }}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Subtitles is required!",
-                                        },
-                                    ]}
                                 >
                                     <Select
                                         mode="tags"

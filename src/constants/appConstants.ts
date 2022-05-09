@@ -7,21 +7,34 @@ export const IMAGE_PATH = process.env.REACT_APP_IMAGE_PATH || "";
 export const KEY_ACCESS_TOKEN = "consoles_access_token";
 export const KEY_USER_INFO = "consoles_user_info";
 
+export const SORTING_ID = {
+    releaseDate: 1,
+    priceLowToHigh: 2,
+    priceHighToLow: 3,
+    nameAToZ: 4,
+    rating: 5,
+    createdDate: 6,
+};
+
 export const SORTINGS = [
     {
-        id: 1,
-        name: "New Release",
+        id: SORTING_ID.releaseDate,
+        name: "Release date",
     },
     {
-        id: 2,
+        id: SORTING_ID.priceLowToHigh,
         name: "Price (Low to Hight)",
     },
     {
-        id: 3,
+        id: SORTING_ID.priceHighToLow,
         name: "Price (Hight to Low)",
     },
     {
-        id: 4,
+        id: SORTING_ID.nameAToZ,
+        name: "Name A-Z",
+    },
+    {
+        id: SORTING_ID.rating,
         name: "Rating",
     },
 ];

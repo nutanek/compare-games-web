@@ -21,7 +21,12 @@ import styled from "styled-components";
 import queryString from "query-string";
 import debounce from "lodash/debounce";
 import numeral from "numeral";
-import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
+import {
+    ERRORS,
+    IMAGE_PATH,
+    ROOT_PATH,
+    SORTING_ID,
+} from "../../constants/appConstants";
 import { Game } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import {
@@ -44,23 +49,12 @@ const Container = styled.div`
     }
 `;
 
-const initialUser = {
-    id: 0,
-    email: "",
-    display_name: "",
-    image: "",
-    gender: "",
-    country: "",
-    role: "",
-};
-
 class AcoountAdminGameListPage extends Component<Props> {
     state: State = {
         isLoading: false,
         page: 1,
         itemsPerPage: 0,
         total: 0,
-        sortingId: 1,
         keyword: "",
         games: [],
     };
@@ -83,13 +77,13 @@ class AcoountAdminGameListPage extends Component<Props> {
     }
 
     async getGameList(queryStr: string): Promise<void> {
-        const { query, sortingId, page } = this.generateQuery(queryStr);
+        const { page } = this.generateQuery(queryStr);
 
         try {
             this.setState({ isLoading: true });
             let { data } = await getAllGamesApi({
-                filter: query,
-                sorting_id: sortingId,
+                filter: {},
+                sorting_id: SORTING_ID.createdDate,
                 keyword: this.state.keyword,
                 items_per_page: 10,
                 page,
@@ -100,7 +94,6 @@ class AcoountAdminGameListPage extends Component<Props> {
                 page: data.page,
                 itemsPerPage: data.items_per_page,
                 total: data.total,
-                sortingId: data.sorting_id,
                 filter: data.filter,
                 games: data.games,
             });
@@ -243,30 +236,30 @@ class AcoountAdminGameListPage extends Component<Props> {
                                     dataIndex: "image",
                                     key: "image",
                                     align: "center",
-                                    className: "pointer text-md",
-                                    onCell: (record) => {
-                                        return {
-                                            onClick: () =>
-                                                this.onClickRow(record.id),
-                                        };
-                                    },
-                                    render: (value) => (
-                                        <img
-                                            src={`${IMAGE_PATH}/games/${value}`}
-                                        />
+                                    className: " text-md",
+                                    render: (value, record) => (
+                                        <Link
+                                            to={`${ROOT_PATH}/account/admin/game/${record.id}`}
+                                        >
+                                            <img
+                                                src={`${IMAGE_PATH}/games/${value}`}
+                                            />
+                                        </Link>
                                     ),
                                 },
                                 {
                                     title: "Name",
                                     dataIndex: "name",
                                     key: "name",
-                                    className: "pointer text-md",
-                                    onCell: (record) => {
-                                        return {
-                                            onClick: () =>
-                                                this.onClickRow(record.id),
-                                        };
-                                    },
+                                    className: "text-md",
+                                    render: (value, record) => (
+                                        <Link
+                                            style={{ color: "#000000" }}
+                                            to={`${ROOT_PATH}/account/admin/game/${record.id}`}
+                                        >
+                                            {value}
+                                        </Link>
+                                    ),
                                 },
                                 {
                                     title: "Lowest price (THB)",
@@ -350,7 +343,6 @@ type State = {
     page: number;
     itemsPerPage: number;
     total: number;
-    sortingId: number;
     games: Game[];
     keyword: string;
     isLoading: boolean;

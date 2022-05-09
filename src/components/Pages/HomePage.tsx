@@ -2,7 +2,7 @@ import { Row, Col, message } from "antd";
 import { Component } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
+import { ERRORS, ROOT_PATH, SORTING_ID } from "../../constants/appConstants";
 import { Game } from "../../models/game";
 import { getHomeApi } from "./../../services/apiServices";
 import Title from "./../Utility/Title";
@@ -71,7 +71,7 @@ class HomePage extends Component {
                     <Title
                         title="On Sales"
                         seeAllText="See All"
-                        seeAllLink={`${ROOT_PATH}/games`}
+                        seeAllLink={`${ROOT_PATH}/games?on_sale=true`}
                     />
                     <Row gutter={15}>
                         {this.state.isLoading
@@ -93,9 +93,9 @@ class HomePage extends Component {
 
                 <div style={{ marginBottom: 20 }}>
                     <Title
-                        title="Most Popular"
+                        title="Best Rating"
                         seeAllText="See All"
-                        seeAllLink={`${ROOT_PATH}/games`}
+                        seeAllLink={`${ROOT_PATH}/games?sorting=${SORTING_ID.rating}`}
                     />
                     <Row gutter={15}>
                         {this.state.isLoading
@@ -119,7 +119,7 @@ class HomePage extends Component {
                     <Title
                         title="New Releases"
                         seeAllText="See All"
-                        seeAllLink={`${ROOT_PATH}/games`}
+                        seeAllLink={`${ROOT_PATH}/games?released=true`}
                     />
                     <Row gutter={15}>
                         {this.state.isLoading
@@ -143,7 +143,7 @@ class HomePage extends Component {
                     <Title
                         title="Coming Soon"
                         seeAllText="See All"
-                        seeAllLink={`${ROOT_PATH}/games`}
+                        seeAllLink={`${ROOT_PATH}/games?coming_soon=true`}
                     />
                     <Row gutter={15}>
                         {this.state.isLoading

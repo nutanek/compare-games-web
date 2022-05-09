@@ -57,6 +57,9 @@ class GamesPage extends Component<Props> {
         total: 0,
         sortingId: 0,
         keyword: "",
+        isOnSale: false,
+        released: false,
+        comingSoon: false,
         isOpenFilter: false,
         filter: [],
         games: [],
@@ -77,8 +80,15 @@ class GamesPage extends Component<Props> {
     }
 
     async onGetGameList(queryStr: string): Promise<void> {
-        const { query, sortingId, keyword, page } =
-            this.generateQuery(queryStr);
+        const {
+            query,
+            sortingId,
+            keyword,
+            isOnSale,
+            released,
+            comingSoon,
+            page,
+        } = this.generateQuery(queryStr);
 
         try {
             this.setState({ isLoading: true, games: [] });
@@ -86,6 +96,9 @@ class GamesPage extends Component<Props> {
                 filter: query,
                 sorting_id: sortingId,
                 keyword,
+                on_sale: isOnSale,
+                released,
+                coming_soon: comingSoon,
                 page,
             });
             this.setState({
@@ -96,6 +109,9 @@ class GamesPage extends Component<Props> {
                 total: data.total,
                 sortingId: data.sorting_id,
                 keyword,
+                isOnSale,
+                released,
+                comingSoon,
                 filter: data.filter,
                 games: data.games,
             });
@@ -108,6 +124,9 @@ class GamesPage extends Component<Props> {
         query: Query;
         sortingId: number;
         keyword: string;
+        isOnSale: boolean;
+        released: boolean;
+        comingSoon: boolean;
         page: number;
     } {
         let query = queryString.parse(queryStr);
@@ -134,7 +153,32 @@ class GamesPage extends Component<Props> {
             keyword = query.keyword ? (query.keyword[0] as string) : "";
         } catch (error) {}
 
-        return { query: query as Query, sortingId, keyword, page };
+        let isOnSale = false;
+        try {
+            isOnSale = query.on_sale ? query.on_sale[0] === "true" : false;
+        } catch (error) {}
+
+        let released = false;
+        try {
+            released = query.released ? query.released[0] === "true" : false;
+        } catch (error) {}
+
+        let comingSoon = false;
+        try {
+            comingSoon = query.coming_soon
+                ? query.coming_soon[0] === "true"
+                : false;
+        } catch (error) {}
+
+        return {
+            query: query as Query,
+            sortingId,
+            keyword,
+            isOnSale,
+            released,
+            comingSoon,
+            page,
+        };
     }
 
     onSelectFilter(
@@ -204,6 +248,15 @@ class GamesPage extends Component<Props> {
         }
         if (this.state.keyword !== "") {
             query.keyword = this.state.keyword;
+        }
+        if (this.state.isOnSale) {
+            query.on_sale = this.state.isOnSale;
+        }
+        if (this.state.released) {
+            query.released = this.state.released;
+        }
+        if (this.state.comingSoon) {
+            query.coming_soon = this.state.comingSoon;
         }
 
         this.state.filter.forEach((item) =>
@@ -331,6 +384,9 @@ type State = {
     total: number;
     sortingId: number;
     keyword: string;
+    isOnSale: boolean;
+    released: boolean;
+    comingSoon: boolean;
     isOpenFilter: boolean;
     filter: FilterModel[];
     games: Game[];
