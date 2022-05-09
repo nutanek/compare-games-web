@@ -20,7 +20,7 @@ const data = [
         link: `${ROOT_PATH}/`,
     },
     {
-        title: "All games",
+        title: "Games",
         icon: <BuildOutlined />,
         hideOnAuth: false,
         needAuth: false,

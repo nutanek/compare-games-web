@@ -176,7 +176,7 @@ class SingleGamePage extends Component<Props> {
                             <Link to={`${ROOT_PATH}/`}>Home</Link>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>
-                            <Link to={`${ROOT_PATH}/games`}>All Games</Link>
+                            <Link to={`${ROOT_PATH}/games`}>Games</Link>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>{game.name}</Breadcrumb.Item>
                     </Breadcrumb>

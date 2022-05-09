@@ -192,7 +192,7 @@ class AcoountAdminGameListPage extends Component<Props> {
     render() {
         return (
             <Container>
-                <AccountLayout title="All games">
+                <AccountLayout title="Games">
                     <div>
                         <Row gutter={[10, 10]} style={{ marginBottom: 20 }}>
                             <Col xs={24} md={12} lg={10}>

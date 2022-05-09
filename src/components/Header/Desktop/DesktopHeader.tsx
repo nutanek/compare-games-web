@@ -87,7 +87,7 @@ const DesktopHeader = (): JSX.Element => {
                 to={`${ROOT_PATH}/games`}
                 className="menu text-md text-bold pointer"
             >
-                All Games
+                Games
             </Link>
             <div className="search-box-container">
                 <SearchBoxDesktop />
