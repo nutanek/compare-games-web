@@ -4,12 +4,17 @@ import { HeartFilled } from "@ant-design/icons";
 import { Link, NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
 import cloneDeep from "lodash/cloneDeep";
+import moment from "moment";
 import LazyLoad from "react-lazyload";
-import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
+import {
+    APP_DATE_FORMAT,
+    ERRORS,
+    IMAGE_PATH,
+    ROOT_PATH,
+} from "../../constants/appConstants";
 import { SingleGame } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import { getGameApi, updateWishlistApi } from "./../../services/apiServices";
-import { epochToDateTime } from "../../services/appServices";
 import GenreTags from "../SingleGame/GenreTags";
 import LoadingModal from "../Utility/Modal/Loading";
 import PricingSection from "../SingleGame/PricingSection";
@@ -140,7 +145,8 @@ class SingleGamePage extends Component<Props> {
         } catch (error) {
             console.log(error);
             this.setState({ isLoading: false });
-            this.props.navigate && this.props.navigate(`${ROOT_PATH}/page-not-found`)
+            this.props.navigate &&
+                this.props.navigate(`${ROOT_PATH}/page-not-found`);
         }
     }
 
@@ -231,10 +237,9 @@ class SingleGamePage extends Component<Props> {
                                 <tr>
                                     <td>Release date:</td>
                                     <td>
-                                        {epochToDateTime(
-                                            game.release_date,
-                                            "mmm d, yyyy"
-                                        )}
+                                        {moment
+                                            .unix(game.release_date / 1000)
+                                            .format(APP_DATE_FORMAT)}
                                     </td>
                                 </tr>
                                 <tr>

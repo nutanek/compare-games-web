@@ -19,7 +19,12 @@ import moment from "moment";
 import { NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
 import { cloneDeep } from "lodash";
-import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
+import {
+    ERRORS,
+    IMAGE_PATH,
+    ROOT_PATH,
+    APP_DATE_FORMAT,
+} from "../../constants/appConstants";
 import languages from "./../../constants/languages.json";
 import { GameAdmin, PlatformKey, SingleGameGenre } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
@@ -34,8 +39,6 @@ import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
 const { Option } = Select;
-
-const DATE_FORMAT = "MMM DD, YYYY";
 
 const Container = styled.div`
     .section-header {
@@ -447,7 +450,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     ]}
                                 >
                                     <DatePicker
-                                        format={DATE_FORMAT}
+                                        format={APP_DATE_FORMAT}
                                         style={{ width: "100%" }}
                                         size="large"
                                     />

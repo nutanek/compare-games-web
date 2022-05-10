@@ -81,10 +81,3 @@ export function getUserRole(): string {
     let userInfo = getLocalUserInfo();
     return userInfo.role;
 }
-
-export function epochToDateTime(epoch: number, format: string): string {
-    var d = new Date();
-    let date = new Date(epoch + d.getTimezoneOffset());
-    let timeFormat = dateFormat(date, format);
-    return timeFormat;
-}

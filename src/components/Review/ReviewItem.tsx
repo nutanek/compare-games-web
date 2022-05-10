@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import { Rate } from "antd";
 import { LikeFilled, DislikeFilled } from "@ant-design/icons";
+import moment from "moment";
 import { ReviewItem as ReviewItemModel } from "../../models/review";
-import { ROOT_PATH, IMAGE_PATH } from "../../constants/appConstants";
-import { epochToDateTime } from "../../services/appServices";
+import {
+    ROOT_PATH,
+    IMAGE_PATH,
+    APP_DATE_FORMAT,
+} from "../../constants/appConstants";
 
 const Container = styled.div`
     border: 1px solid #d2d4d9;
@@ -76,10 +80,9 @@ const ReviewItem = (props: Props) => {
                         {review.display_name}
                     </div>
                     <div className="review-time text-sm">
-                        {epochToDateTime(
-                            review.created_time,
-                            "mmm d, yyyy HH:MM"
-                        )}
+                        {moment
+                            .unix(review.created_time / 1000)
+                            .format(`${APP_DATE_FORMAT} HH:mm`)}
                     </div>
                 </div>
                 <div className="rating-star">
