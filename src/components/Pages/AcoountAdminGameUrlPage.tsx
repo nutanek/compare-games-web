@@ -6,16 +6,12 @@ import {
     Button,
     Form,
     Input,
-    Select,
     FormInstance,
     Alert,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import moment from "moment";
 import { NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
 import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
-import { GameAdmin } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import { addGameFromUrlAdminApi } from "./../../services/apiServices";
 import LoadingModal from "../Utility/Modal/Loading";
