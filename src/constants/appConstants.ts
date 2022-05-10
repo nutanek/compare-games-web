@@ -7,7 +7,7 @@ export const IMAGE_PATH = process.env.REACT_APP_IMAGE_PATH || "";
 export const KEY_ACCESS_TOKEN = "consoles_access_token";
 export const KEY_USER_INFO = "consoles_user_info";
 
-export const APP_DATE_FORMAT = "MMM DD, YYYY";
+export const APP_DATE_FORMAT = "MMM D, YYYY";
 
 export const SORTING_ID = {
     releaseDate: 1,
