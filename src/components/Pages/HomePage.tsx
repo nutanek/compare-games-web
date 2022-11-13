@@ -58,6 +58,7 @@ class HomePage extends Component {
                     image=""
                     price={0}
                     liked={false}
+                    rating={0}
                     platforms={[]}
                 />
             </Col>

@@ -42,6 +42,7 @@ const Container = styled(Header)`
     .account-buttons {
         display: flex;
         gap: 15px;
+        padding-right: 0;
         button {
             border-radius: 8px;
             border-color: #ffffff;

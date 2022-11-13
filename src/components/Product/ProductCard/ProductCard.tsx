@@ -9,6 +9,7 @@ import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../../constants/appConstants";
 import { PlatformKey } from "../../../models/game";
 import { updateWishlistApi } from "../../../services/apiServices";
 import PlatformTags from "./PlatformTags";
+import MetacriticIcon from "./../../../images/metacritic-icon.svg";
 
 const Container = styled.div`
     .image-wrapper {
@@ -26,6 +27,25 @@ const Container = styled.div`
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        .rating-score {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 3px 5px;
+            z-index: 9;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            border-radius: 8px;
+            color: #ffffff;
+            background-color: rgba(26, 36, 47, 0.8);
+            img {
+                vertical-align: sub;
+                width: 18px;
+                height: 18px;
+            }
         }
     }
     .name {
@@ -61,6 +81,7 @@ const ProductCard = ({
     price,
     liked,
     platforms,
+    rating,
     onLike,
 }: Props) => {
     const refImage = useRef<HTMLImageElement>(null);
@@ -94,6 +115,14 @@ const ProductCard = ({
         <Container>
             <Link to={`${ROOT_PATH}/game/${id}`}>
                 <div className="image-wrapper">
+                    {!!rating && (
+                        <div className="rating-score" title="Metacritic Score">
+                            <div>
+                                <img src={MetacriticIcon} />
+                            </div>
+                            <div className="text-bold">{rating}</div>
+                        </div>
+                    )}
                     {image !== "" && (
                         <LazyLoad>
                             <img
@@ -140,6 +169,7 @@ type Props = {
     price: number;
     liked: boolean;
     platforms: PlatformKey[];
+    rating: number;
     onLike?: (id: number) => void;
 };
 

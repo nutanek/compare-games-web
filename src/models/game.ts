@@ -7,6 +7,7 @@ export type Game = {
     image: string;
     price: number;
     liked: boolean;
+    rating: number;
     platforms: PlatformKey[];
 };
 
@@ -69,7 +70,7 @@ export type GameAdmin = {
     image: string;
     detail: string;
     release_date: number;
-    age_rating: keyof typeof AGE_RATINGS | '';
+    age_rating: keyof typeof AGE_RATINGS | "";
     developer: string;
     voices: string[];
     subtitles: string[];
