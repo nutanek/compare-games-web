@@ -12,6 +12,8 @@ import HomePage from "./components/Pages/HomePage";
 import SingleGamePage from "./components/Pages/SingleGamePage";
 import LoginPage from "./components/Pages/LoginPage";
 import SignupPage from "./components/Pages/SignupPage";
+import ForgotPasswordPage from "./components/Pages/ForgotPasswordPage";
+import ResetPasswordPage from "./components/Pages/ResetPasswordPage";
 import GamesPage from "./components/Pages/GamesPage";
 import AcoountPage from "./components/Pages/AcoountPage";
 import AcoountProfilePage from "./components/Pages/AcoountProfilePage";
@@ -31,6 +33,8 @@ const AppRoutes = () => {
         { path: `${ROOT_PATH}/games`, element: <GamesPage /> },
         { path: `${ROOT_PATH}/login`, element: <LoginPage /> },
         { path: `${ROOT_PATH}/signup`, element: <SignupPage /> },
+        { path: `${ROOT_PATH}/forgot-password`, element: <ForgotPasswordPage /> },
+        { path: `${ROOT_PATH}/reset-password`, element: <ResetPasswordPage /> },
         {
             path: `${ROOT_PATH}/account/wishlist`,
             element: <AcoountWishListPage />,

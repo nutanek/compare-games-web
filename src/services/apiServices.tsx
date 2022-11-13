@@ -18,6 +18,8 @@ import { API_URL } from "../constants/appConstants";
 const PATH = {
     signup: `${API_URL}/signup`,
     signin: `${API_URL}/signin`,
+    forgotPassword: `${API_URL}/forgot-password`,
+    resetPassword: `${API_URL}/reset-password`,
     userSelf: `${API_URL}/user/self`,
     userPassword: `${API_URL}/user/password`,
     home: `${API_URL}/home`,
@@ -116,6 +118,18 @@ export function signupApi(params: object): Promise<AxiosResponse<SignUp, any>> {
 export function signinApi(params: object): Promise<AxiosResponse<SignIn, any>> {
     const data = JSON.stringify(params);
     return axios.post<SignIn>(PATH.signin, data);
+}
+
+export function forgotPasswordApi(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.forgotPassword, params);
+}
+
+export function resetPassword(
+    params: object
+): Promise<AxiosResponse<any, any>> {
+    return axios.post<any>(PATH.resetPassword, params);
 }
 
 export function getUserSelfApi(): Promise<AxiosResponse<UserInfo, any>> {
