@@ -104,17 +104,19 @@ const Container = styled.div`
     }
 `;
 
-const initialGameValues = {
+const initialGameValues: SingleGame = {
     id: 0,
     name: "",
     image: "",
     detail: "",
     release_date: 0,
+    age_rating: null,
     developer: "",
     voices: "",
     subtitles: "",
     metacritic_rating: 0,
     metacritic_rating_count: 0,
+    metacritic_ref_url: "",
     user_rating: 0,
     user_rating_count: 0,
     liked: false,
@@ -243,6 +245,10 @@ class SingleGamePage extends Component<Props> {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>Rating:</td>
+                                    <td>{game.age_rating || "-"}</td>
+                                </tr>
+                                <tr>
                                     <td>Developer:</td>
                                     <td>{game.developer || "-"}</td>
                                 </tr>
@@ -261,28 +267,38 @@ class SingleGamePage extends Component<Props> {
 
                 <Row>
                     <Col xs={24} className="ratings-section">
-                        <h2 className="text-lg text-bold">Ratings</h2>
+                        <h2 className="text-lg text-bold">Scores</h2>
                         <Row gutter={[10, 10]}>
                             <Col xs={24} sm={12} lg={12}>
                                 <div className="rating-item">
                                     <div className="text-lg text-bold">
-                                        Metacritic Rating
+                                        Metacritic Score
                                     </div>
                                     <div className="text-bold">
                                         <span className="text-5xl score">
                                             {game.metacritic_rating || "-"}{" "}
                                         </span>
-                                        <span className="text-xl">/ 5</span>
+                                        <span className="text-xl">/ 10</span>
                                     </div>
                                     <div className="text-sm count">
                                         Critics: {game.metacritic_rating_count}
                                     </div>
+                                    {game.metacritic_ref_url && (
+                                        <div className="text-sm">
+                                            <a
+                                                target="_blank"
+                                                href={game.metacritic_ref_url}
+                                            >
+                                                Check Metacritic.com
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                             </Col>
                             <Col xs={24} sm={12} lg={12}>
                                 <div className="rating-item">
                                     <div className="text-lg text-bold">
-                                        Consoles Rating
+                                        Consoles Score
                                     </div>
                                     <div className="text-bold">
                                         <span className="text-5xl score">

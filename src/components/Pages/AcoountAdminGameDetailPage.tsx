@@ -26,6 +26,7 @@ import {
     APP_DATE_FORMAT,
 } from "../../constants/appConstants";
 import languages from "./../../constants/languages.json";
+import { AGE_RATINGS } from "./../../constants/appConstants";
 import { GameAdmin, PlatformKey, SingleGameGenre } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import {
@@ -39,6 +40,8 @@ import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
 const { Option } = Select;
+
+type TypeAgeRatingKey = keyof typeof AGE_RATINGS;
 
 const Container = styled.div`
     .section-header {
@@ -68,12 +71,14 @@ const initialGame: GameAdmin = {
     name: "",
     image: "",
     detail: "",
+    age_rating: "",
     release_date: 0,
     developer: "",
     voices: [],
     subtitles: [],
     metacritic_rating: 0,
     metacritic_rating_count: 0,
+    metacritic_ref_url: "",
     user_rating: 0,
     user_rating_count: 0,
     original_price_ps: 0,
@@ -117,12 +122,14 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                 name: game.name,
                 detail: game.detail,
                 releaseDate: moment.unix(game.release_date / 1000),
+                ageRating: game.age_rating,
                 developer: game.developer,
                 genres: game.genres.map((genre) => genre.id),
                 voices: game.voices,
                 subtitles: game.subtitles,
                 metacriticRating: game.metacritic_rating || 0,
                 metacriticRatingCount: game.metacritic_rating_count || 0,
+                metacriticRefUrl: game.metacritic_ref_url || "",
                 originalPricePs: game.original_price_ps || 0,
                 salePricePs: game.sale_price_ps || 0,
                 originalPriceXbox: game.original_price_xbox || 0,
@@ -221,12 +228,14 @@ class AcoountAdminGameDetailPage extends Component<Props> {
             image: game.image,
             detail: values.detail,
             release_date: moment(values.releaseDate).unix() * 1000,
+            age_rating: values.ageRating,
             developer: values.developer,
             genres: values.genres,
             voices: values.voices,
             subtitles: values.subtitles,
             metacritic_rating: values.metacriticRating,
             metacritic_rating_count: values.metacriticRatingCount,
+            metacritic_ref_url: values.metacriticRefUrl,
             original_price_ps: values.originalPricePs || 0,
             sale_price_ps: values.salePricePs || 0,
             original_price_xbox: values.originalPriceXbox || 0,
@@ -459,6 +468,33 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
+                                            rating
+                                        </div>
+                                    }
+                                    name="ageRating"
+                                    style={{ width: "100%" }}
+                                >
+                                    <Select
+                                        placeholder="Please select game rating"
+                                        size="large"
+                                    >
+                                        {Object.keys(AGE_RATINGS).map((key) => (
+                                            <Option key={key} value={key}>
+                                                <b>{key}</b> (
+                                                {
+                                                    AGE_RATINGS[
+                                                        key as TypeAgeRatingKey
+                                                    ]
+                                                }
+                                                )
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+
+                                <Form.Item
+                                    label={
+                                        <div className="text-bold text-md">
                                             Developer
                                         </div>
                                     }
@@ -548,7 +584,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                 style={{ width: "100%" }}
                                                 className="text-md"
                                                 min={0}
-                                                max={5}
+                                                max={10}
                                                 size="large"
                                             />
                                         </Form.Item>
@@ -574,6 +610,23 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                 style={{ width: "100%" }}
                                                 className="text-md"
                                                 min={0}
+                                                size="large"
+                                            />
+                                        </Form.Item>
+                                    </Col>
+
+                                    <Col xs={24}>
+                                        <Form.Item
+                                            label={
+                                                <div className="text-bold text-md">
+                                                    Metacritic reference URL
+                                                </div>
+                                            }
+                                            name="metacriticRefUrl"
+                                            style={{ width: "100%" }}
+                                        >
+                                            <Input
+                                                className="text-md"
                                                 size="large"
                                             />
                                         </Form.Item>

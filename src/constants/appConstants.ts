@@ -37,7 +37,7 @@ export const SORTINGS = [
     },
     {
         id: SORTING_ID.rating,
-        name: "Rating",
+        name: "Metacritic Score",
     },
 ];
 
@@ -54,4 +54,14 @@ export const USER_GENDER = {
 export const USER_ROLE = {
     admin: "admin",
     user: "user",
+};
+
+export const AGE_RATINGS = {
+    RP: "Rating Pending",
+    EC: "Early Childhood",
+    E: "Everyone",
+    "E10+": "Everyone 10+",
+    T: "Teen",
+    M: "Mature",
+    A: "Adult",
 };

@@ -1,4 +1,5 @@
 import { Filter } from "./filter";
+import { AGE_RATINGS } from "./../constants/appConstants";
 
 export type Game = {
     id: number;
@@ -48,11 +49,13 @@ export type SingleGame = {
     image: string;
     detail: string;
     release_date: number;
+    age_rating: keyof typeof AGE_RATINGS | null;
     developer: string;
     voices: string;
     subtitles: string;
     metacritic_rating: number;
     metacritic_rating_count: number;
+    metacritic_ref_url: string;
     user_rating: number;
     user_rating_count: number;
     liked: boolean;
@@ -66,11 +69,13 @@ export type GameAdmin = {
     image: string;
     detail: string;
     release_date: number;
+    age_rating: keyof typeof AGE_RATINGS | '';
     developer: string;
     voices: string[];
     subtitles: string[];
     metacritic_rating: number;
     metacritic_rating_count: number;
+    metacritic_ref_url: string;
     user_rating: number;
     user_rating_count: number;
     original_price_ps: number;

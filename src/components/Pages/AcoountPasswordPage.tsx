@@ -138,7 +138,7 @@ class AcoountPasswordPage extends Component<Props> {
                                         },
                                     ]}
                                 >
-                                    <Input.Password />
+                                    <Input.Password size="large" />
                                 </Form.Item>
                                 <Form.Item
                                     label={
@@ -173,7 +173,7 @@ class AcoountPasswordPage extends Component<Props> {
                                         }),
                                     ]}
                                 >
-                                    <Input.Password />
+                                    <Input.Password size="large" />
                                 </Form.Item>
                                 <div className="text-center">
                                     <Button
