@@ -11,6 +11,7 @@ import {
     ERRORS,
     IMAGE_PATH,
     ROOT_PATH,
+    AGE_RATINGS,
 } from "../../constants/appConstants";
 import { SingleGame } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
@@ -210,7 +211,19 @@ class SingleGamePage extends Component<Props> {
                     </Col>
                     <Col className="gutter-row" xs={24} sm={24} md={24} lg={16}>
                         <h1 className="text-3xl">{game.name}</h1>
-                        <GenreTags genres={game.genres} />
+                        <div style={{ display: "flex" }}>
+                            <GenreTags genres={game.genres} />
+                            {game.age_rating && (
+                                <div style={{ marginLeft: 15 }}>
+                                    <img
+                                        style={{ height: 26 }}
+                                        src={`${ROOT_PATH}/images/iarc/${game.age_rating}.svg`}
+                                        alt="age-rating"
+                                    />
+                                </div>
+                            )}
+                        </div>
+
                         <AddToWishlist
                             isLoading={this.state.isLikeLoading}
                             liked={game.liked}
@@ -244,10 +257,19 @@ class SingleGamePage extends Component<Props> {
                                             .format(APP_DATE_FORMAT)}
                                     </td>
                                 </tr>
-                                <tr>
+                                {/* <tr>
                                     <td>Rating:</td>
-                                    <td>{game.age_rating || "-"}</td>
-                                </tr>
+                                    <td>
+                                        <img
+                                            style={{ height: 24 }}
+                                            src={`${ROOT_PATH}/images/iarc/${game.age_rating}.svg`}
+                                            alt="age-rating"
+                                        />{" "}
+                                        {AGE_RATINGS[
+                                            game.age_rating as keyof typeof AGE_RATINGS
+                                        ] || "-"}
+                                    </td>
+                                </tr> */}
                                 <tr>
                                     <td>Developer:</td>
                                     <td>{game.developer || "-"}</td>

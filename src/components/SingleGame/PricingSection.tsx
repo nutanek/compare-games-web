@@ -46,6 +46,7 @@ const Container = styled.div`
             }
         }
         .original-price {
+            margin-bottom: 10px;
             color: #808080;
             text-decoration: line-through;
         }
@@ -94,6 +95,13 @@ const PricingSection = (props: Props) => {
                                     {numeral(item.original_price).format(
                                         "0,0.00"
                                     )}
+                                </div>
+                            )}
+                            {item.shop_url && (
+                                <div className="text-sm">
+                                    <a target="_blank" href={item.shop_url}>
+                                        Go to Shop
+                                    </a>
                                 </div>
                             )}
                         </>

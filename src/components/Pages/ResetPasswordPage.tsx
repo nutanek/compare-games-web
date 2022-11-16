@@ -82,7 +82,7 @@ class ResetPasswordPage extends Component<Props> {
                 centered: true,
                 maskClosable: true,
                 afterClose: () => {
-                    window.location.replace(`${ROOT_PATH}/`);
+                    window.location.replace(`${ROOT_PATH}/login`);
                 },
             });
         } catch (error: any) {

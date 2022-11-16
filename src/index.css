@@ -18,6 +18,10 @@ select,
     border-radius: 8px !important;
 }
 
+.ant-input-group-wrapper.no-rounded input {
+    border-radius: 0 !important;
+}
+
 .container,
 .container-fluid,
 .container-xxl,
@@ -531,8 +535,6 @@ select,
     text-overflow: ellipsis;
 }
 
-
-
 @media (min-width: 768px) {
     /* .header-desktop {
         display: flex !important;
@@ -559,7 +561,7 @@ select,
     .header-desktop {
         display: none !important;
     }
-    
+
     .header-mobile {
         display: flex !important;
     }

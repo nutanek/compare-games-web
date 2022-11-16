@@ -36,6 +36,7 @@ export type SingleGamePrice = {
     original_price: number;
     sale_price: number;
     final_price: number;
+    shop_url: string;
 };
 
 export type SingleGameGenre = {
@@ -85,6 +86,9 @@ export type GameAdmin = {
     sale_price_xbox: number;
     original_price_nintendo: number;
     sale_price_nintendo: number;
+    ps_shop_url: string;
+    xbox_shop_url: string;
+    nintendo_shop_url: string;
     in_platform_ps: boolean;
     in_platform_xbox: boolean;
     in_platform_nintendo: boolean;

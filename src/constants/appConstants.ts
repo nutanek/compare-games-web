@@ -1,4 +1,4 @@
-export const ROOT_PATH = "/compare-game";
+export const ROOT_PATH = process.env.REACT_APP_ROOT_PATH;
 
 export const API_URL = process.env.REACT_APP_API_URL || "";
 export const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "";
@@ -57,11 +57,9 @@ export const USER_ROLE = {
 };
 
 export const AGE_RATINGS = {
-    RP: "Rating Pending",
-    EC: "Early Childhood",
-    E: "Everyone",
-    "E10+": "Everyone 10+",
-    T: "Teen",
-    M: "Mature",
-    A: "Adult",
+    "IARC_3+": "3+",
+    "IARC_7+": "7+",
+    "IARC_12+": "12+",
+    "IARC_16+": "16+",
+    "IARC_18+": "18+",
 };

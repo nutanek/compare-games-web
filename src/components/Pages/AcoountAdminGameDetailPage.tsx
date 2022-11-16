@@ -87,6 +87,9 @@ const initialGame: GameAdmin = {
     sale_price_xbox: 0,
     original_price_nintendo: 0,
     sale_price_nintendo: 0,
+    ps_shop_url: "",
+    xbox_shop_url: "",
+    nintendo_shop_url: "",
     in_platform_ps: false,
     in_platform_xbox: false,
     in_platform_nintendo: false,
@@ -136,6 +139,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                 salePriceXbox: game.sale_price_xbox || 0,
                 originalPriceNintendo: game.original_price_nintendo || 0,
                 salePriceNintendo: game.sale_price_nintendo || 0,
+                psShopUrl: game.ps_shop_url || "",
+                xboxShopUrl: game.xbox_shop_url || "",
+                nintendoShopUrl: game.nintendo_shop_url || "",
             });
         } catch (error: any) {
             message.error(error?.response?.data?.msg || ERRORS.unknown);
@@ -193,6 +199,8 @@ class AcoountAdminGameDetailPage extends Component<Props> {
             const formData = new FormData();
             formData.append("path", "games");
             formData.append("image", file);
+            formData.append("width", "450");
+            formData.append("height", "450");
             let { data: image } = await uploadImageApi(formData);
             this.setState({
                 isLoading: false,
@@ -242,6 +250,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
             sale_price_xbox: values.salePriceXbox || 0,
             original_price_nintendo: values.originalPriceNintendo || 0,
             sale_price_nintendo: values.salePriceNintendo || 0,
+            ps_shop_url: values.psShopUrl,
+            xbox_shop_url: values.xboxShopUrl,
+            nintendo_shop_url: values.nintendoShopUrl,
             in_platform_ps: game.in_platform_ps,
             in_platform_xbox: game.in_platform_xbox,
             in_platform_nintendo: game.in_platform_nintendo,
@@ -468,7 +479,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            rating
+                                            Rating (IARC)
                                         </div>
                                     }
                                     name="ageRating"
@@ -480,13 +491,11 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     >
                                         {Object.keys(AGE_RATINGS).map((key) => (
                                             <Option key={key} value={key}>
-                                                <b>{key}</b> (
                                                 {
                                                     AGE_RATINGS[
                                                         key as TypeAgeRatingKey
                                                     ]
                                                 }
-                                                )
                                             </Option>
                                         ))}
                                     </Select>
@@ -672,6 +681,30 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                             }`
                                         ] && (
                                             <div className="price-info">
+                                                <Form.Item
+                                                    name={`${platform.toLowerCase()}ShopUrl`}
+                                                    style={{
+                                                        width: "100%",
+                                                        marginBottom: 15,
+                                                    }}
+                                                >
+                                                    <Input
+                                                        disabled={
+                                                            !game[
+                                                                `in_platform_${
+                                                                    platform.toLowerCase() as PlatformKey
+                                                                }`
+                                                            ]
+                                                        }
+                                                        addonBefore="Shop URL"
+                                                        style={{
+                                                            width: "100%",
+                                                        }}
+                                                        className="text-md no-rounded"
+                                                        size="large"
+                                                    />
+                                                </Form.Item>
+
                                                 <Form.Item
                                                     name={`originalPrice${platform}`}
                                                     style={{
