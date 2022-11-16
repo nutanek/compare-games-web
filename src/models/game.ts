@@ -28,7 +28,8 @@ export type GamesWithFilter = {
     games: Game[];
 };
 
-export type PlatformKey = "ps" | "xbox" | "nintendo";
+export const platformKeys = ["ps", "xbox", "nintendo"] as const;
+export type PlatformKey = typeof platformKeys[number];
 
 export type SingleGamePrice = {
     platform: PlatformKey;

@@ -27,6 +27,7 @@ const Container = styled.div`
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.4s;
         }
         .rating-score {
             position: absolute;
@@ -70,6 +71,13 @@ const Container = styled.div`
             &.liked {
                 color: #fe0707;
             }
+        }
+    }
+    :hover {
+        .image-wrapper .image {
+            -webkit-transform: rotate(5deg) scale(1.2);
+            -ms-transform: rotate(5deg) scale(1.2);
+            transform: rotate(5deg) scale(1.2);
         }
     }
 `;
@@ -139,7 +147,9 @@ const ProductCard = ({
             </Link>
 
             <PlatformTags platforms={platforms} />
-            <div className="name text-sm text-bold text-ellipsis-2">{name}</div>
+            <div className="name text-sm text-bold text-ellipsis-2">
+                <Link to={`${ROOT_PATH}/game/${id}`} className="text-primary-color">{name}</Link>
+            </div>
             <div className="price-wrapper">
                 <div className="price text-sm text-bold">
                     {price > 0

@@ -79,6 +79,7 @@ const GroupChat = () => {
             const userInfo = getLocalUserInfo();
             socketRef.current = io(SOCKET_URL || "", {
                 reconnectionDelayMax: 10000,
+                transports: ['websocket'],
                 auth: {
                     token: accessToken,
                 },

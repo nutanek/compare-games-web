@@ -13,7 +13,7 @@ import {
     ROOT_PATH,
     AGE_RATINGS,
 } from "../../constants/appConstants";
-import { SingleGame } from "../../models/game";
+import { SingleGame, platformKeys } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import { getGameApi, updateWishlistApi } from "./../../services/apiServices";
 import GenreTags from "../SingleGame/GenreTags";
@@ -105,9 +105,18 @@ const Container = styled.div`
     }
 `;
 
+const initialPrices = platformKeys.map((platform) => ({
+    platform: platform,
+    is_on_platform: false,
+    original_price: 0,
+    sale_price: 0,
+    final_price: 0,
+    shop_url: "",
+}));
+
 const initialGameValues: SingleGame = {
     id: 0,
-    name: "",
+    name: "Loading...",
     image: "",
     detail: "",
     release_date: 0,
@@ -121,8 +130,14 @@ const initialGameValues: SingleGame = {
     user_rating: 0,
     user_rating_count: 0,
     liked: false,
-    prices: [],
-    genres: [],
+    prices: initialPrices,
+    genres: [
+        {
+            id: 0,
+            slug: "genre",
+            name: "Genre",
+        },
+    ],
 };
 
 class SingleGamePage extends Component<Props> {
