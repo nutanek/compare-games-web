@@ -5,7 +5,6 @@ import { T } from "../../services/translateServices";
 import { SingleGamePrice } from "../../models/game";
 import PlatformTags from "../Product/ProductCard/PlatformTags";
 
-
 const MedalImages = [
     `${ROOT_PATH}/images/medal-1.png`,
     `${ROOT_PATH}/images/medal-2.png`,
@@ -86,23 +85,26 @@ const PricingSection = (props: Props) => {
                         <>
                             <div className="final-price text-2xl text-bold">
                                 {item.final_price > 0
-                                    ? `THB ${numeral(item.final_price).format(
-                                          "0,0.00"
-                                      )}`
-                                    : "Free"}
+                                    ? T("THB_PRICE", {
+                                          price: numeral(
+                                              item.final_price
+                                          ).format("0,0.00"),
+                                      })
+                                    : T("FREE")}
                             </div>
                             {item.sale_price > 0 && (
                                 <div className="original-price text-lg">
-                                    THB{" "}
-                                    {numeral(item.original_price).format(
-                                        "0,0.00"
-                                    )}
+                                    {T("THB_PRICE", {
+                                        price: numeral(
+                                            item.original_price
+                                        ).format("0,0.00"),
+                                    })}
                                 </div>
                             )}
                             {item.shop_url && (
                                 <div className="text-sm">
                                     <a target="_blank" href={item.shop_url}>
-                                        {T('GO_SHOP')}
+                                        {T("GO_SHOP")}
                                     </a>
                                 </div>
                             )}

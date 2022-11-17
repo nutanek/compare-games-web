@@ -761,7 +761,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                         addonBefore={T(
                                                             "ORIGINAL_PRICE"
                                                         )}
-                                                        addonAfter="THB"
+                                                        addonAfter={T('THB')}
                                                         style={{
                                                             width: "100%",
                                                         }}
@@ -846,7 +846,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                             addonBefore={T(
                                                                 "SALE_PRICE"
                                                             )}
-                                                            addonAfter="THB"
+                                                            addonAfter={T('THB')}
                                                             style={{
                                                                 width: "100%",
                                                             }}

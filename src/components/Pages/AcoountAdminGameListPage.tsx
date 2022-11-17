@@ -263,7 +263,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                                     ),
                                 },
                                 {
-                                    title: `${T("LOWEST_PRICE")} (THB)`,
+                                    title: `${T("LOWEST_PRICE")} (${T('THB')})`,
                                     dataIndex: "price",
                                     key: "price",
                                     align: "right",

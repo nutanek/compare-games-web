@@ -85,7 +85,8 @@ class HomePage extends Component {
                                       xs={12}
                                       sm={12}
                                       md={8}
-                                      lg={4}
+                                      lg={8}
+                                      xl={4}
                                   >
                                       <ProductCard {...game} />
                                   </Col>
@@ -109,7 +110,8 @@ class HomePage extends Component {
                                       xs={12}
                                       sm={12}
                                       md={8}
-                                      lg={4}
+                                      lg={8}
+                                      xl={4}
                                   >
                                       <ProductCard {...game} />
                                   </Col>
@@ -133,7 +135,8 @@ class HomePage extends Component {
                                       xs={12}
                                       sm={12}
                                       md={8}
-                                      lg={4}
+                                      lg={8}
+                                      xl={4}
                                   >
                                       <ProductCard {...game} />
                                   </Col>
@@ -157,7 +160,8 @@ class HomePage extends Component {
                                       xs={12}
                                       sm={12}
                                       md={8}
-                                      lg={4}
+                                      lg={8}
+                                      xl={4}
                                   >
                                       <ProductCard {...game} />
                                   </Col>

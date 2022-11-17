@@ -340,8 +340,9 @@ class GamesPage extends Component<Props> {
                                     className="gutter-row"
                                     xs={12}
                                     sm={12}
-                                    md={8}
-                                    lg={6}
+                                    md={12}
+                                    lg={8}
+                                    xl={6}
                                 >
                                     <ProductCard {...game} />
                                 </Col>

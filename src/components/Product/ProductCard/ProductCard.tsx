@@ -149,13 +149,20 @@ const ProductCard = ({
 
             <PlatformTags platforms={platforms} />
             <div className="name text-sm text-bold text-ellipsis-2">
-                <Link to={`${ROOT_PATH}/game/${id}`} className="text-primary-color">{name}</Link>
+                <Link
+                    to={`${ROOT_PATH}/game/${id}`}
+                    className="text-primary-color"
+                >
+                    {name}
+                </Link>
             </div>
             <div className="price-wrapper">
                 <div className="price text-sm text-bold">
                     {price > 0
-                        ? `THB ${numeral(price).format("0,0.00")}`
-                        : "Free"}
+                        ? T("THB_PRICE", {
+                              price: numeral(price).format("0,0.00"),
+                          })
+                        : T("FREE")}
                 </div>
                 <div
                     className={`fav-icon ${
