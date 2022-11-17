@@ -78,3 +78,8 @@ export const AGE_RATINGS = {
     "IARC_16+": "16+",
     "IARC_18+": "18+",
 };
+
+export const LANGUAGES = {
+    th: "ภาษาไทย",
+    en: "Enlish",
+};

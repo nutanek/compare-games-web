@@ -1,7 +1,7 @@
 import en from "./../constants/i18n/en.json";
 import th from "./../constants/i18n/th.json";
 
-type LangSlug = "en" | "th";
+export type LangSlug = "en" | "th";
 
 export const langSlug: LangSlug =
     (localStorage.getItem("lang_slug") as LangSlug) || "en";
@@ -9,6 +9,11 @@ export const langSlug: LangSlug =
 export function T(key: string, params?: any): string {
     params = params || {};
     return translate(langSlug, key, params);
+}
+
+export function changeLanguage(slug: LangSlug) {
+    localStorage.setItem("lang_slug", slug);
+    window.location.reload();
 }
 
 function translate(langSlug: LangSlug, key: string, params: any): string {

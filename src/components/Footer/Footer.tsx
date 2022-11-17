@@ -2,6 +2,7 @@ import { Layout } from "antd";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ROOT_PATH } from "../../constants/appConstants";
+import LanguageSelector from "../Utility/LanguageSelector";
 
 const Container = styled(Layout.Footer)`
     display: flex;
@@ -41,6 +42,9 @@ const Footer = () => {
                 <img src={`${ROOT_PATH}/images/logo.png`} alt="logo" />
                 <div className="title">Consoles</div>
             </Link>
+            <div className="">
+                <LanguageSelector />
+            </div>
             <div className="copyright text-md">© Consoles 2022</div>
         </Container>
     );
