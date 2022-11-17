@@ -1,6 +1,7 @@
 import { Select } from "antd";
 import styled from "styled-components";
 import { SORTINGS } from "./../../constants/appConstants";
+import { T, langSlug } from "./../../services/translateServices";
 
 const { Option } = Select;
 
@@ -16,7 +17,7 @@ const Container = styled.div`
 const SortingDesktop = (props: Props) => {
     return (
         <Container className="text-sm">
-            <span className="text-bold title">Sort by:</span>
+            <span className="text-bold title">{T("SORT_BY")}:</span>
             <Select
                 style={{ width: 200 }}
                 value={props.value}
@@ -24,7 +25,7 @@ const SortingDesktop = (props: Props) => {
             >
                 {SORTINGS.map((sorting) => (
                     <Option key={sorting.id} value={sorting.id}>
-                        {sorting.name}
+                        {langSlug === "en" ? sorting.name : sorting.nameTh}
                     </Option>
                 ))}
             </Select>

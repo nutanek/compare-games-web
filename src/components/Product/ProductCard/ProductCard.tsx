@@ -8,6 +8,7 @@ import LazyLoad from "react-lazyload";
 import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../../constants/appConstants";
 import { PlatformKey } from "../../../models/game";
 import { updateWishlistApi } from "../../../services/apiServices";
+import { T } from "../../../services/translateServices";
 import PlatformTags from "./PlatformTags";
 import MetacriticIcon from "./../../../images/metacritic-icon.svg";
 
@@ -112,7 +113,7 @@ const ProductCard = ({
             setIsLoading(false);
             setIsLiked((isLiked) => !isLiked);
             onLike && onLike(id);
-            message.success(data?.msg || "Success!");
+            message.success(data?.msg || T("SUCCESS"));
         } catch (error: any) {
             setIsLoading(false);
             message.error(error?.response?.data?.msg || ERRORS.unknown);

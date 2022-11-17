@@ -29,6 +29,7 @@ import {
 } from "../../constants/appConstants";
 import { AllChatRooms, ChatRoom } from "../../models/chat";
 import { getChatRoomApi } from "./../../services/apiServices";
+import { T } from "./../../services/translateServices";
 import ChatButton from "./ChatButton";
 import SingleGroupChat from "./SingleGroupChat";
 import InputMessage from "./InputMessage";
@@ -79,7 +80,7 @@ const GroupChat = () => {
             const userInfo = getLocalUserInfo();
             socketRef.current = io(SOCKET_URL || "", {
                 reconnectionDelayMax: 10000,
-                transports: ['websocket'],
+                transports: ["websocket"],
                 auth: {
                     token: accessToken,
                 },
@@ -90,7 +91,7 @@ const GroupChat = () => {
             });
 
             socketRef.current.on("connect", () => {
-                console.log(`Socket.io is connected`);
+                console.log(`Socket.io is connected`, selectedSingleGroupId);
             });
 
             socketRef.current.on("connect_error", (err) => {
@@ -114,6 +115,7 @@ const GroupChat = () => {
 
             socketRef.current.on("disconnect", () => {
                 console.log(`Socket.io is disconnect`);
+                onBackToMain();
             });
 
             return () => {
@@ -203,8 +205,11 @@ const GroupChat = () => {
                                 className="chat-header"
                                 style={{ paddingBottom: 15 }}
                             >
-                                <div className="name text-xl text-bold">
-                                    All chat rooms
+                                <div
+                                    className="name text-xl text-bold"
+                                    style={{ lineHeight: "normal" }}
+                                >
+                                    {T("ALL_CHAT_ROOMS")}
                                 </div>
                                 <div className="close">
                                     <Button
@@ -220,7 +225,7 @@ const GroupChat = () => {
 
                             <Input
                                 allowClear
-                                placeholder="Search game..."
+                                placeholder={`${T("SEARCH_GAME")}...`}
                                 value={keyword}
                                 onChange={(e) =>
                                     onChangeKeyword(e.target.value)
@@ -280,7 +285,7 @@ const GroupChat = () => {
                                             type="primary"
                                             icon={<WechatOutlined />}
                                         >
-                                            Join
+                                            {T("JOIN")}
                                         </Button>,
                                     ]}
                                     onClick={() => onOpenSingleGroupChat(index)}
@@ -288,6 +293,10 @@ const GroupChat = () => {
                                     <List.Item.Meta
                                         avatar={
                                             <Avatar
+                                                key={item.id}
+                                                style={{
+                                                    backgroundColor: "#d2d4d9",
+                                                }}
                                                 src={`${IMAGE_PATH}/games/${item.image}`}
                                             />
                                         }

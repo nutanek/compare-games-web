@@ -1,6 +1,7 @@
 import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { Filter as FilterModel, FilterOption } from "./../../models/filter";
+import { T } from "./../../services/translateServices";
 
 const Container = styled.div`
     display: flex;
@@ -46,7 +47,7 @@ const SelectedFilters = (props: Props) => {
                     onClick={() => props.onClearAll()}
                 >
                     <DeleteOutlined />
-                    <div className="name">Clear</div>
+                    <div className="name">{T("CLEAR")}</div>
                 </div>
             )}
             {selecteds.map((item) => (

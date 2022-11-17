@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import numeral from "numeral";
 import { ROOT_PATH } from "../../constants/appConstants";
+import { T } from "../../services/translateServices";
 import { SingleGamePrice } from "../../models/game";
 import PlatformTags from "../Product/ProductCard/PlatformTags";
+
 
 const MedalImages = [
     `${ROOT_PATH}/images/medal-1.png`,
@@ -100,7 +102,7 @@ const PricingSection = (props: Props) => {
                             {item.shop_url && (
                                 <div className="text-sm">
                                     <a target="_blank" href={item.shop_url}>
-                                        Go to Shop
+                                        {T('GO_SHOP')}
                                     </a>
                                 </div>
                             )}

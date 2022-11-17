@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ERRORS, IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
 import { addReviewApi } from "./../../services/apiServices";
 import { getLocalUserInfo } from "./../../services/appServices";
+import {  T, langSlug } from "../../services/translateServices";
 
 const { TextArea } = Input;
 
@@ -61,7 +62,11 @@ class CommentBox extends Component<Props> {
                 rating: this.state.rating,
                 comment: this.state.comment,
             });
-            message.success("Thank you for your review!");
+            message.success(
+                langSlug === "en"
+                    ? "Thank you for your review!"
+                    : "ขอบคุณสำหรับการรีวิว!"
+            );
             this.setState({
                 isLoading: false,
                 rating: 0,
@@ -88,7 +93,9 @@ class CommentBox extends Component<Props> {
         return (
             <Spin tip="Loading..." spinning={this.state.isLoading}>
                 <Container>
-                    <h2 className="title text-bold text-lg">Review the game</h2>
+                    <h2 className="title text-bold text-lg">
+                        {T("REVIEW_GAME")}
+                    </h2>
                     <div className="profile">
                         <div className="avatar-wrapper">
                             <div
@@ -118,7 +125,11 @@ class CommentBox extends Component<Props> {
                     <div className="review-comment">
                         <TextArea
                             rows={4}
-                            placeholder="What do you think about the game?"
+                            placeholder={
+                                langSlug === "en"
+                                    ? "What do you think about the game?"
+                                    : "คิดยังไงกับเกมนี้? บอกเราหน่อย"
+                            }
                             value={this.state.comment}
                             onChange={(e) =>
                                 this.onChangeComment(e.target.value)
@@ -132,7 +143,7 @@ class CommentBox extends Component<Props> {
                             size="large"
                             onClick={() => this.addReview()}
                         >
-                            Submit
+                            {T('SUBMIT')}
                         </Button>
                     </div>
 

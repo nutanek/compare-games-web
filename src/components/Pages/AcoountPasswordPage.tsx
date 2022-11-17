@@ -15,6 +15,7 @@ import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
 import { UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
 import { updateUserPasswordApi } from "./../../services/apiServices";
+import { T, langSlug } from "../../services/translateServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
@@ -82,7 +83,7 @@ class AcoountPasswordPage extends Component<Props> {
                 password: values.password,
                 confirm_password: values.confirmPassword,
             });
-            message.success("Success!");
+            message.success(T("SUCCESS"));
             this.setState({
                 isLoading: false,
             });
@@ -104,7 +105,7 @@ class AcoountPasswordPage extends Component<Props> {
 
         return (
             <Container>
-                <AccountLayout title="Change password">
+                <AccountLayout title={T("CHANGE_PASSWORD")}>
                     <Row justify="center">
                         <Col xs={24} sm={24} md={20} lg={12} xl={8}>
                             <Form
@@ -120,7 +121,7 @@ class AcoountPasswordPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            New password
+                                            {T("NEW_PASSWORD")}
                                         </div>
                                     }
                                     name="password"
@@ -128,13 +129,16 @@ class AcoountPasswordPage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                "Please input your password!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("NEW_PASSWORD"),
+                                            }),
                                         },
                                         {
                                             min: 8,
                                             message:
-                                                "Password must be at least 8 characters",
+                                                langSlug === "en"
+                                                    ? "Password must be at least 8 characters"
+                                                    : "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",
                                         },
                                     ]}
                                 >
@@ -143,7 +147,7 @@ class AcoountPasswordPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Confirm password
+                                            {T("CONFIRM_PASSWORD")}
                                         </div>
                                     }
                                     name="confirmPassword"
@@ -151,8 +155,9 @@ class AcoountPasswordPage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                "Please confirm your password!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("CONFIRM_PASSWORD"),
+                                            }),
                                         },
                                         ({ getFieldValue }) => ({
                                             validator(_, value) {
@@ -166,7 +171,9 @@ class AcoountPasswordPage extends Component<Props> {
                                                 }
                                                 return Promise.reject(
                                                     new Error(
-                                                        "The two passwords do not match!"
+                                                        langSlug == "en"
+                                                            ? "The two passwords do not match!"
+                                                            : "รหัสผ่านทั้งคู่ไม่ตรงกัน"
                                                     )
                                                 );
                                             },
@@ -182,7 +189,7 @@ class AcoountPasswordPage extends Component<Props> {
                                         style={{ borderRadius: 8 }}
                                         size="large"
                                     >
-                                        Save changes
+                                        {T("SAVE_CHANGES")}
                                     </Button>
                                 </div>
                             </Form>

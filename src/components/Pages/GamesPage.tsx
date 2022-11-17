@@ -16,6 +16,7 @@ import SelectedFilters from "../Filter/SelectedFilters";
 import SortingDesktop from "../Filter/SortingDesktop";
 import LoadingModal from "../Utility/Modal/Loading";
 import { ROOT_PATH } from "../../constants/appConstants";
+import { T } from "../../services/translateServices";
 
 const Container = styled.div`
     .toolbar {
@@ -297,8 +298,8 @@ class GamesPage extends Component<Props> {
                             />
                         </div>
                         <p className="showing-items text-sm">
-                            Showing {this.state.total}{" "}
-                            {this.state.total > 1 ? "items" : "item"}
+                            {T("SHOWING")} {this.state.total}{" "}
+                            {this.state.total > 1 ? T("ITEMS") : T("ITEM")}
                         </p>
                         <Button
                             block
@@ -310,8 +311,8 @@ class GamesPage extends Component<Props> {
                             onClick={() => this.toggleFilter()}
                         >
                             {this.state.isOpenFilter
-                                ? "Hide Filters"
-                                : "Show Filters"}
+                                ? T("HIDE_FILTERS")
+                                : T("SHOW_FILTERS")}
                         </Button>
                     </Col>
                     <Col
@@ -348,7 +349,7 @@ class GamesPage extends Component<Props> {
                         </Row>
 
                         {this.state.isLoading && (
-                            <p className="text-center">Loading...</p>
+                            <p className="text-center">{T("LOADING")}...</p>
                         )}
                         {!this.state.isLoading &&
                             this.state.games.length === 0 && (

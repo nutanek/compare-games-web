@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Button, Drawer, Input, List, Avatar, message } from "antd";
+import { Button, Input } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import styled from "styled-components";
+import { T } from "./../../services/translateServices";
 
 const Container = styled.div`
     display: flex;
@@ -24,8 +25,10 @@ const InputMessage = (props: Props) => {
     }
 
     function sendMessage() {
-        props.onSubmit(message);
-        setMessage("");
+        if (message !== "") {
+            props.onSubmit(message);
+            setMessage("");
+        }
     }
 
     return (
@@ -34,7 +37,7 @@ const InputMessage = (props: Props) => {
                 size="large"
                 value={message}
                 autoSize={{ minRows: 1, maxRows: 2 }}
-                placeholder="Type your message..."
+                placeholder={`${T("TYPE_MESSAGE")}...`}
                 onChange={(e) => onChangeMessage(e.target.value)}
                 onKeyDown={onSubmit}
             />

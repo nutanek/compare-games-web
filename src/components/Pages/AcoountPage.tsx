@@ -6,6 +6,7 @@ import { ERRORS, ROOT_PATH, USER_GENDER } from "../../constants/appConstants";
 import { UserInfo } from "../../models/user";
 import withRouter from "../../hocs/withRouter";
 import { getUserSelfApi } from "./../../services/apiServices";
+import { T, langSlug } from "../../services/translateServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
@@ -75,34 +76,38 @@ class AcoountPage extends Component<Props> {
         const { user } = this.state;
         return (
             <Container>
-                <AccountLayout title="User Info">
+                <AccountLayout title={T('USER_INFO')}>
                     <>
                         <div className="section-header">
-                            <div className="text-lg text-bold">Profile</div>
+                            <div className="text-lg text-bold">
+                                {T("PROFILE")}
+                            </div>
                             <Link to={`${ROOT_PATH}/account/profile`}>
-                                <Button size="middle">Edit</Button>
+                                <Button size="middle">{T("EDIT")}</Button>
                             </Link>
                         </div>
                         <div className="section-info text-md">
                             <Row>
                                 <Col className="title" xs={10}>
-                                    Display name
+                                    {T("DISPLAY_NAME")}
                                 </Col>
                                 <Col xs={14}>{user.display_name || "-"}</Col>
                             </Row>
                             <Row>
                                 <Col className="title" xs={10}>
-                                    Gender
+                                    {T("GENDER")}
                                 </Col>
                                 <Col xs={14}>
                                     {user.gender
-                                        ? USER_GENDER[user.gender]
+                                        ? langSlug === "en"
+                                            ? USER_GENDER[user.gender]?.name
+                                            : USER_GENDER[user.gender]?.nameTh
                                         : "-"}
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="title" xs={10}>
-                                    Country/region of residence
+                                    {T("COUNTRY_REGION")}
                                 </Col>
                                 <Col xs={14}>{user.country || "-"}</Col>
                             </Row>
@@ -110,28 +115,30 @@ class AcoountPage extends Component<Props> {
 
                         <div className="section-header">
                             <div className="text-lg text-bold">
-                                E-mail address
+                                {T("CONTACTS")}
                             </div>
                         </div>
                         <div className="section-info text-md">
                             <Row>
                                 <Col className="title" xs={10}>
-                                    E-mail address
+                                    {T("EMAIL_ADDRESS")}
                                 </Col>
                                 <Col xs={14}>{user.email}</Col>
                             </Row>
                         </div>
 
                         <div className="section-header">
-                            <div className="text-lg text-bold">Password</div>
+                            <div className="text-lg text-bold">
+                                {T("PASSWORD")}
+                            </div>
                             <Link to={`${ROOT_PATH}/account/password`}>
-                                <Button size="middle">Edit</Button>
+                                <Button size="middle">{T("EDIT")}</Button>
                             </Link>
                         </div>
                         <div className="section-info text-md">
                             <Row>
                                 <Col className="title" xs={10}>
-                                    Password
+                                    {T("PASSWORD")}
                                 </Col>
                                 <Col className="text-2xl" xs={14}>
                                     ••••••

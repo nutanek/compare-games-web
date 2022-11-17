@@ -33,6 +33,7 @@ import {
     getAllGamesApi,
     removeGameAdminApi,
 } from "./../../services/apiServices";
+import { T } from "../../services/translateServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
@@ -111,7 +112,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                 isLoading: false,
             });
             onSuccess && onSuccess();
-            message.success("Success!");
+            message.success(T("SUCCESS"));
         } catch (error: any) {
             this.setState({ isLoading: false });
             message.error(error?.response?.data?.msg || ERRORS.unknown);
@@ -192,14 +193,14 @@ class AcoountAdminGameListPage extends Component<Props> {
     render() {
         return (
             <Container>
-                <AccountLayout title="Games">
+                <AccountLayout title={T("GAMES")}>
                     <div>
                         <Row gutter={[10, 10]} style={{ marginBottom: 20 }}>
                             <Col xs={24} md={12} lg={10}>
                                 <Input
                                     allowClear
                                     size="large"
-                                    placeholder="Search games"
+                                    placeholder={T("SEARCH_GAMES")}
                                     prefix={<SearchOutlined />}
                                     value={this.state.keyword}
                                     onChange={(e) =>
@@ -220,7 +221,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                                         icon={<PlusOutlined />}
                                         style={{ borderRadius: 8 }}
                                     >
-                                        Add game
+                                        {T("ADD_GAME")}
                                     </Button>
                                 </Link>
                             </Col>
@@ -248,7 +249,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                                     ),
                                 },
                                 {
-                                    title: "Name",
+                                    title: T("NAME"),
                                     dataIndex: "name",
                                     key: "name",
                                     className: "text-md",
@@ -262,7 +263,7 @@ class AcoountAdminGameListPage extends Component<Props> {
                                     ),
                                 },
                                 {
-                                    title: "Lowest price (THB)",
+                                    title: `${T("LOWEST_PRICE")} (THB)`,
                                     dataIndex: "price",
                                     key: "price",
                                     align: "right",
@@ -299,12 +300,12 @@ class AcoountAdminGameListPage extends Component<Props> {
                                             </Link>
 
                                             <Popconfirm
-                                                title="Are you sure to delete this game?"
+                                                title={T("CONFIRM_DELETE_GAME")}
                                                 onConfirm={() =>
                                                     this.onRemoveGame(record.id)
                                                 }
-                                                okText="Yes"
-                                                cancelText="No"
+                                                okText={T("YES")}
+                                                cancelText={T("NO")}
                                             >
                                                 <Button
                                                     style={{

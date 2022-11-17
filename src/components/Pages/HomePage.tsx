@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ERRORS, ROOT_PATH, SORTING_ID } from "../../constants/appConstants";
 import { Game } from "../../models/game";
 import { getHomeApi } from "./../../services/apiServices";
+import { T } from "../../services/translateServices";
 import Title from "./../Utility/Title";
 import ProductCard from "../Product/ProductCard/ProductCard";
 import LoadingModal from "../Utility/Modal/Loading";
@@ -70,8 +71,8 @@ class HomePage extends Component {
             <>
                 <div style={{ marginBottom: 20 }}>
                     <Title
-                        title="On Sales"
-                        seeAllText="See All"
+                        title={T("ON_SALES")}
+                        seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?on_sale=true`}
                     />
                     <Row gutter={15}>
@@ -94,8 +95,8 @@ class HomePage extends Component {
 
                 <div style={{ marginBottom: 20 }}>
                     <Title
-                        title="Best Rating"
-                        seeAllText="See All"
+                        title={T("BEST_RATING")}
+                        seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?sorting=${SORTING_ID.rating}`}
                     />
                     <Row gutter={15}>
@@ -118,8 +119,8 @@ class HomePage extends Component {
 
                 <div style={{ marginBottom: 20 }}>
                     <Title
-                        title="New Releases"
-                        seeAllText="See All"
+                        title={T("NEW_RELEASES")}
+                        seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?released=true`}
                     />
                     <Row gutter={15}>
@@ -142,8 +143,8 @@ class HomePage extends Component {
 
                 <div style={{ marginBottom: 20 }}>
                     <Title
-                        title="Coming Soon"
-                        seeAllText="See All"
+                        title={T("COMING_SOON")}
+                        seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?coming_soon=true`}
                     />
                     <Row gutter={15}>

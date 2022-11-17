@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
 import withRouter from "../../hocs/withRouter";
 import { addGameFromUrlAdminApi } from "./../../services/apiServices";
+import { T, langSlug } from "../../services/translateServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
@@ -46,7 +47,7 @@ class AcoountAdminGameUrlPage extends Component<Props> {
         try {
             this.setState({ isLoading: true, gameId: 0 });
             let { data } = await addGameFromUrlAdminApi({ url });
-            message.success("Success!");
+            message.success(T("SUCCESS"));
             this.setState({
                 isLoading: false,
             });
@@ -70,7 +71,13 @@ class AcoountAdminGameUrlPage extends Component<Props> {
         let { isLoading, gameId } = this.state;
         return (
             <Container>
-                <AccountLayout title={"Add game from PlayStation URL"}>
+                <AccountLayout
+                    title={
+                        langSlug === "en"
+                            ? "Add game from PlayStation URL"
+                            : "เพิ่มเกมจากลิงก์ PlayStation"
+                    }
+                >
                     <Form
                         ref={this.formRef}
                         name="game_url"

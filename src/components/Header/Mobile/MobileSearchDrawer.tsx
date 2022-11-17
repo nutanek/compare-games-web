@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Drawer, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { ROOT_PATH } from "./../../../constants/appConstants";
+import { T } from "../../../services/translateServices";
 
 const MobileSearchDrawer = (props: Props) => {
     let [keyword, setKeyword] = useState<string>("");
@@ -17,7 +18,7 @@ const MobileSearchDrawer = (props: Props) => {
         >
             <Input
                 allowClear
-                placeholder="Game name..."
+                placeholder={`${T("GAME_NAME")}...`}
                 size="large"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
@@ -28,6 +29,7 @@ const MobileSearchDrawer = (props: Props) => {
                     type="primary"
                     size="large"
                     icon={<SearchOutlined />}
+                    title={T("SEARCH")}
                     style={{ borderRadius: 8, marginTop: 10 }}
                     onClick={() => {
                         setKeyword("");

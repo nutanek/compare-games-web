@@ -27,6 +27,7 @@ import {
 } from "../../constants/appConstants";
 import languages from "./../../constants/languages.json";
 import { AGE_RATINGS } from "./../../constants/appConstants";
+import { T, langSlug } from "../../services/translateServices";
 import { GameAdmin, PlatformKey, SingleGameGenre } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import {
@@ -167,7 +168,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
         try {
             this.setState({ isLoading: true });
             await updateGameAdminApi({ data: dataStr });
-            message.success("Success!");
+            message.success(T("SUCCESS"));
             this.setState({
                 isLoading: false,
             });
@@ -182,7 +183,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
         try {
             this.setState({ isLoading: true });
             await addGameAdminApi({ data: dataStr });
-            message.success("Success!");
+            message.success(T("SUCCESS"));
             this.setState({
                 isLoading: false,
             });
@@ -316,8 +317,8 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                         isLoading
                             ? "game"
                             : this.props.type === "ADD"
-                            ? "Add game"
-                            : "Edit game"
+                            ? T("ADD_GAME")
+                            : T("EDIT_GAME")
                     }
                 >
                     <Form
@@ -333,13 +334,13 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                         <Row gutter={30}>
                             <Col xs={24}>
                                 <div className="section-header text-lg text-bold">
-                                    Basic info
+                                    {T("BASIC_INFO")}
                                 </div>
 
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Image
+                                            {T("IMAGE")}
                                         </div>
                                     }
                                     style={{ width: "100%" }}
@@ -368,8 +369,8 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                 icon={<UploadOutlined />}
                                             >
                                                 {game.image
-                                                    ? "Change image"
-                                                    : "Upload image"}
+                                                    ? T("CHANGE_IMAGE")
+                                                    : T("UPLOAD_IMAGE")}
                                             </Button>
                                         </Upload>
                                     </>
@@ -378,7 +379,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Name
+                                            {T("NAME")}
                                         </div>
                                     }
                                     name="name"
@@ -386,7 +387,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Name is required!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("NAME"),
+                                            }),
                                         },
                                     ]}
                                 >
@@ -396,7 +399,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Description
+                                            {T("DESCRIPTION")}
                                         </div>
                                     }
                                     name="detail"
@@ -404,7 +407,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Description is required!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("DESCRIPTION"),
+                                            }),
                                         },
                                     ]}
                                 >
@@ -418,7 +423,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Genres
+                                            {T("GENRES")}
                                         </div>
                                     }
                                     name="genres"
@@ -426,13 +431,15 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Genre is required!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("GENRES"),
+                                            }),
                                         },
                                     ]}
                                 >
                                     <Select
                                         mode="multiple"
-                                        placeholder="Please select a genre"
+                                        placeholder={T("PLEASE_SELECT_GENRE")}
                                         size="large"
                                         tokenSeparators={[", ", ","]}
                                         filterOption={(input, option) =>
@@ -456,7 +463,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Release date
+                                            {T("RELEASE_DATE")}
                                         </div>
                                     }
                                     name="releaseDate"
@@ -464,8 +471,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                "Release date is required!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("RELEASE_DATE"),
+                                            }),
                                         },
                                     ]}
                                 >
@@ -479,7 +487,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Rating (IARC)
+                                            {T("RATING")} (IARC)
                                         </div>
                                     }
                                     name="ageRating"
@@ -504,7 +512,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Developer
+                                            {T("DEVELOPER")}
                                         </div>
                                     }
                                     name="developer"
@@ -512,7 +520,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Developer is required!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("DEVELOPER"),
+                                            }),
                                         },
                                     ]}
                                 >
@@ -522,7 +532,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Voices
+                                            {T("VOICES")}
                                         </div>
                                     }
                                     name="voices"
@@ -548,7 +558,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Subtitles
+                                            {T("SUBTITLES")}
                                         </div>
                                     }
                                     name="subtitles"
@@ -576,7 +586,8 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                         <Form.Item
                                             label={
                                                 <div className="text-bold text-md">
-                                                    Metacritic rating
+                                                    {T("METACRITIC_SCORE")} (
+                                                    {T("MAX")} 10)
                                                 </div>
                                             }
                                             name="metacriticRating"
@@ -584,8 +595,14 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message:
-                                                        "Metacritic rating is required!",
+                                                    message: T(
+                                                        "INPUT_REQUIRED",
+                                                        {
+                                                            text: T(
+                                                                "METACRITIC_SCORE"
+                                                            ),
+                                                        }
+                                                    ),
                                                 },
                                             ]}
                                         >
@@ -602,7 +619,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                         <Form.Item
                                             label={
                                                 <div className="text-bold text-md">
-                                                    Number of metacritics
+                                                    {T("METACRITIC_NUMBER")}
                                                 </div>
                                             }
                                             name="metacriticRatingCount"
@@ -610,8 +627,14 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message:
-                                                        "Number of metacritics is required!",
+                                                    message: T(
+                                                        "INPUT_REQUIRED",
+                                                        {
+                                                            text: T(
+                                                                "METACRITIC_NUMBER"
+                                                            ),
+                                                        }
+                                                    ),
                                                 },
                                             ]}
                                         >
@@ -628,7 +651,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                         <Form.Item
                                             label={
                                                 <div className="text-bold text-md">
-                                                    Metacritic reference URL
+                                                    {T("METACRITIC_REF_URL")}
                                                 </div>
                                             }
                                             name="metacriticRefUrl"
@@ -646,7 +669,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     className="section-header text-lg text-bold"
                                     style={{ marginTop: 30 }}
                                 >
-                                    Platforms & Pricing
+                                    {T("PLATFORM_PRICE")}
                                 </div>
 
                                 {["Ps", "Xbox", "Nintendo"].map((platform) => (
@@ -696,7 +719,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                                 }`
                                                             ]
                                                         }
-                                                        addonBefore="Shop URL"
+                                                        addonBefore={T(
+                                                            "SHOP_URL"
+                                                        )}
                                                         style={{
                                                             width: "100%",
                                                         }}
@@ -714,8 +739,14 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            message:
-                                                                "Original price is required!",
+                                                            message: T(
+                                                                "INPUT_REQUIRED",
+                                                                {
+                                                                    text: T(
+                                                                        "ORIGINAL_PRICE"
+                                                                    ),
+                                                                }
+                                                            ),
                                                         },
                                                     ]}
                                                 >
@@ -727,7 +758,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                                 }`
                                                             ]
                                                         }
-                                                        addonBefore="Original price"
+                                                        addonBefore={T(
+                                                            "ORIGINAL_PRICE"
+                                                        )}
                                                         addonAfter="THB"
                                                         style={{
                                                             width: "100%",
@@ -757,7 +790,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                     }
                                                 >
                                                     <span className="text-md">
-                                                        On sale
+                                                        {T("ON_SALE")}
                                                     </span>
                                                 </Checkbox>
                                                 {game[
@@ -773,8 +806,14 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                         rules={[
                                                             {
                                                                 required: true,
-                                                                message:
-                                                                    "Sale price is required!",
+                                                                message: T(
+                                                                    "INPUT_REQUIRED",
+                                                                    {
+                                                                        text: T(
+                                                                            "SALE_PRICE"
+                                                                        ),
+                                                                    }
+                                                                ),
                                                             },
                                                             ({
                                                                 getFieldValue,
@@ -793,7 +832,10 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                                     }
                                                                     return Promise.reject(
                                                                         new Error(
-                                                                            "Sale price must be less than original price!"
+                                                                            langSlug ===
+                                                                            "en"
+                                                                                ? "Sale price must be less than original price!"
+                                                                                : "ราคาที่ลดแล้วต้องน้อยกว่าราคาปกติ!"
                                                                         )
                                                                     );
                                                                 },
@@ -801,7 +843,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                         ]}
                                                     >
                                                         <InputNumber
-                                                            addonBefore="Sale price"
+                                                            addonBefore={T(
+                                                                "SALE_PRICE"
+                                                            )}
                                                             addonAfter="THB"
                                                             style={{
                                                                 width: "100%",
@@ -827,8 +871,8 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                 size="large"
                             >
                                 {this.props.type === "ADD"
-                                    ? "Submit"
-                                    : "Save changes"}
+                                    ? T("SUBMIT")
+                                    : T("SAVE_CHANGES")}
                             </Button>
                         </div>
                     </Form>

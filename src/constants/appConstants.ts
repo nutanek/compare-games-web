@@ -22,22 +22,27 @@ export const SORTINGS = [
     {
         id: SORTING_ID.releaseDate,
         name: "Release date",
+        nameTh: "วันที่วางจำหน่าย",
     },
     {
         id: SORTING_ID.priceLowToHigh,
         name: "Price (Low to Hight)",
+        nameTh: "ราคา (ต่ำไปสูง)",
     },
     {
         id: SORTING_ID.priceHighToLow,
         name: "Price (Hight to Low)",
+        nameTh: "ราคา (สูงไปต่ำ)",
     },
     {
         id: SORTING_ID.nameAToZ,
         name: "Name A-Z",
+        nameTh: "ชื่อ A-Z",
     },
     {
         id: SORTING_ID.rating,
         name: "Metacritic Score",
+        nameTh: "คะแนนจากนักวิจารณ์",
     },
 ];
 
@@ -46,9 +51,19 @@ export const ERRORS = {
 };
 
 export const USER_GENDER = {
-    m: "Male",
-    f: "Female",
-    n: "Choose not to answer",
+    m: {
+        name: "Male",
+        nameTh: "ชาย",
+    },
+    f: {
+        name: "Female",
+        nameTh: "หญิง",
+    },
+
+    n: {
+        name: "Choose not to answer",
+        nameTh: "ไม่ระบุ",
+    },
 };
 
 export const USER_ROLE = {

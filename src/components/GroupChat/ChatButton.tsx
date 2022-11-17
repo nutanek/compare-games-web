@@ -1,6 +1,6 @@
-import { Button } from "antd";
 import styled from "styled-components";
 import { ROOT_PATH } from "../../constants/appConstants";
+import { T } from "./../../services/translateServices";
 
 const Container = styled.div`
     cursor: pointer;
@@ -10,6 +10,7 @@ const Container = styled.div`
     gap: 15px;
     position: fixed;
     bottom: 0;
+    z-index: 99;
     right: 30px;
     width: 300px;
     padding: 15px;
@@ -36,12 +37,9 @@ const ChatButton = (props: Props) => {
             onClick={() => props.onClick()}
         >
             <div className="icon">
-                <img
-                    src={`${ROOT_PATH}/images/chat-icon.png`}
-                    alt=""
-                />
+                <img src={`${ROOT_PATH}/images/chat-icon.png`} alt="icon" />
             </div>
-            <div className="text-md text-bold">Chat Rooms</div>
+            <div className="text-md text-bold">{T("CHAT_ROOMS")}</div>
         </Container>
     );
 };

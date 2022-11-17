@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { Layout, Button, Modal } from "antd";
 import { UserOutlined, HeartFilled } from "@ant-design/icons";
 import { ROOT_PATH } from "./../../../constants/appConstants";
-import {
-    isLoggedIn as checkLoggedIn,
-} from "../../../services/appServices";
+import { T } from "../../../services/translateServices";
+import { isLoggedIn as checkLoggedIn } from "../../../services/appServices";
 import SearchBoxDesktop from "./SearchBox";
 
 const { Header } = Layout;
@@ -88,7 +87,7 @@ const DesktopHeader = (): JSX.Element => {
                 to={`${ROOT_PATH}/games`}
                 className="menu text-md text-bold pointer"
             >
-                Games
+                {T("GAMES")}
             </Link>
             <div className="search-box-container">
                 <SearchBoxDesktop />
@@ -101,7 +100,7 @@ const DesktopHeader = (): JSX.Element => {
                         size="large"
                         icon={<HeartFilled style={{ color: "#fe0a06" }} />}
                     >
-                        Wish List
+                        {T("WISH_LIST")}
                     </Button>
                 </Link>
                 {isLoggedIn ? (
@@ -112,7 +111,7 @@ const DesktopHeader = (): JSX.Element => {
                             size="large"
                             icon={<UserOutlined />}
                         >
-                            My Account
+                            {T("MY_ACCOUNT")}
                         </Button>
                     </Link>
                 ) : (
@@ -123,7 +122,7 @@ const DesktopHeader = (): JSX.Element => {
                                 type="primary"
                                 size="large"
                             >
-                                Login
+                                {T("LOGIN")}
                             </Button>
                         </Link>
                         <Link to={`${ROOT_PATH}/signup`}>
@@ -132,7 +131,7 @@ const DesktopHeader = (): JSX.Element => {
                                 type="primary"
                                 size="large"
                             >
-                                Register
+                                {T("REGISTER")}
                             </Button>
                         </Link>
                     </>

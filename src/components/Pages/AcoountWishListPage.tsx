@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Game } from "../../models/game";
 import { getWishlistApi } from "./../../services/apiServices";
 import { isLoggedIn as checkIsLoggedIn } from "./../../services/appServices";
+import { T, langSlug } from "../../services/translateServices";
 import ProductCard from "../Product/ProductCard/ProductCard";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
@@ -61,15 +62,23 @@ class AcoountWishListPage extends Component<Props> {
             return (
                 <Result
                     status="info"
-                    title="Please login before view your wish list!"
-                    extra={"Redirecting to login..."}
+                    title={
+                        langSlug === "en"
+                            ? "Please login before view your wish list!"
+                            : "กรุณาเข้าสู่ระบบก่อนดูรายการที่ถูกใจ"
+                    }
+                    extra={
+                        langSlug === "en"
+                            ? "Redirecting to login..."
+                            : "กำลังไปหน้า เข้าสู่ระบบ..."
+                    }
                 />
             );
         }
 
         return (
             <Container>
-                <AccountLayout title="Wish List">
+                <AccountLayout title={T("WISH_LIST")}>
                     <>
                         <Row gutter={[15, 24]}>
                             {this.state.games.map((game) => (
@@ -93,7 +102,7 @@ class AcoountWishListPage extends Component<Props> {
                             this.state.games.length === 0 && (
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_DEFAULT}
-                                    description="No games"
+                                    description={T('NO_GAMES')}
                                 />
                             )}
 

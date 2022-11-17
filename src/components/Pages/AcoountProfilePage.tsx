@@ -33,6 +33,7 @@ import {
     getLocalUserInfo,
     setLocalUserInfo,
 } from "./../../services/appServices";
+import { T, langSlug } from "../../services/translateServices";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
 
@@ -127,7 +128,7 @@ class AcoountProfilePage extends Component<Props> {
                 country: values.country,
                 gender: values.gender,
             });
-            message.success("Success!");
+            message.success(T("SUCCESS"));
             this.setState({
                 isLoading: false,
             });
@@ -229,7 +230,7 @@ class AcoountProfilePage extends Component<Props> {
                                         style={{ borderRadius: 8 }}
                                         size="small"
                                     >
-                                        Edit
+                                        {T("EDIT")}
                                     </Button>
                                 </Upload>
                             </Col>
@@ -237,7 +238,7 @@ class AcoountProfilePage extends Component<Props> {
                                 <Form.Item
                                     label={
                                         <div className="text-bold text-md">
-                                            Display name
+                                            {T("DISPLAY_NAME")}
                                         </div>
                                     }
                                     name="displayName"
@@ -245,8 +246,9 @@ class AcoountProfilePage extends Component<Props> {
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                "Please input your display name!",
+                                            message: T("INPUT_REQUIRED", {
+                                                text: T("DISPLAY_NAME"),
+                                            }),
                                         },
                                     ]}
                                 >
@@ -259,7 +261,9 @@ class AcoountProfilePage extends Component<Props> {
 
                         <Form.Item
                             label={
-                                <div className="text-bold text-md">Gender</div>
+                                <div className="text-bold text-md">
+                                    {T("GENDER")}
+                                </div>
                             }
                             name="gender"
                             style={{ width: "100%" }}
@@ -267,17 +271,23 @@ class AcoountProfilePage extends Component<Props> {
                             <Radio.Group>
                                 <Radio value="m">
                                     <span className="text-md">
-                                        {USER_GENDER["m"]}
+                                        {langSlug === "en"
+                                            ? USER_GENDER["m"].name
+                                            : USER_GENDER["m"].nameTh}
                                     </span>
                                 </Radio>
                                 <Radio value="f">
                                     <span className="text-md">
-                                        {USER_GENDER["f"]}
+                                        {langSlug === "en"
+                                            ? USER_GENDER["f"].name
+                                            : USER_GENDER["f"].nameTh}
                                     </span>
                                 </Radio>
                                 <Radio value="n">
                                     <span className="text-md">
-                                        {USER_GENDER["n"]}
+                                        {langSlug === "en"
+                                            ? USER_GENDER["n"].name
+                                            : USER_GENDER["n"].nameTh}
                                     </span>
                                 </Radio>
                             </Radio.Group>
@@ -286,7 +296,7 @@ class AcoountProfilePage extends Component<Props> {
                         <Form.Item
                             label={
                                 <div className="text-bold text-md">
-                                    Country/region of residence
+                                    {T("COUNTRY_REGION")}
                                 </div>
                             }
                             name="country"
@@ -294,7 +304,7 @@ class AcoountProfilePage extends Component<Props> {
                         >
                             <Select
                                 showSearch
-                                placeholder="Select a country"
+                                placeholder={T("SELECT_COUNTRY")}
                                 size="large"
                             >
                                 {countries.map((country) => (
@@ -314,7 +324,7 @@ class AcoountProfilePage extends Component<Props> {
                                 style={{ borderRadius: 8 }}
                                 size="large"
                             >
-                                Save changes
+                                {T("SAVE_CHANGES")}
                             </Button>
                         </div>
                     </Form>

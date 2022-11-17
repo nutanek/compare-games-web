@@ -4,13 +4,12 @@ import { Component } from "react";
 import clone from "lodash/clone";
 import styled from "styled-components";
 import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
+import { T } from "../../services/translateServices";
 import { ReviewItem as ReviewItemModel } from "../../models/review";
 import { getReviewsApi, reactReviewApi } from "./../../services/apiServices";
 import { isLoggedIn as checkIsLoggedIn } from "./../../services/appServices";
 import ReviewItem from "./ReviewItem";
 import CommentBox from "./CommentBox";
-
-const Container = styled.div``;
 
 class Review extends Component<Props> {
     state: State = {
@@ -122,7 +121,7 @@ class Review extends Component<Props> {
     render() {
         const isLoggedIn = checkIsLoggedIn();
         return (
-            <Spin tip="Loading..." spinning={this.state.isLoading}>
+            <Spin tip={`${T("LOADING")}...`} spinning={this.state.isLoading}>
                 <div ref={this.topOfReviewRef}></div>
                 {this.state.reviews.map((review, index) => (
                     <ReviewItem
@@ -134,7 +133,7 @@ class Review extends Component<Props> {
                     />
                 ))}
                 {!this.state.isLoading && this.state.reviews.length === 0 && (
-                    <Empty description="No reviews" />
+                    <Empty description={T("NO_REVIEWS")} />
                 )}
                 <Pagination
                     style={{ textAlign: "right" }}

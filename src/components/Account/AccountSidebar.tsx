@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { getLocalUserInfo, signout } from "./../../services/appServices";
+import { T } from "./../../services/translateServices";
 import { IMAGE_PATH, ROOT_PATH, USER_ROLE } from "../../constants/appConstants";
 import withRouter from "../../hocs/withRouter";
 
@@ -75,9 +76,11 @@ const AccountSidebar = (props: Props) => {
 
     function showConfirmLogoutModal() {
         confirm({
-            title: "Do you want to log out?",
+            title: T("CONFIRM_LOGOUT"),
             centered: true,
             maskClosable: true,
+            okText: T("OK"),
+            cancelText: T("CANCEL"),
             onOk() {
                 signout({ isCallback: true });
             },
@@ -120,7 +123,7 @@ const AccountSidebar = (props: Props) => {
                             <div className="icon">
                                 <UserOutlined />
                             </div>
-                            <div className="text">User Info</div>
+                            <div className="text">{T("USER_INFO")}</div>
                         </div>
                     </Link>
 
@@ -137,7 +140,7 @@ const AccountSidebar = (props: Props) => {
                             <div className="icon">
                                 <HeartOutlined />
                             </div>
-                            <div className="text">Wish List</div>
+                            <div className="text">{T("WISH_LIST")}</div>
                         </div>
                     </Link>
 
@@ -155,7 +158,7 @@ const AccountSidebar = (props: Props) => {
                                 <div className="icon">
                                     <BuildOutlined />
                                 </div>
-                                <div className="text">Games</div>
+                                <div className="text">{T("GAMES")}</div>
                             </div>
                         </Link>
                     )}
@@ -167,7 +170,7 @@ const AccountSidebar = (props: Props) => {
                         <div className="icon">
                             <LogoutOutlined />
                         </div>
-                        <div className="text">Log out</div>
+                        <div className="text">{T("LOGOUT")}</div>
                     </div>
                 </div>
             </div>

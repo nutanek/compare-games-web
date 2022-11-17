@@ -8,6 +8,7 @@ import {
     IMAGE_PATH,
     APP_DATE_FORMAT,
 } from "../../constants/appConstants";
+import { T, langSlug } from "../../services/translateServices";
 
 const Container = styled.div`
     border: 1px solid #d2d4d9;
@@ -107,8 +108,8 @@ const ReviewItem = (props: Props) => {
                     </span>{" "}
                     <span className="text">
                         {review.like_count > 0 ? review.like_count + " " : ""}
-                        {review.like_count > 1 ? "Likes" : "Like"}{" "}
-                        {review.liked && " by you"}
+                        {review.like_count > 1 ? T("LIKES") : T("LIKE")}{" "}
+                        {review.liked && ` ${T("BY_YOU")}`}
                     </span>
                 </div>
                 <div
@@ -124,8 +125,10 @@ const ReviewItem = (props: Props) => {
                         {review.dislike_count > 0
                             ? review.dislike_count + " "
                             : ""}
-                        {review.dislike_count > 1 ? "Dislikes" : "Dislike"}{" "}
-                        {review.disliked && " by you"}
+                        {review.dislike_count > 1
+                            ? T("DISLIKES")
+                            : T("DISLIKE")}{" "}
+                        {review.disliked && ` ${T("BY_YOU")}`}
                     </span>
                 </div>
             </div>

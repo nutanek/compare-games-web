@@ -15,6 +15,7 @@ import queryString from "query-string";
 import styled from "styled-components";
 import { isLoggedIn } from "./../../services/appServices";
 import { resetPassword } from "./../../services/apiServices";
+import { T, langSlug } from "../../services/translateServices";
 import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
 import PasswordStrengthScore from "../Utility/PasswordStrengthScore";
@@ -78,9 +79,13 @@ class ResetPasswordPage extends Component<Props> {
             });
             this.setState({ isLoading: false });
             Modal.success({
-                title: "Your password have changed",
+                title:
+                    langSlug === "en"
+                        ? "Your password have changed"
+                        : "เปลี่ยนรหัสผ่านสำเร็จ!",
                 centered: true,
                 maskClosable: true,
+                okText: T("OK"),
                 afterClose: () => {
                     window.location.replace(`${ROOT_PATH}/login`);
                 },
@@ -119,7 +124,7 @@ class ResetPasswordPage extends Component<Props> {
                             </div>
                             <div className="body">
                                 <p className="text-center text-bold text-4xl">
-                                    Reset Password
+                                    {T("RESET_PASSWORD")}
                                 </p>
                                 <Form
                                     ref={this.formRef}
@@ -130,17 +135,20 @@ class ResetPasswordPage extends Component<Props> {
                                 >
                                     <Form.Item
                                         name="password"
-                                        label="New password"
+                                        label={T("NEW_PASSWORD")}
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    "Please input your new password!",
+                                                message: T("INPUT_REQUIRED", {
+                                                    text: T("NEW_PASSWORD"),
+                                                }),
                                             },
                                             {
                                                 min: 8,
                                                 message:
-                                                    "Password must be at least 8 characters",
+                                                    langSlug === "en"
+                                                        ? "Password must be at least 8 characters"
+                                                        : "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",
                                             },
                                         ]}
                                     >
@@ -155,13 +163,14 @@ class ResetPasswordPage extends Component<Props> {
 
                                     <Form.Item
                                         name="confirmPassword"
-                                        label="Confirm new password"
+                                        label={T("CONFIRM_PASSWORD")}
                                         hasFeedback
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    "Please confirm your new password!",
+                                                message: T("INPUT_REQUIRED", {
+                                                    text: T("CONFIRM_PASSWORD"),
+                                                }),
                                             },
                                             ({ getFieldValue }) => ({
                                                 validator(_, value) {
@@ -175,7 +184,9 @@ class ResetPasswordPage extends Component<Props> {
                                                     }
                                                     return Promise.reject(
                                                         new Error(
-                                                            "The two passwords do not match!"
+                                                            langSlug == "en"
+                                                                ? "The two passwords do not match!"
+                                                                : "รหัสผ่านทั้งคู่ไม่ตรงกัน"
                                                         )
                                                     );
                                                 },
@@ -197,7 +208,7 @@ class ResetPasswordPage extends Component<Props> {
                                         size="large"
                                         block
                                     >
-                                        Submit
+                                        {T("SUBMT")}
                                     </Button>
                                 </Form>
                             </div>

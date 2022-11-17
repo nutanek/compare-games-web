@@ -1,7 +1,5 @@
 import { Row, Col } from "antd";
 import styled from "styled-components";
-import DesktopHeader from "./../Header/Desktop/DesktopHeader";
-import Footer from "../Footer/Footer";
 import AccountSidebar from "../Account/AccountSidebar";
 
 const Container = styled.div`

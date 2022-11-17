@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { NavigateFunction } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { ROOT_PATH } from "../../../constants/appConstants";
+import { T } from "../../../services/translateServices";
 import withRouter from "../../../hocs/withRouter";
 
 const Container = styled.div`
@@ -35,7 +36,7 @@ const SearchBoxDesktop = (props: Props) => {
                 allowClear
                 className="text-md"
                 size="large"
-                placeholder="Search Game"
+                placeholder={T("SEARCH_GAME")}
                 prefix={<SearchOutlined style={{ color: "#ffffff" }} />}
                 onChange={(e) => setKeyword(e.target.value)}
                 onPressEnter={() => onSearch()}

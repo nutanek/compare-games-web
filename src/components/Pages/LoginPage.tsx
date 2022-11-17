@@ -20,6 +20,7 @@ import {
     isLoggedIn,
 } from "../../services/appServices";
 import { signinApi } from "../../services/apiServices";
+import { T, langSlug } from "../../services/translateServices";
 import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
 
@@ -62,7 +63,7 @@ class LoginPage extends Component<Props> {
 
     componentDidMount() {
         if (isLoggedIn()) {
-            window.location.replace(`${ROOT_PATH}/`)
+            window.location.replace(`${ROOT_PATH}/`);
         }
     }
 
@@ -76,9 +77,9 @@ class LoginPage extends Component<Props> {
             });
             setLocalAccessToken(data.access_token);
             setLocalUserInfo(data);
-            message.success("Success!");
+            message.success(T("SUCCESS"));
             this.setState({ isLoading: false });
-            setTimeout(() =>  this.redirect(), 300)
+            setTimeout(() => this.redirect(), 300);
         } catch (error: any) {
             message.error(error?.response?.data?.msg || ERRORS.unknown);
             this.setState({ isLoading: false });
@@ -86,12 +87,12 @@ class LoginPage extends Component<Props> {
     }
 
     redirect(): void {
-        let queryStr = this.props.location?.search || ''
+        let queryStr = this.props.location?.search || "";
         let query = queryString.parse(queryStr);
         if (query.callback) {
-            window.location.replace(query.callback as string)
+            window.location.replace(query.callback as string);
         } else {
-            window.location.replace(`${ROOT_PATH}/`)
+            window.location.replace(`${ROOT_PATH}/`);
         }
     }
 
@@ -109,14 +110,17 @@ class LoginPage extends Component<Props> {
                     <Col xs={20} sm={18} md={14} lg={10} xl={8}>
                         <div className="card-container">
                             <div className="header">
-                                <img src={`${ROOT_PATH}/images/logo.png`} alt="logo" />
+                                <img
+                                    src={`${ROOT_PATH}/images/logo.png`}
+                                    alt="logo"
+                                />
                                 <div className="name text-bold text-xl">
                                     Console
                                 </div>
                             </div>
                             <div className="body">
                                 <p className="text-center text-bold text-4xl">
-                                    Log in
+                                    {T("LOGIN")}
                                 </p>
                                 <Form
                                     ref={this.formRef}
@@ -128,16 +132,19 @@ class LoginPage extends Component<Props> {
                                 >
                                     <Form.Item
                                         name="email"
-                                        label="Email"
+                                        label={T("EMAIL")}
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    "Please input your email!",
+                                                message: T("INPUT_REQUIRED", {
+                                                    text: T("EMAIL"),
+                                                }),
                                             },
                                             {
                                                 type: "email",
-                                                message: "Email is invalid!",
+                                                message: T("INPUT_INVALID", {
+                                                    text: T("EMAIL"),
+                                                }),
                                             },
                                         ]}
                                     >
@@ -146,17 +153,21 @@ class LoginPage extends Component<Props> {
 
                                     <Form.Item
                                         name="password"
-                                        label="Password"
+                                        label={T("PASSWORD")}
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    "Please input your password!",
+
+                                                message: T("INPUT_REQUIRED", {
+                                                    text: T("PASSWORD"),
+                                                }),
                                             },
                                             {
                                                 min: 8,
                                                 message:
-                                                    "Password must be at least 8 characters",
+                                                    langSlug === "en"
+                                                        ? "Password must be at least 8 characters"
+                                                        : "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",
                                             },
                                         ]}
                                     >
@@ -166,7 +177,7 @@ class LoginPage extends Component<Props> {
                                         name="remember"
                                         valuePropName="checked"
                                     >
-                                        <Checkbox>Remember me</Checkbox>
+                                        <Checkbox>{T("REMEMBER_ME")}</Checkbox>
                                     </Form.Item>
 
                                     <Button
@@ -175,7 +186,7 @@ class LoginPage extends Component<Props> {
                                         size="large"
                                         block
                                     >
-                                        Log in
+                                        {T("LOGIN")}
                                     </Button>
 
                                     <Link to={`${ROOT_PATH}/forgot-password`}>
@@ -184,18 +195,18 @@ class LoginPage extends Component<Props> {
                                             block
                                             style={{ marginTop: 15 }}
                                         >
-                                            Forgot Password?
+                                            {T("FORGOT_PASSWORD")}?
                                         </Button>
                                     </Link>
 
                                     <Divider />
 
                                     <div className="text-secondary-color text-center">
-                                        Don´t have an account?
+                                        {T("DONT_HAVE_ACCOUNT")}
                                     </div>
                                     <Link to={`${ROOT_PATH}/signup`}>
                                         <Button type="link" block>
-                                            Sign up
+                                            {T("SIGN_UP")}
                                         </Button>
                                     </Link>
                                 </Form>

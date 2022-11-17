@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { PlatformKey } from "./../../../models/game";
 
 const Container = styled.div`
-padding-top: 10px;
+    padding-top: 10px;
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
     > .platform-item {
         color: #ffffff;
@@ -17,7 +18,7 @@ padding-top: 10px;
             background-color: #008746;
         }
         &.nintendo {
-            background-color: #E60012;
+            background-color: #e60012;
         }
     }
 `;

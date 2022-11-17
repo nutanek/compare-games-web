@@ -17,6 +17,7 @@ import queryString from "query-string";
 import styled from "styled-components";
 import { isLoggedIn } from "../../services/appServices";
 import { forgotPasswordApi } from "../../services/apiServices";
+import { T, langSlug } from "../../services/translateServices";
 import withRouter from "./../../hocs/withRouter";
 import LoadingModal from "../Utility/Modal/Loading";
 import { ERRORS, ROOT_PATH } from "../../constants/appConstants";
@@ -68,9 +69,17 @@ class ForgotPasswordPage extends Component<Props> {
             await forgotPasswordApi({ email: info.email });
             this.setState({ isLoading: false });
             Modal.success({
-                title: "We've sent the link",
-                content: `Please check your email inbox (${info.email})`,
+                title:
+                    langSlug === "en"
+                        ? "We've sent the link"
+                        : "ส่งลิงก์เรียบร้อยแล้ว",
+                content: `${
+                    langSlug === "en"
+                        ? "Please check your email inbox"
+                        : "กรุณาตรวจสอบกล่องข้อความในอีเมล"
+                } (${info.email})`,
                 centered: true,
+                okText: T("OK"),
             });
         } catch (error: any) {
             message.error(error?.response?.data?.msg || ERRORS.unknown);
@@ -102,12 +111,14 @@ class ForgotPasswordPage extends Component<Props> {
                             </div>
                             <div className="body">
                                 <p className="text-center text-bold text-4xl">
-                                    Forgot Password?
+                                    {T("FORGOT_PASSWORD")}?
                                 </p>
 
                                 <p className="text-secondary-color text-center">
-                                    Enter your email and we'll send you a link
-                                    to reset your password.
+                                    {langSlug === "en"
+                                        ? `Enter your email and we'll send you a link
+                                    to reset your password.`
+                                        : `กรุณากรอกอีเมลของคุณ จากนั้นระบบจะส่งลิงก์สำหรับตั้งรหัสผ่านใหม่ให้ทางอีเมล`}
                                 </p>
 
                                 <Form
@@ -120,16 +131,19 @@ class ForgotPasswordPage extends Component<Props> {
                                 >
                                     <Form.Item
                                         name="email"
-                                        label="Email"
+                                        label={T("EMAIL")}
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    "Please input your email!",
+                                                message: T("INPUT_REQUIRED", {
+                                                    text: T("EMAIL"),
+                                                }),
                                             },
                                             {
                                                 type: "email",
-                                                message: "Email is invalid!",
+                                                message: T("INPUT_INVALID", {
+                                                    text: T("EMAIL"),
+                                                }),
                                             },
                                         ]}
                                     >
@@ -142,7 +156,7 @@ class ForgotPasswordPage extends Component<Props> {
                                         size="large"
                                         block
                                     >
-                                        Submit
+                                        {T("SUBMIT")}
                                     </Button>
 
                                     <Divider />
@@ -153,7 +167,7 @@ class ForgotPasswordPage extends Component<Props> {
                                             block
                                             icon={<LeftOutlined />}
                                         >
-                                            Back to Login
+                                            {T("BACK_LOGIN")}
                                         </Button>
                                     </Link>
                                 </Form>

@@ -9,46 +9,48 @@ import {
     HeartOutlined,
 } from "@ant-design/icons";
 import { ROOT_PATH } from "./../../../constants/appConstants";
+import { T } from "../../../services/translateServices";
 import { isLoggedIn as checkLoggedIn } from "../../../services/appServices";
 
 const data = [
     {
-        title: "Home",
+        title: T("HOME"),
+        titleTh: "หน้าแรก",
         icon: <HomeOutlined />,
         hideOnAuth: false,
         needAuth: false,
         link: `${ROOT_PATH}/`,
     },
     {
-        title: "Games",
+        title: T("GAMES"),
         icon: <BuildOutlined />,
         hideOnAuth: false,
         needAuth: false,
         link: `${ROOT_PATH}/games`,
     },
     {
-        title: "Wish List",
+        title: T("WISH_LIST"),
         icon: <HeartOutlined />,
         hideOnAuth: false,
         needAuth: false,
         link: `${ROOT_PATH}/account/wishlist`,
     },
     {
-        title: "Login",
+        title: T("LOGIN"),
         icon: <LoginOutlined />,
         hideOnAuth: true,
         needAuth: false,
         link: `${ROOT_PATH}/login`,
     },
     {
-        title: "Register",
+        title: T("REGISTER"),
         icon: <UserAddOutlined />,
         hideOnAuth: true,
         needAuth: false,
         link: `${ROOT_PATH}/signup`,
     },
     {
-        title: "My Account",
+        title: T("MY_ACCOUNT"),
         icon: <UserOutlined />,
         hideOnAuth: false,
         needAuth: true,

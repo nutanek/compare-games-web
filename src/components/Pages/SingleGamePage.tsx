@@ -16,6 +16,7 @@ import {
 import { SingleGame, platformKeys } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
 import { getGameApi, updateWishlistApi } from "./../../services/apiServices";
+import { T } from "../../services/translateServices";
 import GenreTags from "../SingleGame/GenreTags";
 import LoadingModal from "../Utility/Modal/Loading";
 import PricingSection from "../SingleGame/PricingSection";
@@ -178,7 +179,7 @@ class SingleGamePage extends Component<Props> {
             });
             game.liked = !game.liked;
             this.setState({ isLikeLoading: false, game });
-            message.success(data?.msg || "Success!");
+            message.success(data?.msg || T("SUCCESS"));
         } catch (error: any) {
             this.setState({ isLikeLoading: false });
             message.error(error?.response?.data?.msg || ERRORS.unknown);
@@ -197,10 +198,10 @@ class SingleGamePage extends Component<Props> {
                 <div className="breadcrumb">
                     <Breadcrumb separator=">">
                         <Breadcrumb.Item>
-                            <Link to={`${ROOT_PATH}/`}>Home</Link>
+                            <Link to={`${ROOT_PATH}/`}>{T("HOME")}</Link>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>
-                            <Link to={`${ROOT_PATH}/games`}>Games</Link>
+                            <Link to={`${ROOT_PATH}/games`}>{T("GAMES")}</Link>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item>{game.name}</Breadcrumb.Item>
                     </Breadcrumb>
@@ -225,7 +226,7 @@ class SingleGamePage extends Component<Props> {
                         </div>
                     </Col>
                     <Col className="gutter-row" xs={24} sm={24} md={24} lg={16}>
-                        <h1 className="text-3xl">{game.name}</h1>
+                        <h1 className="text-3xl text-bold">{game.name}</h1>
                         <div style={{ display: "flex" }}>
                             <GenreTags genres={game.genres} />
                             {game.age_rating && (
@@ -251,7 +252,7 @@ class SingleGamePage extends Component<Props> {
                 <Row>
                     <Col xs={24} className="description-section">
                         <h2 className="title text-center text-3xl text-bold">
-                            Description
+                            {T("DESCRIPTION")}
                         </h2>
                         <p
                             className="description text-md"
@@ -265,36 +266,23 @@ class SingleGamePage extends Component<Props> {
                         <table className="properties-table text-md">
                             <tbody>
                                 <tr>
-                                    <td>Release date:</td>
+                                    <td>{T("RELEASE_DATE")}:</td>
                                     <td>
                                         {moment
                                             .unix(game.release_date / 1000)
                                             .format(APP_DATE_FORMAT)}
                                     </td>
                                 </tr>
-                                {/* <tr>
-                                    <td>Rating:</td>
-                                    <td>
-                                        <img
-                                            style={{ height: 24 }}
-                                            src={`${ROOT_PATH}/images/iarc/${game.age_rating}.svg`}
-                                            alt="age-rating"
-                                        />{" "}
-                                        {AGE_RATINGS[
-                                            game.age_rating as keyof typeof AGE_RATINGS
-                                        ] || "-"}
-                                    </td>
-                                </tr> */}
                                 <tr>
-                                    <td>Developer:</td>
+                                    <td>{T("DEVELOPER")}:</td>
                                     <td>{game.developer || "-"}</td>
                                 </tr>
                                 <tr>
-                                    <td>Voices:</td>
+                                    <td>{T("VOICES")}:</td>
                                     <td>{game.voices || "-"}</td>
                                 </tr>
                                 <tr>
-                                    <td>Subtitles:</td>
+                                    <td>{T("SUBTITLES")}:</td>
                                     <td>{game.subtitles || "-"}</td>
                                 </tr>
                             </tbody>
@@ -304,12 +292,12 @@ class SingleGamePage extends Component<Props> {
 
                 <Row>
                     <Col xs={24} className="ratings-section">
-                        <h2 className="text-lg text-bold">Scores</h2>
+                        <h2 className="text-lg text-bold">{T("SCORES")}</h2>
                         <Row gutter={[10, 10]}>
                             <Col xs={24} sm={12} lg={12}>
                                 <div className="rating-item">
                                     <div className="text-lg text-bold">
-                                        Metacritic Score
+                                        {T("METACRITIC_SCORE")}
                                     </div>
                                     <div className="text-bold">
                                         <span className="text-5xl score">
@@ -318,15 +306,19 @@ class SingleGamePage extends Component<Props> {
                                         <span className="text-xl">/ 10</span>
                                     </div>
                                     <div className="text-sm count">
-                                        Critics: {game.metacritic_rating_count}
+                                        {T("CRITICS")}:{" "}
+                                        {game.metacritic_rating_count}
                                     </div>
                                     {game.metacritic_ref_url && (
-                                        <div className="text-sm">
+                                        <div
+                                            className="text-sm"
+                                            style={{ marginTop: 5 }}
+                                        >
                                             <a
                                                 target="_blank"
                                                 href={game.metacritic_ref_url}
                                             >
-                                                Check Metacritic.com
+                                                {T("CHECK_AT")} Metacritic.com
                                             </a>
                                         </div>
                                     )}
@@ -335,7 +327,7 @@ class SingleGamePage extends Component<Props> {
                             <Col xs={24} sm={12} lg={12}>
                                 <div className="rating-item">
                                     <div className="text-lg text-bold">
-                                        Consoles Score
+                                        {T("CONSOLES_SCORE")}
                                     </div>
                                     <div className="text-bold">
                                         <span className="text-5xl score">
@@ -344,7 +336,7 @@ class SingleGamePage extends Component<Props> {
                                         <span className="text-xl">/ 5</span>
                                     </div>
                                     <div className="text-sm count">
-                                        Users: {game.user_rating_count}
+                                        {T("USERS")}: {game.user_rating_count}
                                     </div>
                                 </div>
                             </Col>
@@ -357,10 +349,10 @@ class SingleGamePage extends Component<Props> {
                         <Row>
                             <Col xs={24} className="reviews-section">
                                 <h2 className="text-lg text-bold">
-                                    Showing {game.user_rating_count}{" "}
+                                    {T("SHOWING")} {game.user_rating_count}{" "}
                                     {game.user_rating_count > 1
-                                        ? "Reviews"
-                                        : "Review"}
+                                        ? T("REVIEWS")
+                                        : T("REVIEW")}
                                 </h2>
                                 <Row>
                                     <Col xs={24}>
@@ -404,7 +396,7 @@ const AddToWishlist = (props: AddToWishlistType) => {
                 )}
             </div>
             <div className="text-md pointer" onClick={() => props.onClick()}>
-                {props.liked ? "Remove from Wish List" : "Add to Wish List"}
+                {props.liked ? T("REMOVE_WISHLIST") : T("ADD_WISHLIST")}
             </div>
         </div>
     );
