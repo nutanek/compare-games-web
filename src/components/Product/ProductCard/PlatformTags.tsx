@@ -20,6 +20,18 @@ const Container = styled.div`
         &.nintendo {
             background-color: #e60012;
         }
+        &.reverse-color {
+            background-color: #ffffff !important;
+            &.ps {
+                color: #00439c !important;
+            }
+            &.xbox {
+                color: #008746 !important;
+            }
+            &.nintendo {
+                color: #e60012 !important;
+            }
+        }
     }
 `;
 
@@ -29,13 +41,15 @@ const PLATFOTM = {
     nintendo: "Nintendo",
 };
 
-const PlatformTags = ({ platforms }: Props) => {
+const PlatformTags = ({ platforms, reverseColor }: Props) => {
     return (
         <Container className="platforms">
             {platforms.map((platform) => (
                 <div
                     key={platform}
-                    className={`platform-item ${platform || ""}`}
+                    className={`platform-item ${platform || ""} ${
+                        reverseColor ? "reverse-color" : ""
+                    }`}
                 >
                     {PLATFOTM[platform] || ""}
                 </div>
@@ -46,6 +60,7 @@ const PlatformTags = ({ platforms }: Props) => {
 
 type Props = {
     platforms: PlatformKey[];
+    reverseColor?: boolean;
 };
 
 export default PlatformTags;

@@ -225,7 +225,18 @@ class SingleGamePage extends Component<Props> {
                             )}
                         </div>
                     </Col>
-                    <Col className="gutter-row" xs={24} sm={24} md={24} lg={16}>
+                    <Col
+                        className="gutter-row"
+                        xs={24}
+                        sm={24}
+                        md={24}
+                        lg={16}
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            paddingBottom: 30,
+                        }}
+                    >
                         <h1 className="text-3xl text-bold">{game.name}</h1>
                         <div style={{ display: "flex" }}>
                             <GenreTags genres={game.genres} />
@@ -245,6 +256,9 @@ class SingleGamePage extends Component<Props> {
                             liked={game.liked}
                             onClick={() => this.updateWishlist(game.id)}
                         />
+
+                        <div style={{ flex: 1 }} />
+
                         <PricingSection prices={game.prices} />
                     </Col>
                 </Row>
