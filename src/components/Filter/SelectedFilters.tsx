@@ -1,7 +1,7 @@
 import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { Filter as FilterModel, FilterOption } from "./../../models/filter";
-import { T } from "./../../services/translateServices";
+import { T, langSlug } from "./../../services/translateServices";
 
 const Container = styled.div`
     display: flex;
@@ -56,7 +56,12 @@ const SelectedFilters = (props: Props) => {
                     className="btn btn-item text-sm"
                     onClick={() => props.onRemove(item.filterSlug, item.slug)}
                 >
-                    <div className="name">{item.name}</div> <CloseOutlined />
+                    <div className="name">
+                        {langSlug === "en"
+                            ? item.name
+                            : item.name_th || item.name}
+                    </div>{" "}
+                    <CloseOutlined />
                 </div>
             ))}
         </Container>

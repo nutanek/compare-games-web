@@ -16,7 +16,7 @@ import SelectedFilters from "../Filter/SelectedFilters";
 import SortingDesktop from "../Filter/SortingDesktop";
 import LoadingModal from "../Utility/Modal/Loading";
 import { ROOT_PATH } from "../../constants/appConstants";
-import { T } from "../../services/translateServices";
+import { T, langSlug } from "../../services/translateServices";
 
 const Container = styled.div`
     .toolbar {
@@ -104,7 +104,7 @@ class GamesPage extends Component<Props> {
             });
             this.setState({
                 isLoading: false,
-                title: data.title,
+                title: langSlug === "en" ? data.title : data.title_th,
                 page: data.page,
                 itemsPerPage: data.items_per_page,
                 total: data.total,
@@ -317,7 +317,7 @@ class GamesPage extends Component<Props> {
                     </Col>
                     <Col
                         xs={24}
-                        sm={12}
+                        sm={24}
                         md={8}
                         lg={6}
                         style={{ paddingRight: 30 }}

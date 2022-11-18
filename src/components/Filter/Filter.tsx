@@ -2,6 +2,7 @@ import { Collapse, Checkbox } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { Filter as FilterModel } from "./../../models/filter";
+import { langSlug } from "../../services/translateServices";
 
 const { Panel } = Collapse;
 
@@ -45,7 +46,7 @@ const Filter = (props: Props) => {
                     key={filter.slug}
                     header={
                         <span className="filter-name text-lg">
-                            {filter.name}
+                            {langSlug === "en" ? filter.name : filter.name_th}
                         </span>
                     }
                 >
@@ -55,7 +56,9 @@ const Filter = (props: Props) => {
                                 htmlFor={`filter-${filter.name}-${option.slug}`}
                                 className="name"
                             >
-                                {option.name}
+                                {langSlug === "en"
+                                    ? option.name
+                                    : option.name_th || option.name}
                             </label>
                             <div className="check">
                                 <Checkbox

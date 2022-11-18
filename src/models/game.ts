@@ -20,6 +20,7 @@ export type Home = {
 
 export type GamesWithFilter = {
     title: string;
+    title_th: string;
     page: number;
     items_per_page: number;
     total: number;
