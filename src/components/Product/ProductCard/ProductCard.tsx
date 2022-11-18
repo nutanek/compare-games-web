@@ -80,6 +80,9 @@ const Container = styled.div`
             -ms-transform: rotate(5deg) scale(1.2);
             transform: rotate(5deg) scale(1.2);
         }
+        .name a {
+            color: #1890ff;
+        }
     }
 `;
 

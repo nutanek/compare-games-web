@@ -81,5 +81,5 @@ export const AGE_RATINGS = {
 
 export const LANGUAGES = {
     th: "ภาษาไทย",
-    en: "Enlish",
+    en: "English",
 };

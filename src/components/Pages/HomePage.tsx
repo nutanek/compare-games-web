@@ -75,7 +75,7 @@ class HomePage extends Component {
                         seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?on_sale=true`}
                     />
-                    <Row gutter={15}>
+                    <Row gutter={[15, 24]}>
                         {this.state.isLoading
                             ? this.loadingProductCards()
                             : this.state.onSales.map((game) => (

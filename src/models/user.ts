@@ -3,7 +3,7 @@ export type SignUp = {
     display_name: string;
     email: string;
     image: string;
-    role: string;
+    role: 'user' | 'admin';
     access_token: string;
 };
 

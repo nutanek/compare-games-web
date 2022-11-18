@@ -26,6 +26,7 @@ const Container = styled.div`
         padding: 25px 0;
         text-align: center;
         border-radius: 8px;
+        background-size: cover;
         &-ps {
             background-image: url(${`${ROOT_PATH}/images/bg-price-ps.png`}),
                 linear-gradient(

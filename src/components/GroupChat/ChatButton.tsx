@@ -11,7 +11,7 @@ const Container = styled.div`
     position: fixed;
     bottom: 0;
     z-index: 99;
-    right: 30px;
+    right: 27px;
     width: 300px;
     padding: 15px;
     background: #ff5a5a;

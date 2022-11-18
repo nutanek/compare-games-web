@@ -42,11 +42,12 @@ const LanguageSelector = () => {
             <a onClick={(e) => e.preventDefault()}>
                 <Space className="wrapper">
                     <Avatar
+                        key={langSlug}
                         style={{
                             width: 20,
                             height: 20,
                         }}
-                        src={`${ROOT_PATH}/images/languages/th.png`}
+                        src={`${ROOT_PATH}/images/languages/${langSlug}.png`}
                     />
                     <div>{LANGUAGES[langSlug]}</div>
                     <DownOutlined />

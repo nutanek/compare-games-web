@@ -40,12 +40,21 @@ const Container = styled.div`
             }
         }
         .display-name {
-            padding: 15px 0;
+            padding-top: 15px;
+        }
+        .role-label {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #ff5a5a;
+            color: #ffffff;
+            border-radius: 8px;
+            line-height: 1;
         }
     }
     .menu-list-wrapper {
         width: 100%;
         text-align: center;
+        margin-top: 15px;
         .menu-list {
             display: inline-block;
             padding: 20px 0;
@@ -106,6 +115,7 @@ const AccountSidebar = (props: Props) => {
                 <div className="display-name text-lg text-bold">
                     {user.display_name}
                 </div>
+                {user.role === "admin" && <div className="role-label text-xs text-bold">Admin</div>}
             </div>
 
             <div className="menu-list-wrapper">

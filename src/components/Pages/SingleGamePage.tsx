@@ -32,7 +32,6 @@ const Container = styled.div`
         > .image-wrapper {
             position: relative;
             overflow: hidden;
-            height: 100%;
             height: 0;
             padding-bottom: 100%;
             border-radius: 8px;
@@ -44,6 +43,9 @@ const Container = styled.div`
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+            }
+            @media (min-width: 992px) and (max-width: 1399.99px) {
+                height: 100% !important;
             }
         }
     }
@@ -213,7 +215,8 @@ class SingleGamePage extends Component<Props> {
                         xs={24}
                         sm={24}
                         md={24}
-                        lg={8}
+                        lg={9}
+                        xl={8}
                     >
                         <div className="image-wrapper">
                             {game.image && (
@@ -230,7 +233,8 @@ class SingleGamePage extends Component<Props> {
                         xs={24}
                         sm={24}
                         md={24}
-                        lg={16}
+                        lg={15}
+                        xl={16}
                         style={{
                             display: "flex",
                             flexDirection: "column",
