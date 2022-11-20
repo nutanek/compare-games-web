@@ -1,9 +1,10 @@
 import { Row, Col, message } from "antd";
 import { Component } from "react";
 import styled from "styled-components";
+import random from "lodash/random";
 import { v4 as uuidv4 } from "uuid";
 import { ERRORS, ROOT_PATH, SORTING_ID } from "../../constants/appConstants";
-import { Game } from "../../models/game";
+import { Game, platformKeys } from "../../models/game";
 import { getHomeApi } from "./../../services/apiServices";
 import { T } from "../../services/translateServices";
 import Title from "./../Utility/Title";
@@ -57,10 +58,10 @@ class HomePage extends Component {
                     id={new Date().getTime() + no}
                     name=""
                     image=""
-                    price={0}
+                    price={100}
                     liked={false}
                     rating={0}
-                    platforms={[]}
+                    platforms={[platformKeys[random(2)]]}
                 />
             </Col>
         ));
