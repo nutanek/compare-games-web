@@ -100,7 +100,7 @@ class HomePage extends Component {
                         seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?sorting=${SORTING_ID.rating}`}
                     />
-                    <Row gutter={15}>
+                    <Row gutter={[15, 24]}>
                         {this.state.isLoading
                             ? this.loadingProductCards()
                             : this.state.mostPopulars.map((game) => (
@@ -125,7 +125,7 @@ class HomePage extends Component {
                         seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?released=true`}
                     />
-                    <Row gutter={15}>
+                    <Row gutter={[15, 24]}>
                         {this.state.isLoading
                             ? this.loadingProductCards()
                             : this.state.newReleases.map((game) => (
@@ -150,7 +150,7 @@ class HomePage extends Component {
                         seeAllText={T("SEE_ALL")}
                         seeAllLink={`${ROOT_PATH}/games?coming_soon=true`}
                     />
-                    <Row gutter={15}>
+                    <Row gutter={[15, 24]}>
                         {this.state.isLoading
                             ? this.loadingProductCards()
                             : this.state.commingSoons.map((game) => (
