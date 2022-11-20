@@ -208,7 +208,7 @@ class ResetPasswordPage extends Component<Props> {
                                         size="large"
                                         block
                                     >
-                                        {T("SUBMT")}
+                                        {T("SUBMIT")}
                                     </Button>
                                 </Form>
                             </div>
