@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { Link, NavigateFunction } from "react-router-dom";
-import { message, Spin } from "antd";
+import { Link } from "react-router-dom";
+import { Button, message } from "antd";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import styled from "styled-components";
 import numeral from "numeral";
@@ -49,29 +49,29 @@ const Container = styled.div`
                 height: 18px;
             }
         }
+        .add-wishlist-lable {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 9;
+            width: 100%;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: all 0.3s;
+            button {
+                border-radius: 8px;
+            }
+        }
     }
     .name {
         margin: 15px 0;
-        height: 40px;
     }
     .price-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .price {
+        .price.free {
             color: #fe0707;
-        }
-        .fav-icon {
-            transition: all 0.3s;
-            &:hover {
-                transform: scale(1.2);
-            }
-            &.like {
-                color: #cccccc;
-            }
-            &.liked {
-                color: #fe0707;
-            }
         }
     }
     :hover {
@@ -82,6 +82,9 @@ const Container = styled.div`
         }
         .name a {
             color: #1890ff;
+        }
+        .add-wishlist-lable {
+            transform: translateY(0%);
         }
     }
 `;
@@ -125,17 +128,30 @@ const ProductCard = ({
 
     return (
         <Container>
-            <Link to={`${ROOT_PATH}/game/${id}`}>
-                <div className="image-wrapper">
-                    {!!rating && (
-                        <div className="rating-score" title="Metacritic Score">
-                            <div>
-                                <img src={MetacriticIcon} />
-                            </div>
-                            <div className="text-bold">{rating}</div>
+            <div className="image-wrapper">
+                {!!rating && (
+                    <div className="rating-score" title="Metacritic Score">
+                        <div>
+                            <img src={MetacriticIcon} />
                         </div>
-                    )}
-                    {image !== "" && (
+                        <div className="text-bold">{rating}</div>
+                    </div>
+                )}
+                <div className="add-wishlist-lable">
+                    <Button
+                        block
+                        danger
+                        type="primary"
+                        loading={isLoading}
+                        icon={isLiked ? <HeartFilled /> : <HeartOutlined />}
+                        className="text-xs"
+                        onClick={() => !isLoading && updateWishlist()}
+                    >
+                        {isLiked ? T("REMOVE_WISHLIST") : T("ADD_WISHLIST")}
+                    </Button>
+                </div>
+                {image !== "" && (
+                    <Link to={`${ROOT_PATH}/game/${id}`}>
                         <LazyLoad>
                             <img
                                 ref={refImage}
@@ -146,12 +162,12 @@ const ProductCard = ({
                                 alt={name}
                             />
                         </LazyLoad>
-                    )}
-                </div>
-            </Link>
+                    </Link>
+                )}
+            </div>
 
             <PlatformTags platforms={platforms} />
-            <div className="name text-sm text-bold text-ellipsis-2">
+            <div className="name text-sm text-ellipsis-2">
                 <Link
                     to={`${ROOT_PATH}/game/${id}`}
                     className="text-primary-color"
@@ -160,23 +176,16 @@ const ProductCard = ({
                 </Link>
             </div>
             <div className="price-wrapper">
-                <div className="price text-sm text-bold">
+                <div
+                    className={`price text-sm text-bold ${
+                        price === 0 ? "free" : ""
+                    }`}
+                >
                     {price > 0
                         ? T("THB_PRICE", {
                               price: numeral(price).format("0,0.00"),
                           })
                         : T("FREE")}
-                </div>
-                <div
-                    className={`fav-icon ${
-                        isLiked ? "liked" : "like"
-                    } pointer text-lg`}
-                >
-                    {isLoading ? (
-                        <Spin />
-                    ) : (
-                        <HeartFilled onClick={() => updateWishlist()} />
-                    )}
                 </div>
             </div>
         </Container>

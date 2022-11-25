@@ -65,7 +65,7 @@ class AcoountWishListPage extends Component<Props> {
                     title={
                         langSlug === "en"
                             ? "Please login before view your wish list!"
-                            : "กรุณาเข้าสู่ระบบก่อนดูรายการที่ถูกใจ"
+                            : "กรุณาเข้าสู่ระบบก่อนดูรายการที่โปรด"
                     }
                     extra={
                         langSlug === "en"
