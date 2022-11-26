@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button, Input } from "antd";
-import { SendOutlined } from "@ant-design/icons";
+import { SendOutlined, SmileOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { T } from "./../../services/translateServices";
 
 const Container = styled.div`
+    padding: 10px;
     display: flex;
     gap: 10px;
 `;
@@ -45,6 +46,18 @@ const InputMessage = (props: Props) => {
                 size="large"
                 type="primary"
                 shape="circle"
+                icon={<SmileOutlined />}
+                style={{
+                    backgroundColor: "#ffcc00",
+                    border: 0,
+                    color: "#000000",
+                }}
+                onClick={() => props.toggleStickerSelector()}
+            ></Button>
+            <Button
+                size="large"
+                type="primary"
+                shape="circle"
                 icon={<SendOutlined />}
                 onClick={() => sendMessage()}
             ></Button>
@@ -54,6 +67,7 @@ const InputMessage = (props: Props) => {
 
 type Props = {
     onSubmit: (value: string) => void;
+    toggleStickerSelector: () => void;
 };
 
 export default InputMessage;

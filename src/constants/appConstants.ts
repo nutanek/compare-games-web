@@ -9,6 +9,8 @@ export const KEY_USER_INFO = "consoles_user_info";
 
 export const APP_DATE_FORMAT = "MMM D, YYYY";
 
+export const STICKER_KEY = ":sticker_id=";
+
 export const SORTING_ID = {
     releaseDate: 1,
     priceLowToHigh: 2,

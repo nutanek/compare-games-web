@@ -26,6 +26,7 @@ import {
     IMAGE_PATH,
     ROOT_PATH,
     SOCKET_URL,
+    STICKER_KEY,
 } from "../../constants/appConstants";
 import { AllChatRooms, ChatRoom } from "../../models/chat";
 import { getChatRoomApi } from "./../../services/apiServices";
@@ -33,6 +34,7 @@ import { T } from "./../../services/translateServices";
 import ChatButton from "./ChatButton";
 import SingleGroupChat from "./SingleGroupChat";
 import InputMessage from "./InputMessage";
+import StickerSelector from "./StickerSelector";
 import {
     getLocalAccessToken,
     getLocalUserInfo,
@@ -70,6 +72,8 @@ const GroupChat = () => {
     const [keyword, setKeyword] = useState<string>("");
     const [page, setPage] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isOpenStickerSelector, setIsOpenStickerSelector] =
+        useState<boolean>(false);
     const socketRef =
         useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -163,6 +167,7 @@ const GroupChat = () => {
         socketRef?.current?.disconnect();
         setSelectedSingleGroupId(-1);
         setChatItems([]);
+        toggleStickerSelector(false);
     }
 
     function sendMessage(value: string) {
@@ -174,6 +179,10 @@ const GroupChat = () => {
             image: userInfo.image,
             message: value,
         });
+    }
+
+    function onSelectSticker(id: string) {
+        sendMessage(STICKER_KEY + id);
     }
 
     const scrollToBottom = () => {
@@ -189,6 +198,10 @@ const GroupChat = () => {
     function onChangePage(page: number): void {
         setPage(page);
         getChatRooms(page, keyword);
+    }
+
+    function toggleStickerSelector(status: boolean) {
+        setIsOpenStickerSelector(status);
     }
 
     const debouncedChangeKeyword = useCallback(debounce(getChatRooms, 300), []);
@@ -264,10 +277,21 @@ const GroupChat = () => {
                 bodyStyle={selectedSingleGroupId !== -1 ? { padding: 15 } : {}}
                 onClose={() => toggleModal(false)}
                 visible={isOpen}
+                footerStyle={{ padding: 0 }}
                 footer={
                     selectedSingleGroupId === -1 ? null : (
                         <div>
-                            <InputMessage onSubmit={sendMessage} />
+                            <InputMessage
+                                onSubmit={sendMessage}
+                                toggleStickerSelector={() =>
+                                    toggleStickerSelector(
+                                        !isOpenStickerSelector
+                                    )
+                                }
+                            />
+                            {isOpenStickerSelector && (
+                                <StickerSelector onSelect={onSelectSticker} />
+                            )}
                         </div>
                     )
                 }

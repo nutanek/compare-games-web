@@ -1,0 +1,74 @@
+[
+    {
+        "id": "hi",
+        "name": "Hi"
+    },
+    {
+        "id": "angry",
+        "name": "Angry"
+    },
+    {
+        "id": "boring",
+        "name": "Boring"
+    },
+    {
+        "id": "confused",
+        "name": "Confused"
+    },
+    {
+        "id": "no",
+        "name": "No"
+    },
+    {
+        "id": "ok",
+        "name": "Ok"
+    },
+    {
+        "id": "eat",
+        "name": "Eat"
+    },
+    {
+        "id": "happy",
+        "name": "Happy"
+    },
+    {
+        "id": "laugh",
+        "name": "Laugh"
+    },
+    {
+        "id": "hooley",
+        "name": "Hooley"
+    },
+    {
+        "id": "hug",
+        "name": "Hug"
+    },
+    {
+        "id": "love",
+        "name": "Love"
+    },
+    {
+        "id": "mocking",
+        "name": "Mocking"
+    },
+    {
+        "id": "sad",
+        "name": "Sad"
+    },
+    {
+        "id": "shocked",
+        "name": "Shocked"
+    },
+    {
+        "id": "sick",
+        "name": "Sick"
+    },
+    {
+        "id": "sleep",
+        "name": "Sleep"
+    },
+    {
+        "id": "tired",
+        "name": "Tired"
+    }
+]

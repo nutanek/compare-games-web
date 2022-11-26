@@ -1,6 +1,10 @@
 import { forwardRef } from "react";
 import styled from "styled-components";
-import { IMAGE_PATH, ROOT_PATH } from "../../constants/appConstants";
+import {
+    IMAGE_PATH,
+    ROOT_PATH,
+    STICKER_KEY,
+} from "../../constants/appConstants";
 import { getLocalUserInfo } from "../../services/appServices";
 import { SocketData } from "../../models/sokect";
 import { ChatRoom } from "../../models/chat";
@@ -76,6 +80,14 @@ const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
         );
     };
 
+    const isSticker = (message: string): boolean => {
+        return message.startsWith(STICKER_KEY);
+    };
+
+    const getStickerId = (message: string): string => {
+        return message.replace(STICKER_KEY, "");
+    };
+
     return (
         <Container>
             <div className="chat-messages">
@@ -106,12 +118,25 @@ const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
                             <div className="text-sm text-bold">
                                 {!prevItemIsSameUser(index) && item.displayName}
                             </div>
-                            <div
-                                className="message-box text-md"
-                                dangerouslySetInnerHTML={{
-                                    __html: item.message,
-                                }}
-                            ></div>
+                            {isSticker(item.message) ? (
+                                <div>
+                                    <img
+                                        style={{ width: 150 }}
+                                        src={`${ROOT_PATH}/images/stickers/${getStickerId(
+                                            item.message
+                                        )}.png`}
+                                        title="sticker"
+                                        alt="sticker"
+                                    />
+                                </div>
+                            ) : (
+                                <div
+                                    className="message-box text-md"
+                                    dangerouslySetInnerHTML={{
+                                        __html: item.message,
+                                    }}
+                                ></div>
+                            )}
                         </div>
                     </div>
                 ))}
