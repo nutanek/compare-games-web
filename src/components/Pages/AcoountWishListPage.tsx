@@ -1,10 +1,14 @@
 import { Row, Col, Pagination, Empty, Result } from "antd";
 import { Component } from "react";
+import { URLSearchParamsInit } from "react-router-dom";
+import queryString from "query-string";
 import styled from "styled-components";
+import { ROOT_PATH } from "../../constants/appConstants";
 import { Game } from "../../models/game";
 import { getWishlistApi } from "./../../services/apiServices";
 import { isLoggedIn as checkIsLoggedIn } from "./../../services/appServices";
 import { T, langSlug } from "../../services/translateServices";
+import withRouter from "../../hocs/withRouter";
 import ProductCard from "../Product/ProductCard/ProductCard";
 import LoadingModal from "../Utility/Modal/Loading";
 import AccountLayout from "../Layout/AccountLayout";
@@ -25,7 +29,11 @@ class AcoountWishListPage extends Component<Props> {
     };
 
     componentDidMount() {
-        this.onGetGameList(1);
+        let queryStr = this.props.location?.search ?? "";
+        let query = queryString.parse(queryStr);
+        let page = parseInt(query.page as string) || 1;
+        this.setState({ page });
+        this.onGetGameList(page);
     }
 
     async onGetGameList(page: number): Promise<void> {
@@ -48,6 +56,11 @@ class AcoountWishListPage extends Component<Props> {
     onChangePage(page: number): void {
         this.setState({ page }, () => {
             window.scrollTo(0, 0);
+            this.onGetGameList(page);
+            this.props.navigateSearch &&
+                this.props.navigateSearch(`${ROOT_PATH}/account/wishlist`, {
+                    page: page.toString(),
+                });
         });
     }
 
@@ -102,7 +115,7 @@ class AcoountWishListPage extends Component<Props> {
                             this.state.games.length === 0 && (
                                 <Empty
                                     image={Empty.PRESENTED_IMAGE_DEFAULT}
-                                    description={T('NO_GAMES')}
+                                    description={T("NO_GAMES")}
                                 />
                             )}
 
@@ -111,7 +124,7 @@ class AcoountWishListPage extends Component<Props> {
                                 current={this.state.page}
                                 pageSize={24}
                                 total={this.state.total}
-                                hideOnSinglePage={true}
+                                hideOnSinglePage={this.state.page === 1}
                                 showSizeChanger={false}
                                 onChange={this.onChangePage.bind(this)}
                             />
@@ -132,6 +145,9 @@ type State = {
     isLoading: boolean;
 };
 
-type Props = {};
+type Props = {
+    navigateSearch?: (pathname: string, params: URLSearchParamsInit) => void;
+    location?: Location;
+};
 
-export default AcoountWishListPage;
+export default withRouter(AcoountWishListPage);

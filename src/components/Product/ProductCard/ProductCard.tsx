@@ -55,7 +55,13 @@ const Container = styled.div`
             left: 0px;
             z-index: 9;
             width: 100%;
-            padding: 10px;
+            padding: 20px 10px 10px;
+            background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.8) 0%,
+                rgba(0, 0, 0, 0.5) 40%,
+                rgba(0, 0, 0, 0) 100%
+            );
             transform: translateY(100%);
             transition: all 0.3s;
             button {
@@ -83,8 +89,10 @@ const Container = styled.div`
         .name a {
             color: #1890ff;
         }
-        .add-wishlist-lable {
-            transform: translateY(0%);
+        @media (min-width: 768px) {
+            .add-wishlist-lable {
+                transform: translateY(0%);
+            }
         }
     }
 `;
@@ -141,13 +149,14 @@ const ProductCard = ({
                     <Button
                         block
                         danger
-                        type="primary"
+                        type={isLiked ? "primary" : "default"}
+                        style={{ border: 0 }}
                         loading={isLoading}
                         icon={isLiked ? <HeartFilled /> : <HeartOutlined />}
                         className="text-xs"
                         onClick={() => !isLoading && updateWishlist()}
                     >
-                        {isLiked ? T("REMOVE_WISHLIST") : T("ADD_WISHLIST")}
+                        {T("WISH_LIST")}
                     </Button>
                 </div>
                 {image !== "" && (
