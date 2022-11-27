@@ -38,6 +38,17 @@ const Container = styled.div`
                     border-radius: 8px;
                     white-space: pre-line;
                 }
+                .image-box {
+                    width: 150px;
+                    > img {
+                        width: 100%;
+                    }
+                }
+                @media (max-width: 767.99px) {
+                    .image-box {
+                        width: 120px;
+                    }
+                }
             }
             &.left {
                 .message-box-wrapper {
@@ -119,9 +130,8 @@ const SingleGroupChat = forwardRef<HTMLDivElement, Props>((props, ref) => {
                                 {!prevItemIsSameUser(index) && item.displayName}
                             </div>
                             {isSticker(item.message) ? (
-                                <div>
+                                <div className="image-box">
                                     <img
-                                        style={{ width: 150 }}
                                         src={`${ROOT_PATH}/images/stickers/${getStickerId(
                                             item.message
                                         )}.png`}

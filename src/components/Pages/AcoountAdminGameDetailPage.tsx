@@ -100,6 +100,7 @@ const initialGame: GameAdmin = {
 class AcoountAdminGameDetailPage extends Component<Props> {
     state: State = {
         isLoading: false,
+        isSubmitted: false,
         game: initialGame as GameAdmin,
         allGenres: [] as SingleGameGenre[],
     };
@@ -231,6 +232,20 @@ class AcoountAdminGameDetailPage extends Component<Props> {
 
     onSubmit(values: any) {
         let { game } = this.state;
+        // validate image
+        if (!game.image) {
+            return;
+        }
+        // validate platform
+        if (
+            ![
+                game.in_platform_ps,
+                game.in_platform_xbox,
+                game.in_platform_nintendo,
+            ].includes(true)
+        ) {
+            return;
+        }
         let data = {
             id: game.id,
             name: values.name,
@@ -309,13 +324,13 @@ class AcoountAdminGameDetailPage extends Component<Props> {
     }
 
     render() {
-        let { game, allGenres, isLoading } = this.state;
+        let { game, allGenres, isLoading, isSubmitted } = this.state;
         return (
             <Container>
                 <AccountLayout
                     title={
                         isLoading
-                            ? "game"
+                            ? `${T('LOADING')}...`
                             : this.props.type === "ADD"
                             ? T("ADD_GAME")
                             : T("EDIT_GAME")
@@ -329,6 +344,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                         wrapperCol={{ span: 24 }}
                         requiredMark={false}
                         onFinish={this.onSubmit.bind(this)}
+                        onSubmitCapture={() =>
+                            this.setState({ isSubmitted: true })
+                        }
                         autoComplete="off"
                     >
                         <Row gutter={30}>
@@ -373,6 +391,11 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                     : T("UPLOAD_IMAGE")}
                                             </Button>
                                         </Upload>
+                                        {isSubmitted && !game.image && (
+                                            <div className="ant-form-item-explain-error">
+                                                {T("IMAGE_REQUIRED")}
+                                            </div>
+                                        )}
                                     </>
                                 </Form.Item>
 
@@ -517,14 +540,6 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                     }
                                     name="developer"
                                     style={{ width: "100%" }}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: T("INPUT_REQUIRED", {
-                                                text: T("DEVELOPER"),
-                                            }),
-                                        },
-                                    ]}
                                 >
                                     <Input className="text-md" size="large" />
                                 </Form.Item>
@@ -592,19 +607,6 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                             }
                                             name="metacriticRating"
                                             style={{ width: "100%" }}
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: T(
-                                                        "INPUT_REQUIRED",
-                                                        {
-                                                            text: T(
-                                                                "METACRITIC_SCORE"
-                                                            ),
-                                                        }
-                                                    ),
-                                                },
-                                            ]}
                                         >
                                             <InputNumber
                                                 style={{ width: "100%" }}
@@ -624,19 +626,6 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                             }
                                             name="metacriticRatingCount"
                                             style={{ width: "100%" }}
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: T(
-                                                        "INPUT_REQUIRED",
-                                                        {
-                                                            text: T(
-                                                                "METACRITIC_NUMBER"
-                                                            ),
-                                                        }
-                                                    ),
-                                                },
-                                            ]}
                                         >
                                             <InputNumber
                                                 style={{ width: "100%" }}
@@ -761,7 +750,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                         addonBefore={T(
                                                             "ORIGINAL_PRICE"
                                                         )}
-                                                        addonAfter={T('THB')}
+                                                        addonAfter={T("THB")}
                                                         style={{
                                                             width: "100%",
                                                         }}
@@ -846,7 +835,9 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                                             addonBefore={T(
                                                                 "SALE_PRICE"
                                                             )}
-                                                            addonAfter={T('THB')}
+                                                            addonAfter={T(
+                                                                "THB"
+                                                            )}
                                                             style={{
                                                                 width: "100%",
                                                             }}
@@ -860,6 +851,16 @@ class AcoountAdminGameDetailPage extends Component<Props> {
                                         )}
                                     </div>
                                 ))}
+                                {isSubmitted &&
+                                    ![
+                                        game.in_platform_ps,
+                                        game.in_platform_xbox,
+                                        game.in_platform_nintendo,
+                                    ].includes(true) && (
+                                        <div className="ant-form-item-explain-error">
+                                            {T("PLEASE_SELECT_LEAST_ONE")}
+                                        </div>
+                                    )}
                             </Col>
                         </Row>
 
@@ -886,6 +887,7 @@ class AcoountAdminGameDetailPage extends Component<Props> {
 
 type State = {
     isLoading: boolean;
+    isSubmitted: boolean;
     game: GameAdmin;
     allGenres: SingleGameGenre[];
 };

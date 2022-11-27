@@ -4,6 +4,7 @@ import { HeartFilled } from "@ant-design/icons";
 import { Link, NavigateFunction } from "react-router-dom";
 import styled from "styled-components";
 import cloneDeep from "lodash/cloneDeep";
+import numeral from "numeral";
 import moment from "moment";
 import LazyLoad from "react-lazyload";
 import {
@@ -11,7 +12,6 @@ import {
     ERRORS,
     IMAGE_PATH,
     ROOT_PATH,
-    AGE_RATINGS,
 } from "../../constants/appConstants";
 import { SingleGame, platformKeys } from "../../models/game";
 import withRouter from "../../hocs/withRouter";
@@ -325,7 +325,9 @@ class SingleGamePage extends Component<Props> {
                                     </div>
                                     <div className="text-sm count">
                                         {T("CRITICS")}:{" "}
-                                        {game.metacritic_rating_count}
+                                        {numeral(
+                                            game.metacritic_rating_count
+                                        ).format("0,0")}
                                     </div>
                                     {game.metacritic_ref_url && (
                                         <div
@@ -354,7 +356,10 @@ class SingleGamePage extends Component<Props> {
                                         <span className="text-xl">/ 5</span>
                                     </div>
                                     <div className="text-sm count">
-                                        {T("USERS")}: {game.user_rating_count}
+                                        {T("USERS")}:{" "}
+                                        {numeral(game.user_rating_count).format(
+                                            "0,0"
+                                        )}
                                     </div>
                                 </div>
                             </Col>
