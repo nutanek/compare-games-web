@@ -33,6 +33,9 @@ const Container = styled(Layout.Footer)`
 `;
 
 const Footer = () => {
+    const timeNow = new Date();
+    let year = timeNow.getFullYear();
+
     return (
         <Container>
             <Link
@@ -45,7 +48,7 @@ const Footer = () => {
             <div className="">
                 <LanguageSelector />
             </div>
-            <div className="copyright text-md">© Consoles 2022</div>
+            <div className="copyright text-md">© Consoles {year}</div>
         </Container>
     );
 };
